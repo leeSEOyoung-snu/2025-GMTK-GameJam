@@ -6,9 +6,10 @@ public class GameManager : MonoBehaviour
 {
     //singleton instance
     public static GameManager Instance { get; private set; }
-
+    
     private List<Dictionary<string, object>> _stageData;
     private List<Dictionary<string, object>> _catData;
+    private string StageFileName;
     
     public int CurrStageIdx { get; private set; }
     public readonly float RotateDuration = 1f;
@@ -64,4 +65,13 @@ public class GameManager : MonoBehaviour
         CurrStageIdx++;
         Debug.Log("Curr Stage Idx: " + CurrStageIdx);
     }
+    
+    #region filname
+    
+    public void SetStageFileName(string fileName)
+    {
+        StageFileName = fileName;
+        Debug.Log("GM : Stage File Name Set: " + StageFileName);
+    }
+    #endregion
 }

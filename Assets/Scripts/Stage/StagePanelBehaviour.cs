@@ -31,16 +31,17 @@ public class StagePanelBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if( Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            RightStageButtonClicekd();
-            Debug.Log("Current Selected Node: " + currentSelectedNode);
-        }
-        if( Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            LeftStageButtonClicekd();
-            Debug.Log("Current Selected Node: " + currentSelectedNode);
-        }
+        //TODO : keyinput
+        // if( Input.GetKeyDown(KeyCode.RightArrow))
+        // {
+        //     RightStageButtonClicekd();
+        //     Debug.Log("Current Selected Node: " + currentSelectedNode);
+        // }
+        // if( Input.GetKeyDown(KeyCode.LeftArrow))
+        // {
+        //     LeftStageButtonClicekd();
+        //     Debug.Log("Current Selected Node: " + currentSelectedNode);
+        // }
     }
     
     private void StageNodeClicked(BaseEventData data)
@@ -50,6 +51,7 @@ public class StagePanelBehaviour : MonoBehaviour
         selectedStageFileName = transform.name + "_" + currentSelectedNode.ToString() + ".csv"; // Example file naming convention
         Debug.Log("Selected Stage File Name: " + selectedStageFileName);
         //TODO : connect to game manager and load the stage
+        GameManager.Instance.SetStageFileName("Data/" + selectedStageFileName);
         //TODO : file name convention
     }
     
