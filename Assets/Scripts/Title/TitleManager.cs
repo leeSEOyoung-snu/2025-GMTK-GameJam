@@ -28,7 +28,7 @@ public class TitleManager : MonoBehaviour
     }
     void Update()
     {
-        //select button using arrow keys
+        //currentSelectedButton Logic Part
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             previousSelectedButton = currentSelcectedButton;
@@ -41,22 +41,20 @@ public class TitleManager : MonoBehaviour
             previousSelectedButton = currentSelcectedButton; 
             currentSelcectedButton++;
             if(currentSelcectedButton > Buttons.Count - 1){ currentSelcectedButton = 0;}
-        } 
-        
-        //range Control
-        
+        }
         
         Debug.Log(currentSelcectedButton + " is the current selected button index");
         
-        //Button highlighting
-        if (currentSelcectedButton >= 0 && currentSelcectedButton <= Buttons.Count - 1)
+        
+        
+        //Change detected
+        if (previousSelectedButton != currentSelcectedButton)
         {
-            Buttons[currentSelcectedButton].color = Color.white;
-            if(previousSelectedButton != -1) Buttons[previousSelectedButton].color = Color.black;
+            ButtonHighLighting();
         }
 
         //push the button by enter key
-        if (Input.GetKeyDown(KeyCode.Return) && currentSelcectedButton >= 0)
+        if (Input.GetKeyDown(KeyCode.Return) && currentSelcectedButton != -1)
         {
             Debug.Log("Button " + currentSelcectedButton + " clicked");
             switch (currentSelcectedButton)
@@ -74,11 +72,18 @@ public class TitleManager : MonoBehaviour
                     Debug.LogWarning("No button assigned for index: " + currentSelcectedButton);
                     break;
             }
-        } 
-        
-        
+        }
     }
     #endregion
+
+    private void ButtonHighLighting()
+    {
+        if (currentSelcectedButton >= 0 && currentSelcectedButton <= Buttons.Count - 1)
+        {
+            Buttons[currentSelcectedButton].color = Color.white;
+            if(previousSelectedButton != -1) Buttons[previousSelectedButton].color = Color.black;
+        }
+    }
 
     #region ButtonMethods
     public void OnClickStartButton()
