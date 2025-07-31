@@ -5,14 +5,18 @@ using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TitleManager : MonoBehaviour
 {
     #region Fields
     private int currentSelcectedButton = -1;
     private int previousSelectedButton = -1;
-    private List<TextMeshProUGUI> Buttons = new List<TextMeshProUGUI>();
+    private List<GameObject> Buttons = new List<GameObject>();
     private GameObject TitlePanel;
+    [SerializeField] private GameObject StartButton;
+    [SerializeField] private GameObject OptionButton;
+    [SerializeField] private GameObject QuitButton;
     #endregion
     
     #region LifeCycle
@@ -23,7 +27,10 @@ public class TitleManager : MonoBehaviour
         if (TitlePanel == null) Debug.LogError("TitlePanel not found in the scene.");
         
         // Find all buttons in the scene and add them to the list
-        foreach(TextMeshProUGUI button in TitlePanel.GetComponentsInChildren<TextMeshProUGUI>()) Buttons.Add(button);
+        Buttons.Add(StartButton);
+        Buttons.Add(OptionButton);
+        Buttons.Add(QuitButton);
+        
         Debug.Log(Buttons.Count + " buttons found in the scene.");
     }
     void Update()
@@ -78,8 +85,9 @@ public class TitleManager : MonoBehaviour
     {
         if (currentSelcectedButton >= 0 && currentSelcectedButton <= Buttons.Count - 1)
         {
-            Buttons[currentSelcectedButton].color = Color.white;
-            if(previousSelectedButton != -1) Buttons[previousSelectedButton].color = Color.black;
+            //TODO : Change TMPpro To Image
+            Buttons[currentSelcectedButton].GetComponent<Image>().color = new Color(1,1,1,0.5f);
+            if(previousSelectedButton != -1) Buttons[previousSelectedButton].GetComponent<Image>().color = Color.white;
         }
     }
 
@@ -117,7 +125,7 @@ public class TitleManager : MonoBehaviour
     {
         currentSelcectedButton = -1;
         previousSelectedButton = -1;
-        foreach (TextMeshProUGUI button in Buttons) button.color = Color.black; // Reset all buttons to black
+        foreach (GameObject button in Buttons) button.GetComponent<Image>().color = Color.white; // Reset all buttons to black
         
     }
 }
