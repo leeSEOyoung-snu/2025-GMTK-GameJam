@@ -937,6 +937,7 @@ GameObject:
   - component: {fileID: 1056297270}
   - component: {fileID: 1056297271}
   - component: {fileID: 1056297269}
+  - component: {fileID: 1056297273}
   - component: {fileID: 1056297272}
   m_Layer: 0
   m_Name: Managers
@@ -957,20 +958,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11e7fdf0f4b1e38409c23f5596c3e622, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  railCnt: 5
-  railPref: {fileID: 8534503997798118670, guid: a02ed5ec93eb57e42b9a6efedb22bacf, type: 3}
-  railParent: {fileID: 1555805805}
   railSprites:
   - {fileID: 21300000, guid: 8a46046e75f9e9a4cbb873d0bf2123c5, type: 3}
   - {fileID: 21300000, guid: 06edc2365e3baed49b8acc5b2e47c798, type: 3}
   - {fileID: 21300000, guid: 113df0cddab94784d89995c7bcf0ed98, type: 3}
-  servingCnt: 4
+  railPref: {fileID: 8534503997798118670, guid: a02ed5ec93eb57e42b9a6efedb22bacf, type: 3}
+  railParent: {fileID: 1555805805}
+  dishes: []
   dishPref: {fileID: 3484820050083673054, guid: 184f45889321ff242bd1ebadd42807ed, type: 3}
   dishParent: {fileID: 135738218}
-  dishes: []
-  diningCnt: 3
-  catPref: {fileID: 1920889069797192976, guid: 89728e4ea258fb141ae32fc236582923, type: 3}
-  catParent: {fileID: 378210435}
 --- !u!4 &1056297270
 Transform:
   m_ObjectHideFlags: 0
@@ -998,6 +994,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2a540420f3c28842862ba6da90fd314, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotateCntText: {fileID: 1423483507}
 --- !u!114 &1056297272
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1010,6 +1007,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cd2a2595d2e4ae4d8b3fb34e2822dc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1056297273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1056297268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd1cffd1c3b72dd4582fafe3a02595b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  catPref: {fileID: 1920889069797192976, guid: 89728e4ea258fb141ae32fc236582923, type: 3}
+  catParent: {fileID: 378210435}
 --- !u!1 &1170550936
 GameObject:
   m_ObjectHideFlags: 0
