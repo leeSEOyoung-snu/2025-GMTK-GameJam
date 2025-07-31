@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TableManager : MonoBehaviour
+public class TableManager : MonoBehaviour, IInit
 {
     [Header("Rail")]
     [SerializeField] private int railCnt;
@@ -18,24 +18,18 @@ public class TableManager : MonoBehaviour
     [Header("Dining")]
     [SerializeField] private int diningCnt;
     [SerializeField] private GameObject catPref, catParent;
-
+    
     private readonly float _railMaxPosY = 1.35f, _catPosY = 3f, _posXFactor = 1.8f;
     private float _rotationMinPosX, _railMinPosX, _diningMinPosX, _servingMinPosX;
-
-    private void Awake()
-    {
-        // _railSprites = Resources.LoadAll<Sprite>("Sprites/rails");
-    }
-
-    private void Start()
-    {
-        // railCnt = GameManager.Instance.railCnt;
-        InitTable();
-    }
+    
 
     #region Initialization
-    public void InitTable()
+    public void Init()
     {
+        railCnt = (int)MainSceneManager.Instance.CurrStageData["RailCnt"];
+        servingCnt = (int)MainSceneManager.Instance.CurrStageData["ServingCnt"];
+        diningCnt = (int)MainSceneManager.Instance.CurrStageData["DiningCnt"];
+        
         if (railCnt < 1 || servingCnt < 1 || diningCnt < 1) { Debug.LogError($"something's wrong [railCnt == {railCnt}, servingCnt == {servingCnt}, diningCnt == {diningCnt}]"); return; }
         if (servingCnt > railCnt) { Debug.LogError($"servingCnt is bigger than railCnt [railCnt == {railCnt}, servingCnt == {servingCnt}]"); return; }
         if (diningCnt > railCnt) { Debug.LogError($"diningCnt is bigger than railCnt [railCnt == {railCnt}, diningCnt == {diningCnt}]"); return; }
@@ -47,7 +41,10 @@ public class TableManager : MonoBehaviour
 
     private void GenerateRail()
     {
-        float currPosX = -1f * (float)(railCnt / 2) * _posXFactor;
+        foreach (Transform rail in railParent.transform)
+            Destroy(rail.gameObject);
+        
+        float currPosX = -1f * (railCnt / 2) * _posXFactor;
         currPosX -= railCnt % 2 == 1 ? _posXFactor : 0.5f * _posXFactor;
         
         _rotationMinPosX = currPosX;
@@ -91,8 +88,13 @@ public class TableManager : MonoBehaviour
 
     private void GenerateDish()
     {
-        float currPosX = -1f * (float)(servingCnt / 2) * _posXFactor;
-        currPosX -= railCnt % 2 == 1 ? 0f : 0.5f * _posXFactor;
+        foreach (Transform dish in dishParent.transform)
+            Destroy(dish.gameObject);
+        
+        dishes = new List<DishBehaviour>();
+        
+        float currPosX = -1f * (servingCnt / 2) * _posXFactor;
+        currPosX += railCnt % 2 == 1 ? 0f : 0.5f * _posXFactor;
         _servingMinPosX = currPosX;
         
         GameObject tmpObj;
@@ -109,8 +111,11 @@ public class TableManager : MonoBehaviour
 
     private void GenerateCat()
     {
-        float currPosX = -1f * (float)(diningCnt / 2) * _posXFactor;
-        currPosX -= railCnt % 2 == 1 ? 0f : 0.5f * _posXFactor;
+        foreach (Transform cat in catParent.transform)
+            Destroy(cat.gameObject);
+        
+        float currPosX = -1f * (diningCnt / 2) * _posXFactor;
+        currPosX += railCnt % 2 == 1 ? 0f : 0.5f * _posXFactor;
         _diningMinPosX = currPosX;
         
         GameObject tmpObj;

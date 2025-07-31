@@ -19,6 +19,7 @@ public class DishBehaviour : MonoBehaviour
 
     public void InitDish(SushiTypes sushi, Vector3 initPos)
     {
+        Debug.Log("Dish Init: " + initPos);
         Sushi = sushi;
         CurrPos = initPos;
         transform.localPosition = CurrPos;
@@ -26,7 +27,7 @@ public class DishBehaviour : MonoBehaviour
 
     public void Rotate(Vector3 endPos, bool moveXFirst = false)
     {
-        if (_rotateSq != null && _rotateSq.IsActive())
+        if (_rotateSq != null && _rotateSq.IsActive() && _rotateSq.IsPlaying())
         {
             _rotateSq.Complete();
             _rotateSq = null;
