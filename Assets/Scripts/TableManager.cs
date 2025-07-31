@@ -3,82 +3,97 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TableManager : MonoBehaviour
+public class railManager : MonoBehaviour
 {
-    [Header("Table")]
-    [SerializeField] private GameObject dishPref;
-    [SerializeField] private GameObject tablePref, tableParent;
-    [SerializeField] private int tableCnt, servingCnt, diningCnt;
-    [SerializeField] private Sprite[] tableSprites;
+    [Header("Rail")]
+    [SerializeField] private GameObject railPref, railParent;
+    [SerializeField] private int railCnt, servingCnt;
+    [SerializeField] private Sprite[] railSprites;
+    
+    [Header("Dish")]
+    [SerializeField] private GameObject dishPref, dishParent;
+    [SerializeField] private int diningCnt;
 
-    private readonly float posY = 1.35f, posXFactor = 1.8f;
-    //private float 
+    private readonly float _posY = 1.35f, _posXFactor = 1.8f;
+    private float _startPosX;
 
     private void Awake()
     {
-        // _tableSprites = Resources.LoadAll<Sprite>("Sprites/Tables");
+        // _railSprites = Resources.LoadAll<Sprite>("Sprites/rails");
     }
 
     private void Start()
     {
-        // tableCnt = GameManager.Instance.tableCnt;
-        InitTable();
+        // railCnt = GameManager.Instance.railCnt;
+        Initrail();
     }
 
-    public void InitTable()
+    public void Initrail()
     {
-        if (tableCnt < 1 || servingCnt < 1 || diningCnt < 1) { Debug.LogError($"something's wrong [tableCnt == {tableCnt}, servingCnt == {servingCnt}, diningCnt == {diningCnt}]"); return; }
-        if (servingCnt > tableCnt) { Debug.LogError($"servingCnt is bigger than tableCnt [tableCnt == {tableCnt}, servingCnt == {servingCnt}]"); return; }
-        if (diningCnt > tableCnt) { Debug.LogError($"diningCnt is bigger than tableCnt [tableCnt == {tableCnt}, diningCnt == {diningCnt}]"); return; }
+        if (railCnt < 1 || servingCnt < 1 || diningCnt < 1) { Debug.LogError($"something's wrong [railCnt == {railCnt}, servingCnt == {servingCnt}, diningCnt == {diningCnt}]"); return; }
+        if (servingCnt > railCnt) { Debug.LogError($"servingCnt is bigger than railCnt [railCnt == {railCnt}, servingCnt == {servingCnt}]"); return; }
+        if (diningCnt > railCnt) { Debug.LogError($"diningCnt is bigger than railCnt [railCnt == {railCnt}, diningCnt == {diningCnt}]"); return; }
         
-        GenerateTable();
+        Generaterail();
         GenerateDish();
     }
 
-    private void GenerateTable()
+    private void Generaterail()
     {
-        float currPosX = -1f * (float)(tableCnt / 2) * posXFactor;
-        currPosX += tableCnt % 2 == 1 ? -1f * posXFactor : -0.5f * posXFactor;
+        float currPosX = -1f * (float)(railCnt / 2) * _posXFactor;
+        currPosX -= railCnt % 2 == 1 ? _posXFactor : 0.5f * _posXFactor;
+        
+        _startPosX = currPosX + _posXFactor;
 
         GameObject tmpObj;
         
-        for (int i = -1; i < tableCnt+1; i++)
+        for (int i = -1; i < railCnt+1; i++)
         {
             for (int j = -1; j < 2; j++)
             {
-                Debug.Log($"i == {i}, j == {j}");
                 if (j == 0)
                 {
-                    if (i == -1 || i == tableCnt)
+                    if (i == -1 || i == railCnt)
                     {
-                        tmpObj = Instantiate(tablePref, tableParent.transform);
+                        tmpObj = Instantiate(railPref, railParent.transform);
                         tmpObj.transform.localPosition = new Vector3(currPosX, 0, 0);
-                        tmpObj.GetComponent<SpriteRenderer>().sprite = tableSprites[2];
+                        tmpObj.GetComponent<SpriteRenderer>().sprite = railSprites[2];
                     }
                 }
                 else
                 {
-                    tmpObj = Instantiate(tablePref, tableParent.transform);
-                    tmpObj.transform.localPosition = new Vector3(currPosX, posY * j, 0);
-                    if (i == -1 || i == tableCnt)
+                    tmpObj = Instantiate(railPref, railParent.transform);
+                    tmpObj.transform.localPosition = new Vector3(currPosX, _posY * j, 0);
+                    if (i == -1 || i == railCnt)
                     {
                         SpriteRenderer spr = tmpObj.GetComponent<SpriteRenderer>();
-                        spr.sprite = tableSprites[1];
-                        spr.flipX = i == tableCnt;
+                        spr.sprite = railSprites[1];
+                        spr.flipX = i == railCnt;
                         spr.flipY = j == -1;
                     }
                     else
                     {
-                        tmpObj.GetComponent<SpriteRenderer>().sprite = tableSprites[0];
+                        tmpObj.GetComponent<SpriteRenderer>().sprite = railSprites[0];
                     }
                 }
             }
-            currPosX += posXFactor;
+            currPosX += _posXFactor;
         }
     }
 
     private void GenerateDish()
     {
+        float currPosX = -1f * (float)(servingCnt / 2) * _posXFactor;
+        // currPosX -= railCnt % 2 == 1 ? _posXFactor : 0.5f * _posXFactor;
         
+        GameObject tmpObj;
+
+        for (int i = 0; i < servingCnt; i++)
+        {
+            tmpObj = Instantiate(dishPref, dishParent.transform);
+            tmpObj.transform.localPosition = new Vector3(currPosX, _posY * -1f, 0);
+            // tmpObj.GetComponent<SpriteRenderer>().sprite = ;
+            currPosX += _posXFactor;
+        }
     }
 }

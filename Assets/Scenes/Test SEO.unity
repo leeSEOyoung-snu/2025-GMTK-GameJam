@@ -122,6 +122,37 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &135738218
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 135738219}
+  m_Layer: 0
+  m_Name: Dish Parent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &135738219
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 135738218}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 469885961}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &469885960
 GameObject:
   m_ObjectHideFlags: 0
@@ -132,7 +163,7 @@ GameObject:
   m_Component:
   - component: {fileID: 469885961}
   m_Layer: 0
-  m_Name: Table Parent
+  m_Name: Table
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -152,6 +183,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1996816253}
+  - {fileID: 1555805806}
+  - {fileID: 135738219}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1056297268
@@ -183,16 +216,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11e7fdf0f4b1e38409c23f5596c3e622, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dishPref: {fileID: 3484820050083673054, guid: 184f45889321ff242bd1ebadd42807ed, type: 3}
-  tablePref: {fileID: 8534503997798118670, guid: a02ed5ec93eb57e42b9a6efedb22bacf, type: 3}
-  tableParent: {fileID: 469885960}
-  tableCnt: 5
+  railPref: {fileID: 8534503997798118670, guid: a02ed5ec93eb57e42b9a6efedb22bacf, type: 3}
+  railParent: {fileID: 1555805805}
+  railCnt: 5
   servingCnt: 4
-  diningCnt: 3
-  tableSprites:
+  railSprites:
   - {fileID: 21300000, guid: 8a46046e75f9e9a4cbb873d0bf2123c5, type: 3}
   - {fileID: 21300000, guid: 06edc2365e3baed49b8acc5b2e47c798, type: 3}
   - {fileID: 21300000, guid: 113df0cddab94784d89995c7bcf0ed98, type: 3}
+  dishPref: {fileID: 3484820050083673054, guid: 184f45889321ff242bd1ebadd42807ed, type: 3}
+  dishParent: {fileID: 135738218}
+  diningCnt: 3
 --- !u!4 &1056297270
 Transform:
   m_ObjectHideFlags: 0
@@ -207,6 +241,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1555805805
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1555805806}
+  m_Layer: 0
+  m_Name: Rail Parent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1555805806
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1555805805}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 469885961}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1949232489
 GameObject:
