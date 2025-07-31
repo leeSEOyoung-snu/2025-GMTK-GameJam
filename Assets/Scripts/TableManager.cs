@@ -130,12 +130,10 @@ public class TableManager : MonoBehaviour
         foreach (DishBehaviour dish in dishes)
         {
             Vector3 dishEndPos = Vector3.zero, dishStartPos = dish.CurrPos;
-            Debug.Log(dishStartPos);
             
             if (Mathf.Abs(dishStartPos.x - _railMinPosX) <= 0.0001f && dishStartPos.y < 0f)
             {
                 // 좌하단 -> 좌
-                Debug.Log("1");
                 dishEndPos.x = _rotationMinPosX;
                 dishEndPos.y = 0;
                 dish.Rotate(dishEndPos, true);
@@ -143,7 +141,6 @@ public class TableManager : MonoBehaviour
             else if (Mathf.Abs(dishStartPos.x - _rotationMinPosX) <= 0.0001f)
             {
                 // 좌 -> 좌상단
-                Debug.Log("2");
                 dishEndPos.x = _railMinPosX;
                 dishEndPos.y = _railMaxPosY;
                 dish.Rotate(dishEndPos, false);
@@ -151,7 +148,6 @@ public class TableManager : MonoBehaviour
             else if (Mathf.Abs(dishStartPos.x + _railMinPosX) <= 0.0001f && dishStartPos.y > 0f)
             {
                 // 우상단 -> 우
-                Debug.Log("3");
                 dishEndPos.x = -1f * _rotationMinPosX;
                 dishEndPos.y = 0;
                 dish.Rotate(dishEndPos, true);
@@ -159,7 +155,6 @@ public class TableManager : MonoBehaviour
             else if (Mathf.Abs(dishStartPos.x + _rotationMinPosX) <= 0.0001f)
             {
                 // 우 -> 우하단
-                Debug.Log("4");
                 dishEndPos.x = -1f * _railMinPosX;
                 dishEndPos.y = -1f * _railMaxPosY;
                 dish.Rotate(dishEndPos, false);
@@ -167,7 +162,6 @@ public class TableManager : MonoBehaviour
             else if (dishStartPos.y < 0f)
             {
                 // 밑줄
-                Debug.Log("5");
                 dishEndPos.x = dishStartPos.x - _posXFactor;
                 dishEndPos.y = dishStartPos.y;
                 dish.Rotate(dishEndPos);
@@ -175,7 +169,6 @@ public class TableManager : MonoBehaviour
             else
             {
                 // 윗줄
-                Debug.Log("6");
                 dishEndPos.x = dishStartPos.x + _posXFactor;
                 dishEndPos.y = dishStartPos.y;
                 dish.Rotate(dishEndPos);
