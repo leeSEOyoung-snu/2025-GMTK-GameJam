@@ -8,7 +8,10 @@ public class MainSceneManager : MonoBehaviour
     public static MainSceneManager Instance { get; private set; }
     
     public Dictionary<string, object> CurrStageData { get; private set; }
+    public readonly float PosXFactor = 1.8f;
     private List<IInit> _initScripts = new List<IInit>();
+
+    public float servingMinPosX, diningMinPosX;
     
     [Header("Rotate")]
     [SerializeField] private TextMeshProUGUI rotateCntText;

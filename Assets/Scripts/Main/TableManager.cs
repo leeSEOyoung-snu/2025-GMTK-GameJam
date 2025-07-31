@@ -6,21 +6,17 @@ using UnityEngine;
 public class TableManager : MonoBehaviour, IInit
 {
     [Header("Rail")]
-    [SerializeField] private int railCnt;
-    [SerializeField] private GameObject railPref, railParent;
     [SerializeField] private Sprite[] railSprites;
+    [SerializeField] private GameObject railPref, railParent;
+    private int railCnt;
     
     [Header("Serving")]
-    [SerializeField] private int servingCnt;
-    [SerializeField] private GameObject dishPref, dishParent;
     [SerializeField] private List<DishBehaviour> dishes;
-    
-    [Header("Dining")]
-    [SerializeField] private int diningCnt;
-    [SerializeField] private GameObject catPref, catParent;
-    
-    private readonly float _railMaxPosY = 1.35f, _catPosY = 3f, _posXFactor = 1.8f;
-    private float _rotationMinPosX, _railMinPosX, _diningMinPosX, _servingMinPosX;
+    [SerializeField] private GameObject dishPref, dishParent;
+    private int servingCnt;
+
+    private readonly float _railMaxPosY = 1.35f;
+    private float _rotationMinPosX, _railMinPosX;
     
 
     #region Initialization
@@ -28,15 +24,12 @@ public class TableManager : MonoBehaviour, IInit
     {
         railCnt = (int)MainSceneManager.Instance.CurrStageData["RailCnt"];
         servingCnt = (int)MainSceneManager.Instance.CurrStageData["ServingCnt"];
-        diningCnt = (int)MainSceneManager.Instance.CurrStageData["DiningCnt"];
         
-        if (railCnt < 1 || servingCnt < 1 || diningCnt < 1) { Debug.LogError($"something's wrong [railCnt == {railCnt}, servingCnt == {servingCnt}, diningCnt == {diningCnt}]"); return; }
+        if (railCnt < 1 || servingCnt < 1) { Debug.LogError($"something's wrong [railCnt == {railCnt}, servingCnt == {servingCnt}]"); return; }
         if (servingCnt > railCnt) { Debug.LogError($"servingCnt is bigger than railCnt [railCnt == {railCnt}, servingCnt == {servingCnt}]"); return; }
-        if (diningCnt > railCnt) { Debug.LogError($"diningCnt is bigger than railCnt [railCnt == {railCnt}, diningCnt == {diningCnt}]"); return; }
         
         GenerateRail();
         GenerateDish();
-        GenerateCat();
     }
 
     private void GenerateRail()
@@ -44,11 +37,11 @@ public class TableManager : MonoBehaviour, IInit
         foreach (Transform rail in railParent.transform)
             Destroy(rail.gameObject);
         
-        float currPosX = -1f * (railCnt / 2) * _posXFactor;
-        currPosX -= railCnt % 2 == 1 ? _posXFactor : 0.5f * _posXFactor;
+        float currPosX = -1f * (railCnt / 2) * MainSceneManager.Instance.PosXFactor;
+        currPosX -= railCnt % 2 == 1 ? MainSceneManager.Instance.PosXFactor : 0.5f * MainSceneManager.Instance.PosXFactor;
         
         _rotationMinPosX = currPosX;
-        _railMinPosX = currPosX + _posXFactor;
+        _railMinPosX = currPosX + MainSceneManager.Instance.PosXFactor;
 
         GameObject tmpObj;
         
@@ -82,7 +75,7 @@ public class TableManager : MonoBehaviour, IInit
                     }
                 }
             }
-            currPosX += _posXFactor;
+            currPosX += MainSceneManager.Instance.PosXFactor;
         }
     }
 
@@ -93,9 +86,9 @@ public class TableManager : MonoBehaviour, IInit
         
         dishes = new List<DishBehaviour>();
         
-        float currPosX = -1f * (servingCnt / 2) * _posXFactor;
-        currPosX += railCnt % 2 == 1 ? 0f : 0.5f * _posXFactor;
-        _servingMinPosX = currPosX;
+        float currPosX = -1f * (servingCnt / 2) * MainSceneManager.Instance.PosXFactor;
+        currPosX += railCnt % 2 == 1 ? 0f : 0.5f * MainSceneManager.Instance.PosXFactor;
+        MainSceneManager.Instance.servingMinPosX = currPosX;
         
         GameObject tmpObj;
 
@@ -105,29 +98,11 @@ public class TableManager : MonoBehaviour, IInit
             dishes.Add(tmpObj.GetComponent<DishBehaviour>());
             dishes[i].InitDish(SushiTypes.Egg, new Vector3(currPosX, _railMaxPosY * -1f, 0));
             // tmpObj.GetComponent<SpriteRenderer>().sprite = ;
-            currPosX += _posXFactor;
+            currPosX += MainSceneManager.Instance.PosXFactor;
         }
     }
 
-    private void GenerateCat()
-    {
-        foreach (Transform cat in catParent.transform)
-            Destroy(cat.gameObject);
-        
-        float currPosX = -1f * (diningCnt / 2) * _posXFactor;
-        currPosX += railCnt % 2 == 1 ? 0f : 0.5f * _posXFactor;
-        _diningMinPosX = currPosX;
-        
-        GameObject tmpObj;
-
-        for (int i = 0; i < diningCnt; i++)
-        {
-            tmpObj = Instantiate(catPref, catParent.transform);
-            tmpObj.transform.localPosition = new Vector3(currPosX, _catPosY, 0);
-            // tmpObj.GetComponent<SpriteRenderer>().sprite = ;
-            currPosX += _posXFactor;
-        }
-    }
+    
     #endregion
 
     public void RotateDish()
@@ -167,14 +142,14 @@ public class TableManager : MonoBehaviour, IInit
             else if (dishStartPos.y < 0f)
             {
                 // 밑줄
-                dishEndPos.x = dishStartPos.x - _posXFactor;
+                dishEndPos.x = dishStartPos.x - MainSceneManager.Instance.PosXFactor;
                 dishEndPos.y = dishStartPos.y;
                 dish.Rotate(dishEndPos);
             }
             else
             {
                 // 윗줄
-                dishEndPos.x = dishStartPos.x + _posXFactor;
+                dishEndPos.x = dishStartPos.x + MainSceneManager.Instance.PosXFactor;
                 dishEndPos.y = dishStartPos.y;
                 dish.Rotate(dishEndPos);
             }

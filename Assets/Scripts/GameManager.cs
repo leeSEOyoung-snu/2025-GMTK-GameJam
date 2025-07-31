@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     private List<Dictionary<string, object>> _stageData;
+    private List<Dictionary<string, object>> _catData;
     
     public int CurrStageIdx { get; private set; }
     
@@ -29,12 +30,32 @@ public class GameManager : MonoBehaviour
     private void Init()
     {
         _stageData = CSVReader.Read("Data/Test");
+        _catData = CSVReader.Read("Data/TestCat");
         CurrStageIdx = 0;
     }
 
     public Dictionary<string, object> GetStageData()
     {
         return _stageData[CurrStageIdx];
+    }
+
+    public List<Dictionary<string, object>> GetCatData()
+    {
+        bool goodToEnd = false;
+        List<Dictionary<string, object>> result = new List<Dictionary<string, object>>();
+        foreach (var catData in _catData)
+        {
+            if ((int)catData["Stage"] != (int)_stageData[CurrStageIdx]["Stage"])
+            {
+                if (goodToEnd) break;
+            }
+            else
+            {
+                goodToEnd = true;
+                result.Add(catData);
+            }
+        }
+        return result;
     }
 
     public void EndStage()
