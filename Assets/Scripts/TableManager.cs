@@ -11,7 +11,8 @@ public class TableManager : MonoBehaviour
     [SerializeField] private int tableCnt, servingCnt, diningCnt;
     [SerializeField] private Sprite[] tableSprites;
 
-    private readonly float posY = 1.6f, posXFactor = 2f;
+    private readonly float posY = 1.35f, posXFactor = 1.8f;
+    //private float 
 
     private void Awake()
     {
@@ -30,36 +31,54 @@ public class TableManager : MonoBehaviour
         if (servingCnt > tableCnt) { Debug.LogError($"servingCnt is bigger than tableCnt [tableCnt == {tableCnt}, servingCnt == {servingCnt}]"); return; }
         if (diningCnt > tableCnt) { Debug.LogError($"diningCnt is bigger than tableCnt [tableCnt == {tableCnt}, diningCnt == {diningCnt}]"); return; }
         
+        GenerateTable();
+        GenerateDish();
+    }
+
+    private void GenerateTable()
+    {
         float currPosX = -1f * (float)(tableCnt / 2) * posXFactor;
         currPosX += tableCnt % 2 == 1 ? -1f * posXFactor : -0.5f * posXFactor;
 
-        GameObject tmpObj; 
-        tmpObj = Instantiate(tablePref, new Vector3(currPosX, posY, 0), Quaternion.identity, tableParent.transform);
-        tmpObj.GetComponent<SpriteRenderer>().sprite = tableSprites[1];
-        tmpObj = Instantiate(tablePref, new Vector3(currPosX, 0, 0), Quaternion.identity, tableParent.transform);
-        tmpObj.GetComponent<SpriteRenderer>().sprite = tableSprites[2];
-        tmpObj = Instantiate(tablePref, new Vector3(currPosX, -1f * posY, 0), Quaternion.identity, tableParent.transform);
-        tmpObj.GetComponent<SpriteRenderer>().sprite = tableSprites[1];
-        tmpObj.GetComponent<SpriteRenderer>().flipY = true;
+        GameObject tmpObj;
         
-        for (int i = 0; i < tableCnt; i++)
+        for (int i = -1; i < tableCnt+1; i++)
         {
-            currPosX += 1f * posXFactor;
-            tmpObj = Instantiate(tablePref, new Vector3(currPosX, posY, 0), Quaternion.identity, tableParent.transform);
-            tmpObj.GetComponent<SpriteRenderer>().sprite = tableSprites[0];
-            tmpObj = Instantiate(tablePref, new Vector3(currPosX, -1f * posY, 0), Quaternion.identity, tableParent.transform);
-            tmpObj.GetComponent<SpriteRenderer>().sprite = tableSprites[0];
+            for (int j = -1; j < 2; j++)
+            {
+                Debug.Log($"i == {i}, j == {j}");
+                if (j == 0)
+                {
+                    if (i == -1 || i == tableCnt)
+                    {
+                        tmpObj = Instantiate(tablePref, tableParent.transform);
+                        tmpObj.transform.localPosition = new Vector3(currPosX, 0, 0);
+                        tmpObj.GetComponent<SpriteRenderer>().sprite = tableSprites[2];
+                    }
+                }
+                else
+                {
+                    tmpObj = Instantiate(tablePref, tableParent.transform);
+                    tmpObj.transform.localPosition = new Vector3(currPosX, posY * j, 0);
+                    if (i == -1 || i == tableCnt)
+                    {
+                        SpriteRenderer spr = tmpObj.GetComponent<SpriteRenderer>();
+                        spr.sprite = tableSprites[1];
+                        spr.flipX = i == tableCnt;
+                        spr.flipY = j == -1;
+                    }
+                    else
+                    {
+                        tmpObj.GetComponent<SpriteRenderer>().sprite = tableSprites[0];
+                    }
+                }
+            }
+            currPosX += posXFactor;
         }
+    }
+
+    private void GenerateDish()
+    {
         
-        currPosX += 1f * posXFactor;
-        tmpObj = Instantiate(tablePref, new Vector3(currPosX, posY, 0), Quaternion.identity, tableParent.transform);
-        tmpObj.GetComponent<SpriteRenderer>().sprite = tableSprites[1];
-        tmpObj.GetComponent<SpriteRenderer>().flipX = true;
-        tmpObj = Instantiate(tablePref, new Vector3(currPosX, 0, 0), Quaternion.identity, tableParent.transform);
-        tmpObj.GetComponent<SpriteRenderer>().sprite = tableSprites[2];
-        tmpObj = Instantiate(tablePref, new Vector3(currPosX, -1f * posY, 0), Quaternion.identity, tableParent.transform);
-        tmpObj.GetComponent<SpriteRenderer>().sprite = tableSprites[1];
-        tmpObj.GetComponent<SpriteRenderer>().flipX = true;
-        tmpObj.GetComponent<SpriteRenderer>().flipY = true;
     }
 }
