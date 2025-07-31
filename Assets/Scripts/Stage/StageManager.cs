@@ -111,7 +111,7 @@ public class StageManager : MonoBehaviour
         foreach(GameObject panel in StagePanels)
         {
             if (StagePanels[currentSelectedStage] == panel) stagePanelSequence.Join(panel.GetComponent<RectTransform>().DOSizeDelta(new Vector2(BigStagePanelSizeX, BigStagePanelSizeY), StagePanelMoveDuration));
-            else stagePanelSequence.Join(panel.GetComponent<RectTransform>().DOSizeDelta(new Vector2(SmallStagePanelSizeX, SmallStagePanelSizeY), StagePanelMoveDuration));
+            else stagePanelSequence.Join(panel.GetComponent<RectTransform>().DOScale(new Vector2(SmallStagePanelSizeX/BigStagePanelSizeX, SmallStagePanelSizeY/BigStagePanelSizeY), StagePanelMoveDuration));
         }
     }
     #endregion
