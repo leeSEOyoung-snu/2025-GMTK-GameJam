@@ -19,7 +19,6 @@ public class DishBehaviour : MonoBehaviour
 
     public void InitDish(SushiTypes sushi, Vector3 initPos)
     {
-        Debug.Log("Dish Init: " + initPos);
         Sushi = sushi;
         CurrPos = initPos;
         transform.localPosition = CurrPos;
@@ -40,13 +39,13 @@ public class DishBehaviour : MonoBehaviour
         {
             if (moveXFirst)
             {
-                _rotateSq.Append(transform.DOLocalMoveX(endPos.x, rotateDuration / 2));
-                _rotateSq.Append(transform.DOLocalMoveY(endPos.y, rotateDuration / 2));
+                Vector3[] path = new Vector3[] { new Vector3(endPos.x, CurrPos.y, 0f), new Vector3(endPos.x, endPos.y, 0f) };
+                _rotateSq.Append(transform.DOLocalPath(path, rotateDuration, PathType.Linear));
             }
             else
             {
-                _rotateSq.Append(transform.DOLocalMoveY(endPos.y, rotateDuration / 2));
-                _rotateSq.Append(transform.DOLocalMoveX(endPos.x, rotateDuration / 2));
+                Vector3[] path = new Vector3[] { new Vector3(CurrPos.x, endPos.y, 0f), new Vector3(endPos.x, endPos.y, 0f) };
+                _rotateSq.Append(transform.DOLocalPath(path, rotateDuration, PathType.Linear));
             }
         } 
 
