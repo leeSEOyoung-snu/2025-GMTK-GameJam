@@ -45,8 +45,6 @@ public class TitleManager : MonoBehaviour
         
         Debug.Log(currentSelcectedButton + " is the current selected button index");
         
-        
-        
         //Change detected
         if (previousSelectedButton != currentSelcectedButton)
         {
@@ -95,7 +93,6 @@ public class TitleManager : MonoBehaviour
 
     public void OnClickOptionButton()
     {
-        //TODO : Open the options menu implement later
         Debug.Log("Option button clicked");
     }
 
