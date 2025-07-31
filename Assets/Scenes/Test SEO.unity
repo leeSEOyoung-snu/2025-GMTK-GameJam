@@ -1818,7 +1818,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1056297269}
         m_TargetAssemblyTypeName: TableManager, Assembly-CSharp
-        m_MethodName: RotateDish
+        m_MethodName: RotateDishOnce
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
