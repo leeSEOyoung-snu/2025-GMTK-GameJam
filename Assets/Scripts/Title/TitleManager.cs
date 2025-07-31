@@ -20,17 +20,12 @@ public class TitleManager : MonoBehaviour
     {
         // Find the TitlePanel GameObject in the scene
         TitlePanel = GameObject.Find("TitlePanel");
+        if (TitlePanel == null) Debug.LogError("TitlePanel not found in the scene.");
+        
         // Find all buttons in the scene and add them to the list
         foreach(TextMeshProUGUI button in TitlePanel.GetComponentsInChildren<TextMeshProUGUI>()) Buttons.Add(button);
         Debug.Log(Buttons.Count + " buttons found in the scene.");
-        
     }
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
         //select button using arrow keys
@@ -107,6 +102,20 @@ public class TitleManager : MonoBehaviour
         Application.Quit();
 #endif
     }
-    
+
+    public void OnClickTitleButton()
+    {
+        initTitleManager();
+        TitlePanel.SetActive(true);
+    }
+
     #endregion
+
+    private void initTitleManager()
+    {
+        currentSelcectedButton = -1;
+        previousSelectedButton = -1;
+        foreach (TextMeshProUGUI button in Buttons) button.color = Color.black; // Reset all buttons to black
+        
+    }
 }
