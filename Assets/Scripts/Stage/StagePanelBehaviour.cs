@@ -31,16 +31,17 @@ public class StagePanelBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if( Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            RightStageButtonClicekd();
-            Debug.Log("Current Selected Node: " + currentSelectedNode);
-        }
-        if( Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            LeftStageButtonClicekd();
-            Debug.Log("Current Selected Node: " + currentSelectedNode);
-        }
+        //TODO : keyinput
+        // if( Input.GetKeyDown(KeyCode.RightArrow))
+        // {
+        //     RightStageButtonClicekd();
+        //     Debug.Log("Current Selected Node: " + currentSelectedNode);
+        // }
+        // if( Input.GetKeyDown(KeyCode.LeftArrow))
+        // {
+        //     LeftStageButtonClicekd();
+        //     Debug.Log("Current Selected Node: " + currentSelectedNode);
+        // }
     }
     
     private void StageNodeClicked(BaseEventData data)

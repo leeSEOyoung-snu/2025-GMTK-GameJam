@@ -34,6 +34,12 @@ public class StageManager : MonoBehaviour
             StagePanelsRectTransforms.Add(st.GetComponent<RectTransform>());
         }
     }
+    
+    private void Start()
+    {
+        // Initialize the stage panels
+        ResizeStagePanels();
+    }
 
     // Update is called once per frame
     void Update()
@@ -41,10 +47,12 @@ public class StageManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.RightArrow))
             {
                 RightStageButtonClicekd();
+                Debug.Log("Current Selected Panel: " + currentSelectedStage);
             }
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
                 LeftStageButtonClicekd();
+                Debug.Log("Current Selected Panel: " + currentSelectedStage);
             }
     }
 
@@ -110,7 +118,7 @@ public class StageManager : MonoBehaviour
     {
         foreach(GameObject panel in StagePanels)
         {
-            if (StagePanels[currentSelectedStage] == panel) stagePanelSequence.Join(panel.GetComponent<RectTransform>().DOSizeDelta(new Vector2(BigStagePanelSizeX, BigStagePanelSizeY), StagePanelMoveDuration));
+            if (StagePanels[currentSelectedStage] == panel) stagePanelSequence.Join(panel.GetComponent<RectTransform>().DOScale(new Vector2(1, 1), StagePanelMoveDuration));
             else stagePanelSequence.Join(panel.GetComponent<RectTransform>().DOScale(new Vector2(SmallStagePanelSizeX/BigStagePanelSizeX, SmallStagePanelSizeY/BigStagePanelSizeY), StagePanelMoveDuration));
         }
     }
