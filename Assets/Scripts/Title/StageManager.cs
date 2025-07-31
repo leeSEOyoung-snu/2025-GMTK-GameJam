@@ -7,6 +7,7 @@ public class StageManager : MonoBehaviour
 {
     #region Fields
     private int currentSelectedStage = 0;
+    Sequence stagePanelSequence;
     [Header("Stage Panels Size")]
     [SerializeField] private float BigStagePanelSizeX;
     [SerializeField] private float BigStagePanelSizeY;
@@ -16,12 +17,15 @@ public class StageManager : MonoBehaviour
     [Header("Stage Panels Objects")]
     [SerializeField] private List<GameObject> StagePanels = new List<GameObject>();
 
+    
     private List<RectTransform> StagePanelsRectTransforms = new List<RectTransform>();
+    
     #endregion
 
     #region LifeCycle
     private void Awake()
     {
+        stagePanelSequence = DOTween.Sequence();
         foreach (var st in StagePanels)
         {
             StagePanelsRectTransforms.Add(st.GetComponent<RectTransform>());
@@ -31,8 +35,26 @@ public class StageManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.RightArrow)) RightStage(); ResizeStagePanels();
-        if (Input.GetKeyDown(KeyCode.LeftArrow)) LeftStage(); ResizeStagePanels();
+        if (stagePanelSequence != null && !stagePanelSequence.IsPlaying())
+        {
+            if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                stagePanelSequence = DOTween.Sequence();
+                stagePanelSequence.Append(DOTween.To(() => 0f, x => { }, 0f, 0f));  //dummy tween to ensure the sequence is not empty
+                RightStage();
+                ResizeStagePanels();
+                stagePanelSequence.Play();
+            }
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                stagePanelSequence = DOTween.Sequence();
+                stagePanelSequence.Append(DOTween.To(() => 0f, x => { }, 0f, 0f));  //dummy tween to ensure the sequence is not empty
+                LeftStage();
+                ResizeStagePanels();
+                stagePanelSequence.Play();
+            }
+        }
+        
     }
 
     #endregion
@@ -41,8 +63,8 @@ public class StageManager : MonoBehaviour
     {
         foreach(GameObject panel in StagePanels)
         {
-            if (StagePanels[currentSelectedStage] == panel) panel.GetComponent<RectTransform>().DOSizeDelta(new Vector2(BigStagePanelSizeX, BigStagePanelSizeY), 1.0f);
-            else panel.GetComponent<RectTransform>().DOSizeDelta(new Vector2(SmallStagePanelSizeX, SmallStagePanelSizeY), 1.0f);
+            if (StagePanels[currentSelectedStage] == panel) stagePanelSequence.Join(panel.GetComponent<RectTransform>().DOSizeDelta(new Vector2(BigStagePanelSizeX, BigStagePanelSizeY), 1.0f));
+            else stagePanelSequence.Join(panel.GetComponent<RectTransform>().DOSizeDelta(new Vector2(SmallStagePanelSizeX, SmallStagePanelSizeY), 1.0f));
         }
     }
 
@@ -59,7 +81,7 @@ public class StageManager : MonoBehaviour
         
         foreach (RectTransform rectPanels in StagePanelsRectTransforms)
         {
-            rectPanels.DOMove(new Vector2(rectPanels.transform.position.x - StagePanelGap, rectPanels.transform.position.y), 1.0f);
+            stagePanelSequence.Join(rectPanels.DOMove(new Vector2(rectPanels.transform.position.x - StagePanelGap, rectPanels.transform.position.y), 1.0f));
         }
         Debug.Log("Current Selected Stage: " + currentSelectedStage);
     }
@@ -73,10 +95,10 @@ public class StageManager : MonoBehaviour
         }
         foreach (RectTransform rectPanels in StagePanelsRectTransforms)
         {
-            rectPanels.DOMove(new Vector2(rectPanels.transform.position.x + StagePanelGap, rectPanels.transform.position.y), 1.0f);
+            stagePanelSequence.Join(rectPanels.DOMove(new Vector2(rectPanels.transform.position.x + StagePanelGap, rectPanels.transform.position.y), 1.0f));
         }
+        
         Debug.Log("Current Selected Stage: " + currentSelectedStage);
-
     }
     
     #endregion
