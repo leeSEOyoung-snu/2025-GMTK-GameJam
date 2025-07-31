@@ -14,6 +14,7 @@ public class TitleManager : MonoBehaviour
     private int previousSelectedButton = -1;
     private List<GameObject> Buttons = new List<GameObject>();
     private GameObject TitlePanel;
+    [Header("Buttons")]
     [SerializeField] private GameObject StartButton;
     [SerializeField] private GameObject OptionButton;
     [SerializeField] private GameObject QuitButton;
@@ -24,7 +25,7 @@ public class TitleManager : MonoBehaviour
     {
         // Find the TitlePanel GameObject in the scene
         TitlePanel = GameObject.Find("TitlePanel");
-        if (TitlePanel == null) Debug.LogError("TitlePanel not found in the scene.");
+        if (TitlePanel == null) Debug.LogWarning("TitlePanel not found in the scene.");
         
         // Find all buttons in the scene and add them to the list
         Buttons.Add(StartButton);
@@ -50,7 +51,7 @@ public class TitleManager : MonoBehaviour
             if(currentSelcectedButton > Buttons.Count - 1){ currentSelcectedButton = 0;}
         }
         
-        Debug.Log(currentSelcectedButton + " is the current selected button index");
+        //Debug.Log(currentSelcectedButton + " is the current selected button index");
         
         //Change detected
         if (previousSelectedButton != currentSelcectedButton)
