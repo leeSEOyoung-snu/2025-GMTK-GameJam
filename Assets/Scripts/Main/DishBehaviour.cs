@@ -13,9 +13,6 @@ public class DishBehaviour : MonoBehaviour
     public Vector3 CurrPos { get; private set; }
 
     private Sequence _rotateSq;
-    
-    // TODO: Rotation 길이 GameManager로 이양
-    private readonly float rotateDuration = 1f;
 
     public void InitDish(SushiTypes sushi, Vector3 initPos)
     {
@@ -32,20 +29,22 @@ public class DishBehaviour : MonoBehaviour
             _rotateSq = null;
         }
         _rotateSq = DOTween.Sequence();
+
+        float rotateSpeed = GameManager.Instance.RotateDuration * MainSceneManager.Instance.RotateSpeedFactor;
         
         if (endPos.y.Equals(CurrPos.y))
-            _rotateSq.Append(transform.DOLocalMoveX(endPos.x, rotateDuration));
+            _rotateSq.Append(transform.DOLocalMoveX(endPos.x, rotateSpeed));
         else
         {
             if (moveXFirst)
             {
                 Vector3[] path = new Vector3[] { new Vector3(endPos.x, CurrPos.y, 0f), new Vector3(endPos.x, endPos.y, 0f) };
-                _rotateSq.Append(transform.DOLocalPath(path, rotateDuration, PathType.Linear));
+                _rotateSq.Append(transform.DOLocalPath(path, rotateSpeed, PathType.Linear));
             }
             else
             {
                 Vector3[] path = new Vector3[] { new Vector3(CurrPos.x, endPos.y, 0f), new Vector3(endPos.x, endPos.y, 0f) };
-                _rotateSq.Append(transform.DOLocalPath(path, rotateDuration, PathType.Linear));
+                _rotateSq.Append(transform.DOLocalPath(path, rotateSpeed, PathType.Linear));
             }
         } 
 

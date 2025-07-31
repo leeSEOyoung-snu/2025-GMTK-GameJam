@@ -15,6 +15,7 @@ public class MainSceneManager : MonoBehaviour
     
     [Header("Rotate")]
     [SerializeField] private TextMeshProUGUI rotateCntText;
+    public float RotateSpeedFactor { get; private set; }
     private int _maxRotateCnt, _currRotateCnt;
 
     private void Awake()
@@ -37,6 +38,8 @@ public class MainSceneManager : MonoBehaviour
         
         _maxRotateCnt = _currRotateCnt = (int)CurrStageData["RotateCnt"];
         rotateCntText.text = $"Rotate Cnt [{_currRotateCnt} / {_maxRotateCnt}]";
+
+        RotateSpeedFactor = 1f;
         
         foreach(IInit script in _initScripts) script.Init();
     }

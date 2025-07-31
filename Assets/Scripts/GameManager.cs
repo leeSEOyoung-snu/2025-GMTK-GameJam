@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     private List<Dictionary<string, object>> _catData;
     
     public int CurrStageIdx { get; private set; }
+    public readonly float RotateDuration = 1f;
     
     private void Awake()
     {
