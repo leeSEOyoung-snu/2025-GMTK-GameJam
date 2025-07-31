@@ -50,6 +50,7 @@ public class StagePanelBehaviour : MonoBehaviour
         selectedStageFileName = transform.name + "_" + currentSelectedNode.ToString() + ".csv"; // Example file naming convention
         Debug.Log("Selected Stage File Name: " + selectedStageFileName);
         //TODO : connect to game manager and load the stage
+        GameManager.Instance.SetStageFileName("Data/" + selectedStageFileName);
         //TODO : file name convention
     }
     
