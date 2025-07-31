@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class MainSceneManager : MonoBehaviour
@@ -8,6 +9,10 @@ public class MainSceneManager : MonoBehaviour
     
     public Dictionary<string, object> CurrStageData { get; private set; }
     private List<IInit> _initScripts = new List<IInit>();
+    
+    [Header("Rotate")]
+    [SerializeField] private TextMeshProUGUI rotateCntText;
+    private int _maxRotateCnt, _currRotateCnt;
 
     private void Awake()
     {
@@ -26,6 +31,10 @@ public class MainSceneManager : MonoBehaviour
     public void Init()
     {
         CurrStageData = GameManager.Instance.GetStageData();
+        
+        _maxRotateCnt = _currRotateCnt = (int)CurrStageData["RotateCnt"];
+        rotateCntText.text = $"Rotate Cnt [{_currRotateCnt} / {_maxRotateCnt}]";
+        
         foreach(IInit script in _initScripts) script.Init();
     }
 }
