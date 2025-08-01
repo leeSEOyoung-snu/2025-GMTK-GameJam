@@ -4,8 +4,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum SushiTypes { Egg = 0, Shrimp = 1, Unagi = 2, Tuna = 3, Maki = 4, Empty = 5, Any = 6, StandBy = 7 }
-public enum ColorTypes { W = 0, R = 1, Y = 2, B = 3, StandBy = 4 }
+public enum SushiTypes { Egg = 0, Shrimp = 1, Unagi = 2, Tuna = 3, Maki = 4, Empty = 5, Any = 6, SushiStandBy = 7 }
+public enum ColorTypes { W = 0, R = 1, Y = 2, B = 3, DishStandBy = 4 }
 
 public class MainSceneManager : MonoBehaviour
 {

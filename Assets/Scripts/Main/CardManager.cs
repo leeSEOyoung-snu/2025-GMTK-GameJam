@@ -14,7 +14,7 @@ public class CardManager : MonoBehaviour, IInit
     public List<CardBehaviour> CurrCards { get; private set; }
     public readonly float CardMoveDuration = 0.5f;
 
-    private readonly float _cardMinPosX = -4f, _cardMaxPosX = 3f, _cardNormalPosY = 0f;
+    private readonly float _cardMinPosX = -4f, _cardMaxPosX = 3f, _cardNormalPosY = 0f, _addCardStartPosY = -2f;
     public readonly float CardHoveredPosY = 0.7f;
 
     private readonly int _defaultOrder = 10;
@@ -94,11 +94,32 @@ public class CardManager : MonoBehaviour, IInit
         _selectedCard = null;
     }
 
+    public void ResultSelected(CatResultBehaviour resultBehaviour)
+    {
+        if (_selectedCard == null) return;
+        resultBehaviour.SetResult(_selectedCard.Sushi);
+        DiscardCard(_selectedCard);
+        _selectedCard = null;
+    }
+
     public void PutSushiOnDish(DishBehaviour dish)
     {
         if (_selectedCard == null) return;
         dish.PutSushiOnDish(_selectedCard.Sushi);
         DiscardCard(_selectedCard);
         _selectedCard = null;
+    }
+
+    public void AddCard(SushiTypes sushi)
+    {
+        CardBehaviour cardBehaviour = Instantiate(cardPref, cardParent.transform).GetComponent<CardBehaviour>();
+        CurrCards.Add(cardBehaviour);
+        cardBehaviour.InitCard(sushi, new Vector3(_cardMaxPosX, _addCardStartPosY, 0f), _defaultOrder + CurrCards.Count - 1);
+        ArrangeCard();
+    }
+
+    public void DebugAddCard()
+    {
+        AddCard(SushiTypes.Egg);
     }
 }

@@ -17,9 +17,9 @@ public class ConditionMethods : MonoBehaviour
 {
     public static ConditionMethods Instance { get; private set; }
     
-    [SerializeField] private List<Sprite> iconSprites;
-    [SerializeField] private List<Sprite> sushiSprites;
-    [SerializeField] private List<Sprite> dishSprites;
+    public List<Sprite> iconSprites;
+    public List<Sprite> sushiSprites;
+    public List<Sprite> dishSprites;
 
     private void Awake()
     {
@@ -43,7 +43,7 @@ public class ConditionMethods : MonoBehaviour
                 case ConditionTypes.SushiPassed:    sprites = SushiPassed(sushi);    break;
             }
 
-            isStandBy = sushi == SushiTypes.StandBy;
+            isStandBy = sushi == SushiTypes.SushiStandBy;
         }
         else if (Enum.TryParse((string)conval, ignoreCase: true, out ColorTypes color))
         {
@@ -53,7 +53,7 @@ public class ConditionMethods : MonoBehaviour
             }
 
             isSushiType = false;
-            isStandBy = color == ColorTypes.StandBy;
+            isStandBy = color == ColorTypes.DishStandBy;
         }
         else Debug.LogError("Condition Val Error: " + conval);
 
