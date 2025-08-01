@@ -1032,6 +1032,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   catPref: {fileID: 1920889069797192976, guid: 89728e4ea258fb141ae32fc236582923, type: 3}
   catParent: {fileID: 378210435}
+  catSprites:
+  - {fileID: -977122928, guid: 43642cca7a6743c48b695459de4a0bf1, type: 3}
+  - {fileID: 1853821044, guid: 43642cca7a6743c48b695459de4a0bf1, type: 3}
+  - {fileID: -519140016, guid: 43642cca7a6743c48b695459de4a0bf1, type: 3}
+  - {fileID: -597720355, guid: 43642cca7a6743c48b695459de4a0bf1, type: 3}
+  - {fileID: -1843375751, guid: 43642cca7a6743c48b695459de4a0bf1, type: 3}
 --- !u!1 &1170550936
 GameObject:
   m_ObjectHideFlags: 0
