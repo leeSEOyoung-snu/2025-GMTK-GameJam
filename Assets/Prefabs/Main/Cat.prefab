@@ -364,6 +364,7 @@ MonoBehaviour:
   catBehaviour: {fileID: 1313736812669224089}
   iconSr: {fileID: 1432935629405655004}
   typePref: {fileID: 6512532467102884891, guid: 7c569059b791c1b4cb7bc1305b5c8bef, type: 3}
+  conditionCollider: {fileID: 4393286012813092630}
 --- !u!1 &6658599521744851486
 GameObject:
   m_ObjectHideFlags: 0

@@ -480,7 +480,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: c2d105a4221fda94aa72983327cffd3a, type: 3}
   - {fileID: 21300000, guid: 25dd8f5c7f2ea7549908c615069899a7, type: 3}
   - {fileID: 21300000, guid: 159d2eb2d8951a346b6fe4840b401be9, type: 3}
-  - {fileID: 21300000, guid: 3280d50fd52f24d479eb6e5688b2f8ed, type: 3}
+  - {fileID: 21300000, guid: 06edc2365e3baed49b8acc5b2e47c798, type: 3}
   dishSprites:
   - {fileID: 21300000, guid: aa298071ed2a99b40bfbe623d2956e0c, type: 3}
   - {fileID: 21300000, guid: e81f0ad74ba2f3641a28cd616058fc12, type: 3}
