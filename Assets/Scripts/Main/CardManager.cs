@@ -19,6 +19,8 @@ public class CardManager : MonoBehaviour, IInit
 
     private readonly int _defaultOrder = 10;
 
+    private CardBehaviour _selectedCard;
+
     private void Awake()
     {
         if (Instance == null) Instance = this;
@@ -48,8 +50,18 @@ public class CardManager : MonoBehaviour, IInit
         }
     }
 
-    private void GenerateCard(SushiTypes sushi)
+    public void CardSelected(CardBehaviour cardBehaviour)
     {
+        if (_selectedCard != null)
+        {
+            _selectedCard.OnPointerClick(null);
+        }
         
+        _selectedCard = cardBehaviour;
+    }
+
+    public void CardDeselected()
+    {
+        _selectedCard = null;
     }
 }

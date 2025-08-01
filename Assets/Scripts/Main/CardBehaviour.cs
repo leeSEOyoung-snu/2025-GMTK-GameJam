@@ -11,9 +11,11 @@ public class CardBehaviour : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     private Vector3 _normalPos, _hoveredPos;
     private Sequence _sequence;
-
-    private int order;
-    private readonly float _hoveredPosZ = 1f;
+    
+    private readonly int _hoveredOrderAdder = 15;
+    private int _order;
+    
+    private bool isSelected;
 
     public void InitCard(SushiTypes sushi, Vector3 normalPos, int order)
     {
@@ -22,16 +24,18 @@ public class CardBehaviour : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         _normalPos = normalPos;
         transform.localPosition = normalPos;
         _hoveredPos = new Vector3(normalPos.x, normalPos.y + CardManager.Instance.CardHoveredPosY, normalPos.z);
-
-        this.order = order;
+        
+        _order = order;
         cardSr.sortingOrder = order;
         cardSr.sprite = CardManager.Instance.cardSprites[(int)sushi];
+        
+        isSelected = false;
     }
     
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Debug.Log("Enter Card");
-        transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, _hoveredPosZ);
+        if (isSelected) return;
+        cardSr.sortingOrder = _order + _hoveredOrderAdder;
         if (_sequence != null && _sequence.IsActive() && _sequence.IsPlaying())
         {
             _sequence.Kill();
@@ -43,8 +47,8 @@ public class CardBehaviour : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        Debug.Log("Exit Card");
-        transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, 0f);
+        if (isSelected) return;
+        cardSr.sortingOrder = _order;
         if (_sequence != null && _sequence.IsActive() && _sequence.IsPlaying())
         {
             _sequence.Kill();
@@ -56,12 +60,23 @@ public class CardBehaviour : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        throw new System.NotImplementedException();
+        if (isSelected)
+        {
+            isSelected = false;
+            CardManager.Instance.CardDeselected();
+            OnPointerExit(null);
+        }
+        else
+        {
+            isSelected = true;
+            CardManager.Instance.CardSelected(this);
+            OnPointerEnter(null);
+        }
     }
 
     public void ChangePosition(Vector3 normalPos, int newOrder)
     {
-        order = newOrder;
+        _order = newOrder;
         cardSr.sortingOrder = newOrder;
         if (_sequence != null && _sequence.IsActive() && _sequence.IsPlaying())
         {
