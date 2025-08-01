@@ -9,19 +9,26 @@ public class Dish
     public Vector3 CurrPos;
 }
 
-public class DishBehaviour : MonoBehaviour, IPointerClickHandler
+public class DishBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private SpriteRenderer dishSr;
     [SerializeField] private SpriteRenderer sushiSr;
     public Dish DishData { get; private set; }
 
     private Sequence _rotateSq;
+    private Vector3 _hoveredPos;
+
+    private readonly float _hoveredPosY = 0.5f, _swapDurationFactor = 1.2f;
+
+    private bool isSelected;
 
     public void InitDish(SushiTypes sushi, ColorTypes color, Vector3 initPos)
     {
         DishData = new Dish();
         DishData.CurrPos = initPos;
         transform.localPosition = DishData.CurrPos;
+        _hoveredPos = new Vector3(initPos.x, initPos.y + _hoveredPosY, initPos.z);
+        isSelected = false;
         
         ChangeSushiType(sushi);
         ChangeDishType(color);
@@ -34,6 +41,7 @@ public class DishBehaviour : MonoBehaviour, IPointerClickHandler
             _rotateSq.Complete();
             _rotateSq = null;
         }
+        _hoveredPos = new Vector3(endPos.x, endPos.y + _hoveredPosY, endPos.z);
         _rotateSq = DOTween.Sequence();
 
         float rotateSpeed = GameManager.Instance.RotateDuration * MainSceneManager.Instance.RotateSpeedFactor;
@@ -83,6 +91,68 @@ public class DishBehaviour : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        throw new System.NotImplementedException();
+        if (MainSceneManager.Instance.CookStarted)
+        {
+            
+        }
+        else
+        {
+            if (isSelected)
+            {
+                isSelected = false;
+                TableManager.Instance.DishDeSelected();
+                OnPointerExit(null);
+            }
+            else
+            {
+                isSelected = true;
+                TableManager.Instance.DishSelected(this);
+                OnPointerEnter(null);
+            }
+        }
+    }
+
+    public void SwapPosition(Vector3 endPos)
+    {
+        if (_rotateSq != null && _rotateSq.IsActive() && _rotateSq.IsPlaying())
+        {
+            _rotateSq.Kill();
+        }
+        _rotateSq = DOTween.Sequence();
+        Vector3[] path = new Vector3[3] { _hoveredPos, Vector3.zero, Vector3.zero };
+        DishData.CurrPos = endPos;
+        _hoveredPos = new Vector3(DishData.CurrPos.x, DishData.CurrPos.y + _hoveredPosY, DishData.CurrPos.z);
+        path[1] = _hoveredPos; path[2] = endPos;
+        _rotateSq.Append(transform.DOLocalPath(path, CardManager.Instance.CardMoveDuration * _swapDurationFactor));
+        _rotateSq.Play().OnComplete(EndSwap);
+    }
+
+    private void EndSwap()
+    {
+        isSelected = false;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (MainSceneManager.Instance.isRotating || isSelected) return;
+        if (_rotateSq != null && _rotateSq.IsActive() && _rotateSq.IsPlaying())
+        {
+            _rotateSq.Kill();
+        }
+        _rotateSq = DOTween.Sequence();
+        _rotateSq.Append(transform.DOLocalMove(_hoveredPos, CardManager.Instance.CardMoveDuration));
+        _rotateSq.Play();
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (MainSceneManager.Instance.isRotating || isSelected) return;
+        if (_rotateSq != null && _rotateSq.IsActive() && _rotateSq.IsPlaying())
+        {
+            _rotateSq.Kill();
+        }
+        _rotateSq = DOTween.Sequence();
+        _rotateSq.Append(transform.DOLocalMove(DishData.CurrPos, CardManager.Instance.CardMoveDuration));
+        _rotateSq.Play();
     }
 }

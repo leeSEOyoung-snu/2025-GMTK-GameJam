@@ -32,6 +32,8 @@ public class TableManager : MonoBehaviour, IInit
     private List<int> _checkDishIdx;
 
     public List<Sprite> dishSprites, sushiSprites;
+    
+    private DishBehaviour _selectedDish;
 
     private void Awake()
     {
@@ -47,6 +49,8 @@ public class TableManager : MonoBehaviour, IInit
         currCompletedRotCnt = 0;
         _checkDishIdx = new List<int>();
         DishBehaviourDict = new Dictionary<int, DishBehaviour>();
+        
+        _selectedDish = null;
         
         GenerateRail();
         GenerateDish();
@@ -145,6 +149,43 @@ public class TableManager : MonoBehaviour, IInit
 
     
     #endregion
+
+    public void DishSelected(DishBehaviour dishBehaviour)
+    {
+        if (MainSceneManager.Instance.CookStarted)
+        {
+            
+        }
+        else
+        {
+            if (_selectedDish != null)
+            {
+                Vector3 firstCurrPos = _selectedDish.DishData.CurrPos, secondCurrPos = dishBehaviour.DishData.CurrPos;
+                _selectedDish.SwapPosition(secondCurrPos);
+                dishBehaviour.SwapPosition(firstCurrPos);
+                
+                int firstDishIdx = 0, secondDishIdx = 0;
+                foreach (var pair in DishBehaviourDict)
+                {
+                    if (pair.Value == _selectedDish)
+                        firstDishIdx = pair.Key;
+                    else if (pair.Value == dishBehaviour)
+                        secondDishIdx = pair.Key;
+                }
+
+                DishBehaviourDict[firstDishIdx] = dishBehaviour;
+                DishBehaviourDict[secondDishIdx] = _selectedDish;
+                
+                _selectedDish = null;
+            }
+            else _selectedDish = dishBehaviour;
+        }
+    }
+
+    public void DishDeSelected()
+    {
+        _selectedDish = null;
+    }
     
     public void RotateDishOnce()
     {

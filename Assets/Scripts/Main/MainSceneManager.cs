@@ -23,7 +23,7 @@ public class MainSceneManager : MonoBehaviour
     public float RotateSpeedFactor { get; private set; }
     private int _maxRotateCnt, _currRotateCnt;
     private int _targetScore, _currScore;
-    private bool isRotating;
+    public bool isRotating { get; private set; }
     
     public bool CookStarted { get; private set; }
     
