@@ -2,13 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using TMPro;
 
 public class StageManager : MonoBehaviour
 {
     #region Fields
     private int currentSelectedStage = 0;
     private string selectedStageFileName;
-    
+    private List<RectTransform> StagePanelsRectTransforms = new List<RectTransform>();
+
     Sequence stagePanelSequence;
     [SerializeField] private GameObject TitlePanel;
     [SerializeField] private GameObject OptionPanel;
@@ -19,11 +21,11 @@ public class StageManager : MonoBehaviour
     [SerializeField] private float SmallStagePanelSizeY;
     [SerializeField] private float StagePanelGap;
     [SerializeField] private float StagePanelMoveDuration;
-
+    
     [Header("Stage Panels Objects")]
     [SerializeField] private GameObject StageSet;
     [SerializeField] private List<GameObject> StagePanels = new List<GameObject>();
-    private List<RectTransform> StagePanelsRectTransforms = new List<RectTransform>();
+    
     
     #endregion
 
