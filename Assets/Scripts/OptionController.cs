@@ -45,7 +45,7 @@ public class OptionController : MonoBehaviour
             Debug.Log("Escape key pressed");
             if (SceneName == "Title")
             {
-                TitleButtonClicked();
+                BackButtonClicked();
             }
             else {
                 // During Gaming Close the options panel
@@ -72,18 +72,20 @@ public class OptionController : MonoBehaviour
                 break;
         }
     }
-    
-    
-    public void TitleButtonClicked()
+
+    public void TitleButonClicked()
     {
         if (SceneName != "Title")
         {
             SceneManager.LoadScene("Title");
             return;
         }
+    }
+
+    public void BackButtonClicked()
+    {
         Debug.Log("Back button clicked");
         // Example: Close the options panel
         gameObject.SetActive(false);
-        
     }
 }

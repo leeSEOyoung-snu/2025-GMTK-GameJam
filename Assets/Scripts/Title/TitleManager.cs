@@ -96,7 +96,6 @@ public class TitleManager : MonoBehaviour
     {
         if (currentSelcectedButton >= 0 && currentSelcectedButton <= Buttons.Count - 1)
         {
-            //TODO : Change TMPpro To Image
             Buttons[currentSelcectedButton].GetComponent<RectTransform>().localScale = new Vector3(1.2f, 1.2f, 1f);
             if(previousSelectedButton != -1) Buttons[previousSelectedButton].GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1f);
         }

@@ -11,6 +11,7 @@ public class StageManager : MonoBehaviour
     
     Sequence stagePanelSequence;
     [SerializeField] private GameObject TitlePanel;
+    [SerializeField] private GameObject OptionPanel;
     [Header("Stage Panels Size")]
     [SerializeField] private float BigStagePanelSizeX;
     [SerializeField] private float BigStagePanelSizeY;
@@ -57,7 +58,7 @@ public class StageManager : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                BackButtonClicked();
+                TitleButtonClicked();
             }
     }
 
@@ -126,11 +127,17 @@ public class StageManager : MonoBehaviour
     }
     #endregion
     
-    public void BackButtonClicked()
+    public void TitleButtonClicked()
     {
         if (stagePanelSequence == null || stagePanelSequence.IsPlaying()) return;
         StageSet.SetActive(false);
         TitlePanel.SetActive(true);
     }
-    
+
+    public void OptionButtonClicked()
+    {
+        if(stagePanelSequence == null || stagePanelSequence.IsPlaying()) return;
+        OptionPanel.SetActive(true);
+    }
+
 }
