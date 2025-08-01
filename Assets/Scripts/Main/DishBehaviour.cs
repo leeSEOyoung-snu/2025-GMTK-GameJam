@@ -60,6 +60,7 @@ public class DishBehaviour : MonoBehaviour
     public void Eat()
     {
         // TODO: Eat 구현
+        Debug.Log("앙");
     }
 
     public void ChangeDishType(DishTypes color)

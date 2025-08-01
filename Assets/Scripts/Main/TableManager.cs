@@ -151,6 +151,7 @@ public class TableManager : MonoBehaviour, IInit
     
     public void RotateDishOnce()
     {
+        Debug.LogWarning("RotateDishOnce");
         currCompletedRotCnt = 0;
         _checkDishIdx = new List<int>();
         
@@ -191,10 +192,10 @@ public class TableManager : MonoBehaviour, IInit
                 dishEndPos.x = dishStartPos.x + MainSceneManager.Instance.PosXFactor; dishEndPos.y = dishStartPos.y;
             }
 
-            if (dishStartPos.y > 0f
-                && Mathf.Abs(dishEndPos.x - DiningManager.Instance.DiningMinPosX) <= 0.0001f
-                && Mathf.Abs(dishEndPos.x - (DiningManager.Instance.DiningMinPosX +
-                                             MainSceneManager.Instance.PosXFactor * DiningManager.Instance.CatCnt)) <= 0.0001f)
+            if (dishEndPos.y > 0.0001f
+                && dishEndPos.x - DiningManager.Instance.DiningMinPosX >= -0.0001f
+                && dishEndPos.x - (DiningManager.Instance.DiningMinPosX +
+                                             MainSceneManager.Instance.PosXFactor * DiningManager.Instance.CatCnt) <= 0.0001f)
                 _checkDishIdx.Insert(0, i);
             
             dish.Rotate(dishEndPos, moveXFirst);
@@ -204,10 +205,18 @@ public class TableManager : MonoBehaviour, IInit
     public void CheckDishCondition()
     {
         if (currCompletedRotCnt < DishCnt - 1) { currCompletedRotCnt++; return; }
+
+        string list = "";
+        foreach(int idx in _checkDishIdx) list += idx + ", ";
+        Debug.Log($"completed: {currCompletedRotCnt}, dishCnt: {DishCnt}, list: [{list}]");
         
         currCompletedRotCnt = 0;
 
-        if (_checkDishIdx.Count == 0) RotateDishOnce();
+        if (_checkDishIdx.Count == 0)
+        {
+            RotateDishOnce();
+            return;
+        }
 
         foreach (int idx in _checkDishIdx)
         {
