@@ -453,9 +453,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79465de345a41be4fa77886da43c5407, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iconSprites: []
-  sushiSprites: []
-  dishSprites: []
+  iconSprites:
+  - {fileID: 21300000, guid: 25dd8f5c7f2ea7549908c615069899a7, type: 3}
+  - {fileID: 21300000, guid: 159d2eb2d8951a346b6fe4840b401be9, type: 3}
+  - {fileID: 21300000, guid: 3280d50fd52f24d479eb6e5688b2f8ed, type: 3}
+  - {fileID: 21300000, guid: 97167d0a189dc8c48aac2decf4965abd, type: 3}
+  - {fileID: 21300000, guid: b424f6836eee7ca49bf704c2b8e12e10, type: 3}
+  - {fileID: 21300000, guid: 06edc2365e3baed49b8acc5b2e47c798, type: 3}
+  - {fileID: 21300000, guid: 113df0cddab94784d89995c7bcf0ed98, type: 3}
+  - {fileID: 21300000, guid: 8a46046e75f9e9a4cbb873d0bf2123c5, type: 3}
 --- !u!114 &270993563
 MonoBehaviour:
   m_ObjectHideFlags: 0
