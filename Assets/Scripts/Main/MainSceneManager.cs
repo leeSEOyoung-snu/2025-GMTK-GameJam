@@ -21,6 +21,7 @@ public class MainSceneManager : MonoBehaviour
     public float RotateSpeedFactor { get; private set; }
     private int _maxRotateCnt, _currRotateCnt;
     private int _targetScore, _currScore;
+    private bool isRotating;
     
     // TODO: 가격 수정
     public readonly Dictionary<SushiTypes, int> Price = new Dictionary<SushiTypes, int>()
@@ -59,12 +60,14 @@ public class MainSceneManager : MonoBehaviour
         _currScore = 0;
         UpdateScore();
         
+        isRotating = false;
+        
         foreach(IInit script in _initScripts) script.Init();
     }
 
     public void UpdateRotateCnt()
     {
-        rotateCntText.text = $"Rotate Cnt [{_currRotateCnt} / {_maxRotateCnt}]";
+        rotateCntText.text = _currRotateCnt.ToString();
     }
 
     public void UpdateScore()
@@ -72,5 +75,12 @@ public class MainSceneManager : MonoBehaviour
         scoreText.text = $"Score [{_currScore}/{_targetScore}]";
     }
 
-    
+    public void StartRotate()
+    {
+        if (isRotating || _currRotateCnt == 0) return;
+        isRotating = true;
+        _currRotateCnt--;
+        UpdateRotateCnt();
+        TableManager.Instance.RotateDishOnce();
+    }
 }

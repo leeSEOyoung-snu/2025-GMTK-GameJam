@@ -151,7 +151,6 @@ public class TableManager : MonoBehaviour, IInit
     
     public void RotateDishOnce()
     {
-        Debug.LogWarning("RotateDishOnce");
         currCompletedRotCnt = 0;
         _checkDishIdx = new List<int>();
         
