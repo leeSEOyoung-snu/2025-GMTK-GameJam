@@ -18,7 +18,9 @@ public class StageManager : MonoBehaviour
     [SerializeField] private float SmallStagePanelSizeY;
     [SerializeField] private float StagePanelGap;
     [SerializeField] private float StagePanelMoveDuration;
+
     [Header("Stage Panels Objects")]
+    [SerializeField] private GameObject StageSet;
     [SerializeField] private List<GameObject> StagePanels = new List<GameObject>();
     private List<RectTransform> StagePanelsRectTransforms = new List<RectTransform>();
     
@@ -122,7 +124,7 @@ public class StageManager : MonoBehaviour
     
     public void BackButtonClicked()
     {
-        gameObject.SetActive(false);
+        StageSet.SetActive(false);
         TitlePanel.SetActive(true);
     }
     

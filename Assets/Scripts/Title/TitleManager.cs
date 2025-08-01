@@ -13,6 +13,7 @@ public class TitleManager : MonoBehaviour
     private int currentSelcectedButton = -1;
     private int previousSelectedButton = -1;
     private List<GameObject> Buttons = new List<GameObject>();
+    
     [Header("Buttons")]
     [SerializeField] private GameObject StartButton;
     [SerializeField] private GameObject OptionButton;
@@ -21,6 +22,7 @@ public class TitleManager : MonoBehaviour
     [Header("Panels")] 
     [SerializeField] private GameObject TitlePanel;
     [SerializeField] private GameObject OptionPanel;
+    [SerializeField] private GameObject StageSet;
     #endregion
     
     #region LifeCycle
@@ -32,6 +34,7 @@ public class TitleManager : MonoBehaviour
         
         TitlePanel.SetActive(true);
         OptionPanel.SetActive(false);
+        StageSet.SetActive(false);
         
         // Find all buttons in the scene and add them to the list
         Buttons.Add(StartButton);
@@ -93,8 +96,8 @@ public class TitleManager : MonoBehaviour
         if (currentSelcectedButton >= 0 && currentSelcectedButton <= Buttons.Count - 1)
         {
             //TODO : Change TMPpro To Image
-            Buttons[currentSelcectedButton].GetComponent<Image>().color = new Color(1,1,1,0.5f);
-            if(previousSelectedButton != -1) Buttons[previousSelectedButton].GetComponent<Image>().color = Color.white;
+            Buttons[currentSelcectedButton].GetComponent<RectTransform>().localScale = new Vector3(1.2f, 1.2f, 1f);
+            if(previousSelectedButton != -1) Buttons[previousSelectedButton].GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1f);
         }
     }
 
@@ -102,6 +105,7 @@ public class TitleManager : MonoBehaviour
     public void OnClickStartButton()
     {
         // Debug.Log("Start button clicked");
+        StageSet.SetActive(true);
         TitlePanel.SetActive(false);
     }
 
