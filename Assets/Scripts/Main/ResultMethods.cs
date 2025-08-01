@@ -16,6 +16,7 @@ public class ResultMethods : MonoBehaviour
     [SerializeField] private List<Sprite> iconSprites;
     [SerializeField] private List<Sprite> sushiSprites;
     [SerializeField] private List<Sprite> dishSprites;
+    
 
     private void Awake()
     {

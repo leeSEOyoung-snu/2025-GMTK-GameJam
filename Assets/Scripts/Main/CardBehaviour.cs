@@ -78,6 +78,8 @@ public class CardBehaviour : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     {
         _order = newOrder;
         cardSr.sortingOrder = newOrder;
+        _normalPos = normalPos;
+        _hoveredPos = new Vector3(normalPos.x, normalPos.y + CardManager.Instance.CardHoveredPosY, normalPos.z);
         if (_sequence != null && _sequence.IsActive() && _sequence.IsPlaying())
         {
             _sequence.Kill();
@@ -85,7 +87,5 @@ public class CardBehaviour : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         _sequence = DOTween.Sequence();
         _sequence.Append(transform.DOLocalMove(_normalPos, CardManager.Instance.CardMoveDuration));
         _sequence.Play();
-        transform.position = normalPos;
-        _hoveredPos = new Vector3(normalPos.x, normalPos.y + CardManager.Instance.CardHoveredPosY, normalPos.z);
     }
 }

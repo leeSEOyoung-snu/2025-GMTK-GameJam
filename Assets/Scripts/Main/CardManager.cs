@@ -35,19 +35,35 @@ public class CardManager : MonoBehaviour, IInit
             Destroy(card.gameObject);
         
         CurrCards = new List<CardBehaviour>();
-        
-        float cardGap = (_cardMaxPosX - _cardMinPosX) / (cardData.Length - 1);
 
         for (int i = 0; i < cardData.Length; i++)
         {
             var cardBehaviour = Instantiate(cardPref, cardParent.transform).GetComponent<CardBehaviour>();
             if (Enum.TryParse(cardData[i], ignoreCase: true, out SushiTypes sushi))
             {
-                cardBehaviour.InitCard(sushi, new Vector3(_cardMinPosX + cardGap * i, _cardNormalPosY, 0f), _defaultOrder + i);
+                cardBehaviour.InitCard(sushi, Vector3.zero, _defaultOrder + i);
                 CurrCards.Add(cardBehaviour);
             }
             else Debug.LogError("Card Sushi Error: " + cardData[i]);
         }
+        
+        ArrangeCard();
+    }
+
+    private void ArrangeCard()
+    {
+        float cardGap = (_cardMaxPosX - _cardMinPosX) / (CurrCards.Count - 1);
+        for (int i = 0; i < CurrCards.Count; i++)
+        {
+            CurrCards[i].ChangePosition(new Vector3(_cardMinPosX + cardGap * i, _cardNormalPosY, 0f), _defaultOrder + i);
+        }
+    }
+
+    private void DiscardCard(CardBehaviour card)
+    {
+        Destroy(card.gameObject);
+        CurrCards.Remove(card);
+        ArrangeCard();
     }
 
     public void CardSelected(CardBehaviour cardBehaviour)
@@ -62,6 +78,16 @@ public class CardManager : MonoBehaviour, IInit
 
     public void CardDeselected()
     {
+        _selectedCard = null;
+    }
+
+    public void ConditionSelected(CatConditionBehaviour conditionBehaviour)
+    {
+        if (_selectedCard == null) return;
+        
+        Debug.Log("Condition Selected");
+        DiscardCard(_selectedCard);
+        conditionBehaviour.SetCondition(_selectedCard.Sushi);
         _selectedCard = null;
     }
 }

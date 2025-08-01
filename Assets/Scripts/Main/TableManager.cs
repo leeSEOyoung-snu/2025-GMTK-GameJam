@@ -12,7 +12,6 @@ public class TableManager : MonoBehaviour, IInit
     [SerializeField] private GameObject railPref, railParent;
     
     [Header("Serving")]
-    [SerializeField] private List<DishBehaviour> dishes;
     [SerializeField] private GameObject dishPref, dishParent;
 
     [Header("Menu")]
@@ -111,8 +110,6 @@ public class TableManager : MonoBehaviour, IInit
         foreach (Transform dish in dishParent.transform)
             Destroy(dish.gameObject);
         
-        dishes = new List<DishBehaviour>();
-        
         float currPosX = -1f * (DishCnt / 2) * MainSceneManager.Instance.PosXFactor;
         currPosX += RailCnt % 2 == 1 ? 0f : 0.5f * MainSceneManager.Instance.PosXFactor;
         ServingMinPosX = currPosX;
@@ -120,10 +117,10 @@ public class TableManager : MonoBehaviour, IInit
         for (int i = 0; i < DishCnt; i++)
         {
             GameObject tmpObj = Instantiate(dishPref, dishParent.transform);
-            dishes.Add(tmpObj.GetComponent<DishBehaviour>());
+            DishBehaviourDict.Add(i, tmpObj.GetComponent<DishBehaviour>());
             if (Enum.TryParse(dishColor[i], ignoreCase: true, out ColorTypes color))
             {
-                dishes[i].InitDish(SushiTypes.Empty, color, new Vector3(currPosX, _railMaxPosY * -1f, 0));
+                DishBehaviourDict[i].InitDish(SushiTypes.Empty, color, new Vector3(currPosX, _railMaxPosY * -1f, 0));
                 currPosX += MainSceneManager.Instance.PosXFactor;
             }
             else Debug.LogError("Color Error: " + dishColor[i]);
@@ -154,9 +151,9 @@ public class TableManager : MonoBehaviour, IInit
         currCompletedRotCnt = 0;
         _checkDishIdx = new List<int>();
         
-        for (int i = 0; i < dishes.Count; i++)
+        for (int i = 0; i < DishBehaviourDict.Count; i++)
         {
-            DishBehaviour dish = dishes[i];
+            DishBehaviour dish = DishBehaviourDict[i];
             Vector3 dishEndPos = Vector3.zero, dishStartPos = dish.DishData.CurrPos;
             bool moveXFirst = false;
             
@@ -219,10 +216,10 @@ public class TableManager : MonoBehaviour, IInit
 
         foreach (int idx in _checkDishIdx)
         {
-            bool eatSushi = DiningManager.Instance.ActivateDishEffect(dishes[idx].DishData);
+            bool eatSushi = DiningManager.Instance.ActivateDishEffect(DishBehaviourDict[idx].DishData);
             if (eatSushi)
             {
-                dishes[idx].Eat();
+                DishBehaviourDict[idx].Eat();
             }
         }
     }

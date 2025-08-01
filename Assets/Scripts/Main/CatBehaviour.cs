@@ -13,6 +13,7 @@ public class CatBehaviour : MonoBehaviour
     private ColorTypes color;
 
     private ConditionTypes conditionType;
+    public string Condition { private get; set; }
 
     public void InitCat(Vector3 initPos, Dictionary<string, object> catData)
     {
@@ -32,13 +33,14 @@ public class CatBehaviour : MonoBehaviour
         }
         else Debug.LogError("Cat Color Error: " + (string)catData["Color"]);
 
+        Condition = (string)catData["Condition"];
 
-        if (Enum.TryParse((string)catData["Condition"], ignoreCase: true, out conditionType))
+        if (Enum.TryParse(Condition, ignoreCase: true, out conditionType))
         {
             var conditionData =
                 ConditionMethods.Instance.GetConditionSprites(conditionType, catData["ConVal1"]);
             catConditionBehaviour.InitCondition(conditionData.Item1, conditionData.Item2, conditionData.Item3);
         }
-        else Debug.LogError("Condition Error: " + catData["Condition"]);
+        else Debug.LogError("Condition Error: " + Condition);
     }
 }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class CatConditionBehaviour : MonoBehaviour, IPointerClickHandler
+public class CatConditionBehaviour : IPointerHandler
 {
     [SerializeField] private CatBehaviour catBehaviour;
     [SerializeField] private SpriteRenderer iconSr;
@@ -23,17 +23,33 @@ public class CatConditionBehaviour : MonoBehaviour, IPointerClickHandler
         iconSr.sprite = sprites[0];
         
         type = Instantiate(typePref, transform);
+        type.transform.SetAsFirstSibling();
         type.transform.localPosition = new Vector3(_typePosX, 0, 0);
         if (isSushiType) type.transform.localScale = new Vector3(_sushiScale, _sushiScale, 0);
         else type.transform.localScale = new Vector3(_dishScale, _dishScale, 0);
         type.GetComponent<SpriteRenderer>().sprite = sprites[1];
         
         this.isStandBy = isStandBy;
-        conditionCollider.enabled = isSushiType;
+        conditionCollider.enabled = isStandBy;
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    public override void HandlePointerClick()
     {
-        throw new System.NotImplementedException();
+        if (MainSceneManager.Instance.CookStarted) return;
+        Debug.Log("Card Condition Clicked");
+        CardManager.Instance.ConditionSelected(this);
+    }
+    
+    public override void HandlePointerEnter() {}
+    
+    public override void HandlePointerExit() {}
+
+    public void SetCondition(SushiTypes condition)
+    {
+        Debug.Log("Condition Set");
+        isStandBy = false;
+        conditionCollider.enabled = false;
+        type.GetComponent<SpriteRenderer>().sprite = TableManager.Instance.sushiSprites[(int)condition];
+        catBehaviour.Condition = condition.ToString();
     }
 }
