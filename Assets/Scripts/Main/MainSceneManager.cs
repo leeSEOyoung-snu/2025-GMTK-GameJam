@@ -10,7 +10,7 @@ public class MainSceneManager : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private TextMeshProUGUI rotateCntText;
-    [SerializeField] private TextMeshProUGUI targetScoreText;
+    [SerializeField] private TextMeshProUGUI scoreText;
     
     public static MainSceneManager Instance { get; private set; }
     
@@ -41,13 +41,24 @@ public class MainSceneManager : MonoBehaviour
         CurrStageData = GameManager.Instance.GetStageData();
         
         _maxRotateCnt = _currRotateCnt = (int)CurrStageData["RotateCnt"];
-        rotateCntText.text = $"Rotate Cnt [{_currRotateCnt} / {_maxRotateCnt}]";
+        UpdateRotateCnt();
 
         RotateSpeedFactor = 1f;
         
         _targetScore = (int)CurrStageData["TargetScore"];
         _currScore = 0;
+        UpdateScore();
         
         foreach(IInit script in _initScripts) script.Init();
+    }
+
+    public void UpdateRotateCnt()
+    {
+        rotateCntText.text = $"Rotate Cnt [{_currRotateCnt} / {_maxRotateCnt}]";
+    }
+
+    public void UpdateScore()
+    {
+        scoreText.text = $"Score [{_currScore}/{_targetScore}]";
     }
 }
