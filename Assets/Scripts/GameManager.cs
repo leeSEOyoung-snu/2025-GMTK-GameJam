@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -13,6 +15,12 @@ public class GameManager : MonoBehaviour
     
     public int CurrStageIdx { get; private set; }
     public readonly float RotateDuration = 1f;
+
+
+    //Save Part
+    [SerializeField] public List<int> StageCount;
+    private SaveData _saveData;
+    string path;
     
     private void Awake()
     {
@@ -21,6 +29,7 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject); // Keep this instance across scenes
+            path = Path.Combine(Application.persistentDataPath, "saveData.json");
             Init();
         }
         else
@@ -33,6 +42,7 @@ public class GameManager : MonoBehaviour
     {
         _stageData = CSVReader.Read("Data/Test");
         _catData = CSVReader.Read("Data/TestCat");
+        LoadSaveData();
         CurrStageIdx = 0;
     }
 
@@ -66,12 +76,58 @@ public class GameManager : MonoBehaviour
         Debug.Log("Curr Stage Idx: " + CurrStageIdx);
     }
     
-    #region filname
-    
-    public void SetStageFileName(string fileName)
+    #region Save
+
+    private void LoadSaveData()
     {
-        StageFileName = fileName;
-        Debug.Log("GM : Stage File Name Set: " + StageFileName);
+        if (File.Exists(path)) 
+        {
+            string json = File.ReadAllText(path);
+            _saveData = JsonUtility.FromJson<SaveData>(json);
+            Debug.Log("Save data loaded from " + path);
+        }
+        else
+        {
+            initSaveData();
+            SaveSaveData();
+            Debug.Log("Save data initialized and saved to " + path);
+        }
     }
+
+    private void SaveSaveData()
+    {
+        string json = JsonUtility.ToJson(_saveData, true);
+        if (json == null)
+        {
+            Debug.Log("FUUUUUCKKK!!!!");
+        }
+        File.WriteAllText(path, json);
+        Debug.Log("Saved : "+ path);
+    }
+
+    private void initSaveData()
+    {
+        _saveData = new SaveData();
+        _saveData.saveData = new List<List<int>>();
+        _saveData.BigStageCount = StageCount.Count;
+        _saveData.SmallStageCount = new List<int>(StageCount);  //Shallow copy of StageCount
+        for (int i = 0; i < _saveData.BigStageCount; i++)
+        {
+            _saveData.saveData.Add(new List<int>());
+            if (_saveData.saveData[i] == null) Debug.LogError("FUck!!!");
+            
+            for (int j = 0; j < _saveData.SmallStageCount[i]; j++)
+            {
+                _saveData.saveData[i].Add(0);
+            }
+        }
+        
+        //UnLock Hard Coding fuck
+        for (int i = 0; i < _saveData.BigStageCount; i++)
+        {
+            _saveData.saveData[i][0] = 1;    //1st stage is always unlocked
+        }
+    }
+    
     #endregion
 }
