@@ -18,7 +18,7 @@ public class DishBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     private Sequence _rotateSq;
     private Vector3 _hoveredPos;
 
-    private readonly float _hoveredPosY = 0.5f, _swapDurationFactor = 1.2f;
+    private readonly float _hoveredPosY = 0.5f, _swapDurationFactor = 1.4f;
 
     private bool isSelected;
 
@@ -93,7 +93,8 @@ public class DishBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     {
         if (MainSceneManager.Instance.CookStarted)
         {
-            
+            if (DishData.Sushi != SushiTypes.Empty) return;
+            CardManager.Instance.PutSushiOnDish(this);
         }
         else
         {
@@ -110,6 +111,14 @@ public class DishBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnterH
                 OnPointerEnter(null);
             }
         }
+    }
+
+    public void PutSushiOnDish(SushiTypes sushi)
+    {
+        DishData.Sushi = sushi;
+        sushiSr.sprite = TableManager.Instance.sushiSprites[(int)sushi];
+        sushiSr.color = Color.white;
+        OnPointerExit(null);
     }
 
     public void SwapPosition(Vector3 endPos)
@@ -132,9 +141,15 @@ public class DishBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnterH
         isSelected = false;
     }
 
+    public void ReadyToCook()
+    { 
+        isSelected = false;
+        OnPointerExit(null);
+    }
+
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (MainSceneManager.Instance.isRotating || isSelected) return;
+        if (MainSceneManager.Instance.isRotating || isSelected || DishData.Sushi != SushiTypes.Empty) return;
         if (_rotateSq != null && _rotateSq.IsActive() && _rotateSq.IsPlaying())
         {
             _rotateSq.Kill();

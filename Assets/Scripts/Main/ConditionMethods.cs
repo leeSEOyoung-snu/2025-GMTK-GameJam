@@ -43,7 +43,7 @@ public class ConditionMethods : MonoBehaviour
                 case ConditionTypes.SushiPassed:    sprites = SushiPassed(sushi);    break;
             }
 
-            isSushiType = sushi == SushiTypes.StandBy;
+            isStandBy = sushi == SushiTypes.StandBy;
         }
         else if (Enum.TryParse((string)conval, ignoreCase: true, out ColorTypes color))
         {
@@ -51,7 +51,9 @@ public class ConditionMethods : MonoBehaviour
             {
                 case ConditionTypes.DishPassed:     sprites = DishPassed(color);     break;
             }
-            isSushiType = color == ColorTypes.StandBy;
+
+            isSushiType = false;
+            isStandBy = color == ColorTypes.StandBy;
         }
         else Debug.LogError("Condition Val Error: " + conval);
 

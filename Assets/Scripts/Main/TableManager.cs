@@ -186,6 +186,13 @@ public class TableManager : MonoBehaviour, IInit
     {
         _selectedDish = null;
     }
+
+    public void ReadyToCook()
+    {
+        if (_selectedDish == null) return;
+        _selectedDish.ReadyToCook();
+        _selectedDish = null;
+    }
     
     public void RotateDishOnce()
     {

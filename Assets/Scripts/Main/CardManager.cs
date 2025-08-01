@@ -53,6 +53,11 @@ public class CardManager : MonoBehaviour, IInit
     private void ArrangeCard()
     {
         float cardGap = (_cardMaxPosX - _cardMinPosX) / (CurrCards.Count - 1);
+        if (CurrCards.Count == 1)
+        {
+            CurrCards[0].ChangePosition(new Vector3(0f, _cardNormalPosY, 0f), _defaultOrder);
+            return;
+        }
         for (int i = 0; i < CurrCards.Count; i++)
         {
             CurrCards[i].ChangePosition(new Vector3(_cardMinPosX + cardGap * i, _cardNormalPosY, 0f), _defaultOrder + i);
@@ -61,8 +66,8 @@ public class CardManager : MonoBehaviour, IInit
 
     private void DiscardCard(CardBehaviour card)
     {
-        Destroy(card.gameObject);
         CurrCards.Remove(card);
+        Destroy(card.gameObject);
         ArrangeCard();
     }
 
@@ -84,10 +89,16 @@ public class CardManager : MonoBehaviour, IInit
     public void ConditionSelected(CatConditionBehaviour conditionBehaviour)
     {
         if (_selectedCard == null) return;
-        
-        Debug.Log("Condition Selected");
-        DiscardCard(_selectedCard);
         conditionBehaviour.SetCondition(_selectedCard.Sushi);
+        DiscardCard(_selectedCard);
+        _selectedCard = null;
+    }
+
+    public void PutSushiOnDish(DishBehaviour dish)
+    {
+        if (_selectedCard == null) return;
+        dish.PutSushiOnDish(_selectedCard.Sushi);
+        DiscardCard(_selectedCard);
         _selectedCard = null;
     }
 }

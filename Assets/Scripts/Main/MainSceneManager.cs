@@ -86,6 +86,7 @@ public class MainSceneManager : MonoBehaviour
     {
         CookStarted = true;
         startCookButton.SetActive(false);
+        TableManager.Instance.ReadyToCook();
     }
 
     public void Rotate()

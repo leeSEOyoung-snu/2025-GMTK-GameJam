@@ -9,7 +9,7 @@ public class CatConditionBehaviour : IPointerHandler
     [SerializeField] private CatBehaviour catBehaviour;
     [SerializeField] private SpriteRenderer iconSr;
     [SerializeField] private GameObject typePref;
-    [SerializeField] private Collider2D conditionCollider;
+    [SerializeField] private GameObject pointerDetector;
     
     private GameObject type;
 
@@ -20,6 +20,7 @@ public class CatConditionBehaviour : IPointerHandler
 
     public void InitCondition(Sprite[] sprites, bool isStandBy, bool isSushiType)
     {
+        Debug.Log($"stand: {isStandBy}, sushi: {isSushiType}");
         iconSr.sprite = sprites[0];
         
         type = Instantiate(typePref, transform);
@@ -30,7 +31,7 @@ public class CatConditionBehaviour : IPointerHandler
         type.GetComponent<SpriteRenderer>().sprite = sprites[1];
         
         this.isStandBy = isStandBy;
-        conditionCollider.enabled = isStandBy;
+        pointerDetector.SetActive(isStandBy);
     }
 
     public override void HandlePointerClick()
@@ -46,9 +47,8 @@ public class CatConditionBehaviour : IPointerHandler
 
     public void SetCondition(SushiTypes condition)
     {
-        Debug.Log("Condition Set");
         isStandBy = false;
-        conditionCollider.enabled = false;
+        pointerDetector.SetActive(false);
         type.GetComponent<SpriteRenderer>().sprite = TableManager.Instance.sushiSprites[(int)condition];
         catBehaviour.Condition = condition.ToString();
     }
