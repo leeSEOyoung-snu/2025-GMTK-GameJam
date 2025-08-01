@@ -16,6 +16,9 @@ public class DiningManager : MonoBehaviour, IInit
     
     public Dictionary<int, CatBehaviour> CatBehaviourDict { get; private set; }
     
+    public readonly float BubbleTypePosX = 0.5f;
+    public readonly float BubbleSushiScale = 0.6f, BubbleDishScale = 0.4f, BubbleHighlightFactor = 1.2f;
+    
     private void Awake()
     {
         if (Instance == null) Instance = this;
@@ -43,11 +46,11 @@ public class DiningManager : MonoBehaviour, IInit
         DiningMinPosX = currPosX;
         
         CatBehaviourDict = new Dictionary<int, CatBehaviour>();
-
+        
         for (int i = 0; i < CatCnt; i++)
         {
-            CatBehaviourDict[i] = Instantiate(catPref, catParent.transform).GetComponent<CatBehaviour>();
-            CatBehaviourDict[i].InitCat(new Vector3(currPosX, _catPosY, 0), (int)currCatData[i]["Sprite"]);
+            CatBehaviourDict.Add(i, Instantiate(catPref, catParent.transform).GetComponent<CatBehaviour>());
+            CatBehaviourDict[i].InitCat(new Vector3(currPosX, _catPosY, 0), currCatData[i]);
             currPosX += MainSceneManager.Instance.PosXFactor;
         }
     }

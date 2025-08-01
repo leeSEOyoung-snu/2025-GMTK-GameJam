@@ -12,7 +12,6 @@ public class TableManager : MonoBehaviour, IInit
     [SerializeField] private GameObject railPref, railParent;
     
     [Header("Serving")]
-    [SerializeField] private List<DishBehaviour> dishes;
     [SerializeField] private GameObject dishPref, dishParent;
 
     [Header("Menu")]
@@ -33,6 +32,8 @@ public class TableManager : MonoBehaviour, IInit
     private List<int> _checkDishIdx;
 
     public List<Sprite> dishSprites, sushiSprites;
+    
+    private DishBehaviour _selectedDish;
 
     private void Awake()
     {
@@ -48,6 +49,8 @@ public class TableManager : MonoBehaviour, IInit
         currCompletedRotCnt = 0;
         _checkDishIdx = new List<int>();
         DishBehaviourDict = new Dictionary<int, DishBehaviour>();
+        
+        _selectedDish = null;
         
         GenerateRail();
         GenerateDish();
@@ -111,8 +114,6 @@ public class TableManager : MonoBehaviour, IInit
         foreach (Transform dish in dishParent.transform)
             Destroy(dish.gameObject);
         
-        dishes = new List<DishBehaviour>();
-        
         float currPosX = -1f * (DishCnt / 2) * MainSceneManager.Instance.PosXFactor;
         currPosX += RailCnt % 2 == 1 ? 0f : 0.5f * MainSceneManager.Instance.PosXFactor;
         ServingMinPosX = currPosX;
@@ -120,10 +121,10 @@ public class TableManager : MonoBehaviour, IInit
         for (int i = 0; i < DishCnt; i++)
         {
             GameObject tmpObj = Instantiate(dishPref, dishParent.transform);
-            dishes.Add(tmpObj.GetComponent<DishBehaviour>());
-            if (Enum.TryParse(dishColor[i], ignoreCase: true, out DishTypes color))
+            DishBehaviourDict.Add(i, tmpObj.GetComponent<DishBehaviour>());
+            if (Enum.TryParse(dishColor[i], ignoreCase: true, out ColorTypes color))
             {
-                dishes[i].InitDish(SushiTypes.Empty, color, new Vector3(currPosX, _railMaxPosY * -1f, 0));
+                DishBehaviourDict[i].InitDish(SushiTypes.Empty, color, new Vector3(currPosX, _railMaxPosY * -1f, 0));
                 currPosX += MainSceneManager.Instance.PosXFactor;
             }
             else Debug.LogError("Color Error: " + dishColor[i]);
@@ -148,15 +149,59 @@ public class TableManager : MonoBehaviour, IInit
 
     
     #endregion
+
+    public void DishSelected(DishBehaviour dishBehaviour)
+    {
+        if (MainSceneManager.Instance.CookStarted)
+        {
+            
+        }
+        else
+        {
+            if (_selectedDish != null)
+            {
+                Vector3 firstCurrPos = _selectedDish.DishData.CurrPos, secondCurrPos = dishBehaviour.DishData.CurrPos;
+                _selectedDish.SwapPosition(secondCurrPos);
+                dishBehaviour.SwapPosition(firstCurrPos);
+                
+                int firstDishIdx = 0, secondDishIdx = 0;
+                foreach (var pair in DishBehaviourDict)
+                {
+                    if (pair.Value == _selectedDish)
+                        firstDishIdx = pair.Key;
+                    else if (pair.Value == dishBehaviour)
+                        secondDishIdx = pair.Key;
+                }
+
+                DishBehaviourDict[firstDishIdx] = dishBehaviour;
+                DishBehaviourDict[secondDishIdx] = _selectedDish;
+                
+                _selectedDish = null;
+            }
+            else _selectedDish = dishBehaviour;
+        }
+    }
+
+    public void DishDeSelected()
+    {
+        _selectedDish = null;
+    }
+
+    public void ReadyToCook()
+    {
+        if (_selectedDish == null) return;
+        _selectedDish.ReadyToCook();
+        _selectedDish = null;
+    }
     
     public void RotateDishOnce()
     {
         currCompletedRotCnt = 0;
         _checkDishIdx = new List<int>();
         
-        for (int i = 0; i < dishes.Count; i++)
+        for (int i = 0; i < DishBehaviourDict.Count; i++)
         {
-            DishBehaviour dish = dishes[i];
+            DishBehaviour dish = DishBehaviourDict[i];
             Vector3 dishEndPos = Vector3.zero, dishStartPos = dish.DishData.CurrPos;
             bool moveXFirst = false;
             
@@ -191,10 +236,10 @@ public class TableManager : MonoBehaviour, IInit
                 dishEndPos.x = dishStartPos.x + MainSceneManager.Instance.PosXFactor; dishEndPos.y = dishStartPos.y;
             }
 
-            if (dishStartPos.y > 0f
-                && Mathf.Abs(dishEndPos.x - DiningManager.Instance.DiningMinPosX) <= 0.0001f
-                && Mathf.Abs(dishEndPos.x - (DiningManager.Instance.DiningMinPosX +
-                                             MainSceneManager.Instance.PosXFactor * DiningManager.Instance.CatCnt)) <= 0.0001f)
+            if (dishEndPos.y > 0.0001f
+                && dishEndPos.x - DiningManager.Instance.DiningMinPosX >= -0.0001f
+                && dishEndPos.x - (DiningManager.Instance.DiningMinPosX +
+                                             MainSceneManager.Instance.PosXFactor * DiningManager.Instance.CatCnt) <= 0.0001f)
                 _checkDishIdx.Insert(0, i);
             
             dish.Rotate(dishEndPos, moveXFirst);
@@ -204,17 +249,25 @@ public class TableManager : MonoBehaviour, IInit
     public void CheckDishCondition()
     {
         if (currCompletedRotCnt < DishCnt - 1) { currCompletedRotCnt++; return; }
+
+        string list = "";
+        foreach(int idx in _checkDishIdx) list += idx + ", ";
+        Debug.Log($"completed: {currCompletedRotCnt}, dishCnt: {DishCnt}, list: [{list}]");
         
         currCompletedRotCnt = 0;
 
-        if (_checkDishIdx.Count == 0) RotateDishOnce();
+        if (_checkDishIdx.Count == 0)
+        {
+            RotateDishOnce();
+            return;
+        }
 
         foreach (int idx in _checkDishIdx)
         {
-            bool eatSushi = DiningManager.Instance.ActivateDishEffect(dishes[idx].DishData);
+            bool eatSushi = DiningManager.Instance.ActivateDishEffect(DishBehaviourDict[idx].DishData);
             if (eatSushi)
             {
-                dishes[idx].Eat();
+                DishBehaviourDict[idx].Eat();
             }
         }
     }

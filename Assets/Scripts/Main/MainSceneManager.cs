@@ -2,15 +2,17 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-public enum SushiTypes { Egg = 0, Shrimp = 1, Unagi = 2, Tuna = 3, Maki = 4, Empty = 5 }
-public enum DishTypes { W = 0, R = 1, Y = 2, B = 3 }
+public enum SushiTypes { Egg = 0, Shrimp = 1, Unagi = 2, Tuna = 3, Maki = 4, Empty = 5, Any = 6, SushiStandBy = 7 }
+public enum ColorTypes { W = 0, R = 1, Y = 2, B = 3, DishStandBy = 4 }
 
 public class MainSceneManager : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private TextMeshProUGUI rotateCntText;
     [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private GameObject startCookButton;
     
     public static MainSceneManager Instance { get; private set; }
     
@@ -21,6 +23,9 @@ public class MainSceneManager : MonoBehaviour
     public float RotateSpeedFactor { get; private set; }
     private int _maxRotateCnt, _currRotateCnt;
     private int _targetScore, _currScore;
+    public bool isRotating { get; private set; }
+    
+    public bool CookStarted { get; private set; }
     
     // TODO: 가격 수정
     public readonly Dictionary<SushiTypes, int> Price = new Dictionary<SushiTypes, int>()
@@ -59,12 +64,17 @@ public class MainSceneManager : MonoBehaviour
         _currScore = 0;
         UpdateScore();
         
+        isRotating = false;
+
+        CookStarted = false;
+        startCookButton.SetActive(true);
+        
         foreach(IInit script in _initScripts) script.Init();
     }
 
     public void UpdateRotateCnt()
     {
-        rotateCntText.text = $"Rotate Cnt [{_currRotateCnt} / {_maxRotateCnt}]";
+        rotateCntText.text = _currRotateCnt.ToString();
     }
 
     public void UpdateScore()
@@ -72,5 +82,19 @@ public class MainSceneManager : MonoBehaviour
         scoreText.text = $"Score [{_currScore}/{_targetScore}]";
     }
 
-    
+    public void StartCook()
+    {
+        CookStarted = true;
+        startCookButton.SetActive(false);
+        TableManager.Instance.ReadyToCook();
+    }
+
+    public void Rotate()
+    {
+        if (!CookStarted || isRotating || _currRotateCnt == 0) return;
+        isRotating = true;
+        _currRotateCnt--;
+        UpdateRotateCnt();
+        TableManager.Instance.RotateDishOnce();
+    }
 }
