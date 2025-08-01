@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using Newtonsoft.Json;
 
 public class GameManager : MonoBehaviour
 {
@@ -83,7 +84,7 @@ public class GameManager : MonoBehaviour
         if (File.Exists(path)) 
         {
             string json = File.ReadAllText(path);
-            _saveData = JsonUtility.FromJson<SaveData>(json);
+            _saveData = JsonConvert.DeserializeObject<SaveData>(json);
             Debug.Log("Save data loaded from " + path);
         }
         else
@@ -96,7 +97,7 @@ public class GameManager : MonoBehaviour
 
     private void SaveSaveData()
     {
-        string json = JsonUtility.ToJson(_saveData, true);
+        string json = JsonConvert.SerializeObject(_saveData, Formatting.Indented);
         if (json == null)
         {
             Debug.Log("FUUUUUCKKK!!!!");
