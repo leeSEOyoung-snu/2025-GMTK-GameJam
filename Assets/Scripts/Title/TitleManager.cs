@@ -13,19 +13,25 @@ public class TitleManager : MonoBehaviour
     private int currentSelcectedButton = -1;
     private int previousSelectedButton = -1;
     private List<GameObject> Buttons = new List<GameObject>();
-    private GameObject TitlePanel;
     [Header("Buttons")]
     [SerializeField] private GameObject StartButton;
     [SerializeField] private GameObject OptionButton;
     [SerializeField] private GameObject QuitButton;
+
+    [Header("Panels")] 
+    [SerializeField] private GameObject TitlePanel;
+    [SerializeField] private GameObject OptionPanel;
     #endregion
     
     #region LifeCycle
     private void Awake()
     {
         // Find the TitlePanel GameObject in the scene
-        TitlePanel = GameObject.Find("TitlePanel");
         if (TitlePanel == null) Debug.LogWarning("TitlePanel not found in the scene.");
+        if (OptionPanel == null) Debug.LogWarning("OptionPanel not found in the scene.");
+        
+        TitlePanel.SetActive(true);
+        OptionPanel.SetActive(false);
         
         // Find all buttons in the scene and add them to the list
         Buttons.Add(StartButton);
@@ -95,14 +101,14 @@ public class TitleManager : MonoBehaviour
     #region ButtonMethods
     public void OnClickStartButton()
     {
-        Debug.Log("Start button clicked");
+        // Debug.Log("Start button clicked");
         TitlePanel.SetActive(false);
-        
     }
 
     public void OnClickOptionButton()
     {
-        Debug.Log("Option button clicked");
+        OptionPanel.SetActive(true);
+        // Debug.Log("Option button clicked");
     }
 
     public void OnClickQuitButton()

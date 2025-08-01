@@ -10,6 +10,7 @@ public class StageManager : MonoBehaviour
     private string selectedStageFileName;
     
     Sequence stagePanelSequence;
+    [SerializeField] private GameObject TitlePanel;
     [Header("Stage Panels Size")]
     [SerializeField] private float BigStagePanelSizeX;
     [SerializeField] private float BigStagePanelSizeY;
@@ -19,8 +20,6 @@ public class StageManager : MonoBehaviour
     [SerializeField] private float StagePanelMoveDuration;
     [Header("Stage Panels Objects")]
     [SerializeField] private List<GameObject> StagePanels = new List<GameObject>();
-    
-    
     private List<RectTransform> StagePanelsRectTransforms = new List<RectTransform>();
     
     #endregion
@@ -57,9 +56,6 @@ public class StageManager : MonoBehaviour
     }
 
     #endregion
-    
-    
-
 
     #region DOTween Methods
 
@@ -123,5 +119,11 @@ public class StageManager : MonoBehaviour
         }
     }
     #endregion
+    
+    public void BackButtonClicked()
+    {
+        gameObject.SetActive(false);
+        TitlePanel.SetActive(true);
+    }
     
 }
