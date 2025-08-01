@@ -16,6 +16,8 @@ public class TableManager : MonoBehaviour, IInit
     [SerializeField] private List<DishBehaviour> dishes;
     [SerializeField] private GameObject dishPref, dishParent;
     public int DishCnt { get; private set; }
+    
+    public Dictionary<int, DishBehaviour> DishBehaviourDict { get; private set; }
 
     private readonly float _railMaxPosY = 1.35f;
     public float ServingMinPosX { get; private set; }
@@ -23,6 +25,8 @@ public class TableManager : MonoBehaviour, IInit
 
     private int currCompletedRotCnt;
     private List<int> _checkDishIdx;
+
+    public List<Sprite> dishSprites, sushiSprites;
 
     private void Awake()
     {
@@ -33,13 +37,11 @@ public class TableManager : MonoBehaviour, IInit
     public void Init()
     {
         RailCnt = (int)MainSceneManager.Instance.CurrStageData["RailCnt"];
-        DishCnt = (int)MainSceneManager.Instance.CurrStageData["ServingCnt"];
+        if (RailCnt < 1) { Debug.LogError($"something's wrong [railCnt == {RailCnt}]"); return; }
         
-        if (RailCnt < 1 || DishCnt < 1) { Debug.LogError($"something's wrong [railCnt == {RailCnt}, DishCnt == {DishCnt}]"); return; }
-        if (DishCnt > RailCnt) { Debug.LogError($"DishCnt is bigger than railCnt [railCnt == {RailCnt}, DishCnt == {DishCnt}]"); return; }
-
         currCompletedRotCnt = 0;
         _checkDishIdx = new List<int>();
+        DishBehaviourDict = new Dictionary<int, DishBehaviour>();
         
         GenerateRail();
         GenerateDish();
@@ -94,6 +96,11 @@ public class TableManager : MonoBehaviour, IInit
 
     private void GenerateDish()
     {
+        string[] dishColor = CSVReader.ParseDollar((string)MainSceneManager.Instance.CurrStageData["DishColor"]);
+        DishCnt = dishColor.Length;
+        if (DishCnt > RailCnt) { Debug.LogError($"DishCnt is bigger than railCnt [railCnt == {RailCnt}, DishCnt == {DishCnt}]"); return; }
+        if (DishCnt < 1) { Debug.LogError($"something's wrong [DishCnt == {DishCnt}]"); return; }
+        
         foreach (Transform dish in dishParent.transform)
             Destroy(dish.gameObject);
         
@@ -109,9 +116,13 @@ public class TableManager : MonoBehaviour, IInit
         {
             tmpObj = Instantiate(dishPref, dishParent.transform);
             dishes.Add(tmpObj.GetComponent<DishBehaviour>());
-            dishes[i].InitDish(SushiTypes.Egg, new Vector3(currPosX, _railMaxPosY * -1f, 0));
-            // tmpObj.GetComponent<SpriteRenderer>().sprite = ;
-            currPosX += MainSceneManager.Instance.PosXFactor;
+            DishTypes color;
+            if (Enum.TryParse(dishColor[i], ignoreCase: true, out color))
+            {
+                dishes[i].InitDish(SushiTypes.Empty, color, new Vector3(currPosX, _railMaxPosY * -1f, 0));
+                currPosX += MainSceneManager.Instance.PosXFactor;
+            }
+            else Debug.LogError("Color Error: " + dishColor[i]);
         }
     }
 

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+public enum SushiTypes { Egg = 0, Shrimp = 1, Unagi = 2, Tuna = 3, Maki = 4, Empty = 5 }
+public enum DishTypes { W = 0, R = 1, Y = 2, B = 3 }
+
 public class MainSceneManager : MonoBehaviour
 {
     public static MainSceneManager Instance { get; private set; }

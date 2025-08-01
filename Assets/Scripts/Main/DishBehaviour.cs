@@ -1,31 +1,29 @@
 using DG.Tweening;
 using UnityEngine;
 
-public enum SushiTypes
-{
-    Empty,
-    Egg,
-    Shrimp
-}
-
 public class Dish
 {
     public SushiTypes Sushi;
+    public DishTypes Color;
     public Vector3 CurrPos;
 }
 
 public class DishBehaviour : MonoBehaviour
 {
+    [SerializeField] private SpriteRenderer dishSr;
+    [SerializeField] private SpriteRenderer sushiSr;
     public Dish DishData { get; private set; }
 
     private Sequence _rotateSq;
 
-    public void InitDish(SushiTypes sushi, Vector3 initPos)
+    public void InitDish(SushiTypes sushi, DishTypes color, Vector3 initPos)
     {
         DishData = new Dish();
-        DishData.Sushi = sushi;
         DishData.CurrPos = initPos;
         transform.localPosition = DishData.CurrPos;
+        
+        ChangeSushiType(sushi);
+        ChangeDishType(color);
     }
 
     public void Rotate(Vector3 endPos, bool moveXFirst)
@@ -45,12 +43,12 @@ public class DishBehaviour : MonoBehaviour
         {
             if (moveXFirst)
             {
-                Vector3[] path = new Vector3[] { new Vector3(endPos.x, DishData.CurrPos.y, 0f), new Vector3(endPos.x, endPos.y, 0f) };
+                Vector3[] path = { new (endPos.x, DishData.CurrPos.y, 0f), new (endPos.x, endPos.y, 0f) };
                 _rotateSq.Append(transform.DOLocalPath(path, rotateSpeed, PathType.Linear));
             }
             else
             {
-                Vector3[] path = new Vector3[] { new Vector3(DishData.CurrPos.x, endPos.y, 0f), new Vector3(endPos.x, endPos.y, 0f) };
+                Vector3[] path = { new (DishData.CurrPos.x, endPos.y, 0f), new (endPos.x, endPos.y, 0f) };
                 _rotateSq.Append(transform.DOLocalPath(path, rotateSpeed, PathType.Linear));
             }
         } 
@@ -62,5 +60,22 @@ public class DishBehaviour : MonoBehaviour
     public void Eat()
     {
         // TODO: Eat 구현
+    }
+
+    public void ChangeDishType(DishTypes color)
+    {
+        DishData.Color = color;
+        dishSr.sprite = TableManager.Instance.dishSprites[(int)color];
+    }
+
+    public void ChangeSushiType(SushiTypes sushi)
+    {
+        DishData.Sushi = sushi;
+        if (sushi == SushiTypes.Empty) sushiSr.color = Color.clear;
+        else
+        {
+            sushiSr.color = Color.white;
+            sushiSr.sprite = TableManager.Instance.sushiSprites[(int)sushi];
+        }
     }
 }

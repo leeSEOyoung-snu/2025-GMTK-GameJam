@@ -1,7 +1,7 @@
-﻿Stage
-101
-102
-102
-103
-103
-103
+Stage,Sprite,Color,Condition,ConVal1,ConVal2,Result,ResVal1,ResVal2
+101,0,W,SushiEaten,Egg,X,GenerateCard,null,X
+102,1,W,SushiEaten,Shrimp,X,GenerateCard,null,X
+102,2,W,CardPlaced,Shrimp,X,GenerateCard,null,X
+103,3,W,CardPlaced,Shrimp,X,GenerateCard,null,X
+103,4,W,SushiEaten,Egg,X,GenerateCard,null,X
+103,0,W,SushiEaten,null,X,GenerateCard,Egg,X
