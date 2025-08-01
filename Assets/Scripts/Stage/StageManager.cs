@@ -49,12 +49,12 @@ public class StageManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.RightArrow))
             {
                 RightStageButtonClicekd();
-                Debug.Log("Current Selected Panel: " + currentSelectedStage);
+                // Debug.Log("Current Selected Panel: " + currentSelectedStage);
             }
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
                 LeftStageButtonClicekd();
-                Debug.Log("Current Selected Panel: " + currentSelectedStage);
+            //     Debug.Log("Current Selected Panel: " + currentSelectedStage);
             }
             if (Input.GetKeyDown(KeyCode.Escape))
             {
