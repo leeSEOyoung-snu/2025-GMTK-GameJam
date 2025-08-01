@@ -5,6 +5,7 @@ using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class TitleManager : MonoBehaviour
@@ -136,7 +137,31 @@ public class TitleManager : MonoBehaviour
     {
         currentSelcectedButton = -1;
         previousSelectedButton = -1;
-        foreach (GameObject button in Buttons) button.GetComponent<Image>().color = Color.white; // Reset all buttons to black
-        
+        foreach (GameObject button in Buttons) button.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1f); // Reset all buttons to black
     }
+
+    #region Hovering
+
+    public void OnHoverEnter(BaseEventData data)
+    {
+        PointerEventData ped = (PointerEventData)data;
+        GameObject hoveredButton = ped.pointerPress;
+        
+        if (Buttons.Contains(hoveredButton))
+        {
+            int hoveredIndex = Buttons.IndexOf(hoveredButton);
+            if (hoveredIndex != currentSelcectedButton)
+            {
+                previousSelectedButton = currentSelcectedButton;
+                currentSelcectedButton = hoveredIndex;
+                ButtonHighLighting();
+            }
+        }
+    }
+    public void OnHoverExit(BaseEventData data)
+    {
+        initTitleManager();
+    }
+
+    #endregion
 }
