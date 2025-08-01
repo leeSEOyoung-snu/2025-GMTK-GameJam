@@ -1043,6 +1043,7 @@ GameObject:
   - component: {fileID: 1056297271}
   - component: {fileID: 1056297269}
   - component: {fileID: 1056297273}
+  - component: {fileID: 1056297274}
   - component: {fileID: 1056297272}
   m_Layer: 0
   m_Name: Managers
@@ -1146,6 +1147,20 @@ MonoBehaviour:
   - {fileID: -1448299727, guid: 43642cca7a6743c48b695459de4a0bf1, type: 3}
   - {fileID: 478568577, guid: 43642cca7a6743c48b695459de4a0bf1, type: 3}
   - {fileID: 1995747726, guid: 43642cca7a6743c48b695459de4a0bf1, type: 3}
+--- !u!114 &1056297274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1056297268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c0a67d8abba8c0459baf66865f5cc6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardPref: {fileID: 171407329708931927, guid: 2ab85dc1ca33af74cad2d14deb51c222, type: 3}
+  cardParent: {fileID: 1814029752}
 --- !u!1 &1299656086
 GameObject:
   m_ObjectHideFlags: 0
@@ -1510,6 +1525,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 469885961}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1814029752
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1814029753}
+  m_Layer: 0
+  m_Name: Card Parent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1814029753
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1814029752}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -4.6, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1878672669
 GameObject:
@@ -1898,9 +1944,10 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1949232492}
+  - {fileID: 1056297270}
   - {fileID: 2054233045}
   - {fileID: 469885961}
-  - {fileID: 1056297270}
+  - {fileID: 1814029753}
   - {fileID: 547865273}
   - {fileID: 994849366}
   - {fileID: 1312385355}
