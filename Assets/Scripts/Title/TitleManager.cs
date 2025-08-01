@@ -101,14 +101,14 @@ public class TitleManager : MonoBehaviour
     #region ButtonMethods
     public void OnClickStartButton()
     {
-        Debug.Log("Start button clicked");
+        // Debug.Log("Start button clicked");
         TitlePanel.SetActive(false);
     }
 
     public void OnClickOptionButton()
     {
         OptionPanel.SetActive(true);
-        Debug.Log("Option button clicked");
+        // Debug.Log("Option button clicked");
     }
 
     public void OnClickQuitButton()
