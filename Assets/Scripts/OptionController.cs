@@ -38,6 +38,22 @@ public class OptionController : MonoBehaviour
             SoundManager.Instance.soundEffectSource.volume = value;
         });
     }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape)) {
+            Debug.Log("Escape key pressed");
+            if (SceneName == "Title")
+            {
+                TitleButtonClicked();
+            }
+            else {
+                // During Gaming Close the options panel
+                gameObject.SetActive(false);
+            }
+        }
+    }
+
     public void ScreenModeChanged(int value)
     {
         switch (value)

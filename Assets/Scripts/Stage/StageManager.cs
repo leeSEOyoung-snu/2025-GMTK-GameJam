@@ -55,6 +55,10 @@ public class StageManager : MonoBehaviour
                 LeftStageButtonClicekd();
                 Debug.Log("Current Selected Panel: " + currentSelectedStage);
             }
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                BackButtonClicked();
+            }
     }
 
     #endregion
@@ -124,6 +128,7 @@ public class StageManager : MonoBehaviour
     
     public void BackButtonClicked()
     {
+        if (stagePanelSequence == null || stagePanelSequence.IsPlaying()) return;
         StageSet.SetActive(false);
         TitlePanel.SetActive(true);
     }
