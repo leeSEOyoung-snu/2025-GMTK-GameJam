@@ -47,7 +47,7 @@ public class DiningManager : MonoBehaviour, IInit
         for (int i = 0; i < CatCnt; i++)
         {
             CatBehaviourDict[i] = Instantiate(catPref, catParent.transform).GetComponent<CatBehaviour>();
-            CatBehaviourDict[i].InitCat(new Vector3(currPosX, _catPosY, 0), (int)currCatData[i]["Sprite"]);
+            CatBehaviourDict[i].InitCat(new Vector3(currPosX, _catPosY, 0), currCatData[i]);
             currPosX += MainSceneManager.Instance.PosXFactor;
         }
     }

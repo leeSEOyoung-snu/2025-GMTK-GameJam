@@ -1,14 +1,15 @@
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Dish
 {
     public SushiTypes Sushi;
-    public DishTypes Color;
+    public ColorTypes Color;
     public Vector3 CurrPos;
 }
 
-public class DishBehaviour : MonoBehaviour
+public class DishBehaviour : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private SpriteRenderer dishSr;
     [SerializeField] private SpriteRenderer sushiSr;
@@ -16,7 +17,7 @@ public class DishBehaviour : MonoBehaviour
 
     private Sequence _rotateSq;
 
-    public void InitDish(SushiTypes sushi, DishTypes color, Vector3 initPos)
+    public void InitDish(SushiTypes sushi, ColorTypes color, Vector3 initPos)
     {
         DishData = new Dish();
         DishData.CurrPos = initPos;
@@ -63,7 +64,7 @@ public class DishBehaviour : MonoBehaviour
         Debug.Log("앙");
     }
 
-    public void ChangeDishType(DishTypes color)
+    public void ChangeDishType(ColorTypes color)
     {
         DishData.Color = color;
         dishSr.sprite = TableManager.Instance.dishSprites[(int)color];
@@ -78,5 +79,10 @@ public class DishBehaviour : MonoBehaviour
             sushiSr.color = Color.white;
             sushiSr.sprite = TableManager.Instance.sushiSprites[(int)sushi];
         }
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        throw new System.NotImplementedException();
     }
 }

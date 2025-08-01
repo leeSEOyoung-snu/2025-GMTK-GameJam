@@ -121,7 +121,7 @@ public class TableManager : MonoBehaviour, IInit
         {
             GameObject tmpObj = Instantiate(dishPref, dishParent.transform);
             dishes.Add(tmpObj.GetComponent<DishBehaviour>());
-            if (Enum.TryParse(dishColor[i], ignoreCase: true, out DishTypes color))
+            if (Enum.TryParse(dishColor[i], ignoreCase: true, out ColorTypes color))
             {
                 dishes[i].InitDish(SushiTypes.Empty, color, new Vector3(currPosX, _railMaxPosY * -1f, 0));
                 currPosX += MainSceneManager.Instance.PosXFactor;
