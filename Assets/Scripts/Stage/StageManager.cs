@@ -20,7 +20,6 @@ public class StageManager : MonoBehaviour
     [SerializeField] private float StagePanelMoveDuration;
     [Header("Stage Panels Objects")]
     [SerializeField] private List<GameObject> StagePanels = new List<GameObject>();
-    
     private List<RectTransform> StagePanelsRectTransforms = new List<RectTransform>();
     
     #endregion
