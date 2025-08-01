@@ -2036,6 +2036,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 4307798860075604785, guid: 065550f1d91db01479d389a3fca53e9e, type: 3}
+      propertyPath: StageCount.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4307798860075604785, guid: 065550f1d91db01479d389a3fca53e9e, type: 3}
+      propertyPath: StageCount.Array.data[0]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4307798860075604785, guid: 065550f1d91db01479d389a3fca53e9e, type: 3}
+      propertyPath: StageCount.Array.data[1]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4307798860075604785, guid: 065550f1d91db01479d389a3fca53e9e, type: 3}
+      propertyPath: StageCount.Array.data[2]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4307798860075604785, guid: 065550f1d91db01479d389a3fca53e9e, type: 3}
+      propertyPath: StageCount.Array.data[3]
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4718386882598034381, guid: 065550f1d91db01479d389a3fca53e9e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
