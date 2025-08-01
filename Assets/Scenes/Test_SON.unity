@@ -1095,12 +1095,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -2118,6 +2118,14 @@ PrefabInstance:
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1073692419}
+    - target: {fileID: 999888944091028625, guid: 13d77a80835c69c4f97cdf5f8328e1d2, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c38c6ae017ff52a4f8666fbf3f8c2af8, type: 3}
+    - target: {fileID: 1224892355774824775, guid: 13d77a80835c69c4f97cdf5f8328e1d2, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: a91bd422f62b13b4e8925e5df19b9098, type: 3}
     - target: {fileID: 3007229967194962863, guid: 13d77a80835c69c4f97cdf5f8328e1d2, type: 3}
       propertyPath: m_Name
       value: TitlePanel
@@ -2128,7 +2136,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3230501947722167875, guid: 13d77a80835c69c4f97cdf5f8328e1d2, type: 3}
       propertyPath: m_Pivot.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3230501947722167875, guid: 13d77a80835c69c4f97cdf5f8328e1d2, type: 3}
       propertyPath: m_Pivot.y
@@ -2136,15 +2144,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3230501947722167875, guid: 13d77a80835c69c4f97cdf5f8328e1d2, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 329
+      value: 369
       objectReference: {fileID: 0}
     - target: {fileID: 3230501947722167875, guid: 13d77a80835c69c4f97cdf5f8328e1d2, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 105
+      value: 197
+      objectReference: {fileID: 0}
+    - target: {fileID: 3230501947722167875, guid: 13d77a80835c69c4f97cdf5f8328e1d2, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 56
+      objectReference: {fileID: 0}
+    - target: {fileID: 3230501947722167875, guid: 13d77a80835c69c4f97cdf5f8328e1d2, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 325
       objectReference: {fileID: 0}
     - target: {fileID: 4664028939531435059, guid: 13d77a80835c69c4f97cdf5f8328e1d2, type: 3}
       propertyPath: m_Pivot.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4664028939531435059, guid: 13d77a80835c69c4f97cdf5f8328e1d2, type: 3}
       propertyPath: m_Pivot.y
@@ -2152,15 +2168,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4664028939531435059, guid: 13d77a80835c69c4f97cdf5f8328e1d2, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 329
+      value: 369
       objectReference: {fileID: 0}
     - target: {fileID: 4664028939531435059, guid: 13d77a80835c69c4f97cdf5f8328e1d2, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 132
+      value: 196
+      objectReference: {fileID: 0}
+    - target: {fileID: 4664028939531435059, guid: 13d77a80835c69c4f97cdf5f8328e1d2, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 435
+      objectReference: {fileID: 0}
+    - target: {fileID: 4664028939531435059, guid: 13d77a80835c69c4f97cdf5f8328e1d2, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 325
       objectReference: {fileID: 0}
     - target: {fileID: 4699508487798023511, guid: 13d77a80835c69c4f97cdf5f8328e1d2, type: 3}
       propertyPath: m_Pivot.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4699508487798023511, guid: 13d77a80835c69c4f97cdf5f8328e1d2, type: 3}
       propertyPath: m_Pivot.y
@@ -2168,11 +2192,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4699508487798023511, guid: 13d77a80835c69c4f97cdf5f8328e1d2, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 308
+      value: 369
       objectReference: {fileID: 0}
     - target: {fileID: 4699508487798023511, guid: 13d77a80835c69c4f97cdf5f8328e1d2, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 115
+      value: 196
+      objectReference: {fileID: 0}
+    - target: {fileID: 4699508487798023511, guid: 13d77a80835c69c4f97cdf5f8328e1d2, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 56
+      objectReference: {fileID: 0}
+    - target: {fileID: 4699508487798023511, guid: 13d77a80835c69c4f97cdf5f8328e1d2, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 125
       objectReference: {fileID: 0}
     - target: {fileID: 5287429255221678289, guid: 13d77a80835c69c4f97cdf5f8328e1d2, type: 3}
       propertyPath: m_Pivot.x
@@ -2258,6 +2290,22 @@ PrefabInstance:
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1073692419}
+    - target: {fileID: 6499889418769801345, guid: 13d77a80835c69c4f97cdf5f8328e1d2, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 907
+      objectReference: {fileID: 0}
+    - target: {fileID: 6499889418769801345, guid: 13d77a80835c69c4f97cdf5f8328e1d2, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 560
+      objectReference: {fileID: 0}
+    - target: {fileID: 6499889418769801345, guid: 13d77a80835c69c4f97cdf5f8328e1d2, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 6499889418769801345, guid: 13d77a80835c69c4f97cdf5f8328e1d2, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -30
+      objectReference: {fileID: 0}
     - target: {fileID: 7091983304395261508, guid: 13d77a80835c69c4f97cdf5f8328e1d2, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
