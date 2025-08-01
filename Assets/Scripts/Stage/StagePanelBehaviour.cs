@@ -31,7 +31,7 @@ public class StagePanelBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //TODO : keyinput
+        //TODO : Control by key
         // if( Input.GetKeyDown(KeyCode.RightArrow))
         // {
         //     RightStageButtonClicekd();
@@ -65,8 +65,6 @@ public class StagePanelBehaviour : MonoBehaviour
         currentSelectedNode--;
         if (currentSelectedNode < 0) currentSelectedNode = 0;
     }
-    
-    
     
     //
 }
