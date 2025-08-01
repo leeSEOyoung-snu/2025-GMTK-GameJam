@@ -124,7 +124,6 @@ public class StageManager : MonoBehaviour
     {
         gameObject.SetActive(false);
         TitlePanel.SetActive(true);
-        
     }
     
 }
