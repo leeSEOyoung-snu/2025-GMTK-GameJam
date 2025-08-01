@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using UnityEngine.Networking;
 
 public class CSVReader
 {
@@ -54,5 +55,10 @@ public class CSVReader
       Debug.LogError($"csv 파일명 오류 [{file}]");
       return null;
     }
+  }
+
+  public static string[] ParseDollar(string data)
+  { 
+    return data.Split('$');
   }
 }

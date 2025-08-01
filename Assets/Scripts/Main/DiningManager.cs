@@ -7,13 +7,14 @@ public class DiningManager : MonoBehaviour, IInit
     public static DiningManager Instance { get; private set; }
     
     [SerializeField] private GameObject catPref, catParent;
+    public List<Sprite> catSprites;
     
     public int CatCnt { get; private set; }
     public float DiningMinPosX { get; private set; }
     private readonly float _catPosY = 3f;
     private List<Dictionary<string, object>> currCatData;
     
-    private Dictionary<int, CatBehaviour> catBehaviourDict;
+    public Dictionary<int, CatBehaviour> CatBehaviourDict { get; private set; }
     
     private void Awake()
     {
@@ -41,12 +42,12 @@ public class DiningManager : MonoBehaviour, IInit
         currPosX += TableManager.Instance.RailCnt % 2 == 1 ? 0f : 0.5f * MainSceneManager.Instance.PosXFactor;
         DiningMinPosX = currPosX;
         
-        catBehaviourDict = new Dictionary<int, CatBehaviour>();
+        CatBehaviourDict = new Dictionary<int, CatBehaviour>();
 
         for (int i = 0; i < CatCnt; i++)
         {
-            catBehaviourDict[i] = Instantiate(catPref, catParent.transform).GetComponent<CatBehaviour>();
-            catBehaviourDict[i].InitCat(new Vector3(currPosX, _catPosY, 0));
+            CatBehaviourDict[i] = Instantiate(catPref, catParent.transform).GetComponent<CatBehaviour>();
+            CatBehaviourDict[i].InitCat(new Vector3(currPosX, _catPosY, 0), (int)currCatData[i]["Sprite"]);
             currPosX += MainSceneManager.Instance.PosXFactor;
         }
     }
