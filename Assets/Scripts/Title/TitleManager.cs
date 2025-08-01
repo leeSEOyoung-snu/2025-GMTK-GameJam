@@ -145,7 +145,7 @@ public class TitleManager : MonoBehaviour
     public void OnHoverEnter(BaseEventData data)
     {
         PointerEventData ped = (PointerEventData)data;
-        GameObject hoveredButton = ped.pointerPress;
+        GameObject hoveredButton = ped.pointerEnter;
         
         if (Buttons.Contains(hoveredButton))
         {
