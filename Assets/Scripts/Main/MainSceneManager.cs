@@ -8,16 +8,19 @@ public enum DishTypes { W = 0, R = 1, Y = 2, B = 3 }
 
 public class MainSceneManager : MonoBehaviour
 {
+    [Header("References")]
+    [SerializeField] private TextMeshProUGUI rotateCntText;
+    [SerializeField] private TextMeshProUGUI targetScoreText;
+    
     public static MainSceneManager Instance { get; private set; }
     
     public Dictionary<string, object> CurrStageData { get; private set; }
     public readonly float PosXFactor = 1.8f;
     private List<IInit> _initScripts = new List<IInit>();
     
-    [Header("Rotate")]
-    [SerializeField] private TextMeshProUGUI rotateCntText;
     public float RotateSpeedFactor { get; private set; }
     private int _maxRotateCnt, _currRotateCnt;
+    private int _targetScore, _currScore;
 
     private void Awake()
     {
@@ -41,6 +44,9 @@ public class MainSceneManager : MonoBehaviour
         rotateCntText.text = $"Rotate Cnt [{_currRotateCnt} / {_maxRotateCnt}]";
 
         RotateSpeedFactor = 1f;
+        
+        _targetScore = (int)CurrStageData["TargetScore"];
+        _currScore = 0;
         
         foreach(IInit script in _initScripts) script.Init();
     }
