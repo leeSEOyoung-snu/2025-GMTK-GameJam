@@ -21,6 +21,16 @@ public class MainSceneManager : MonoBehaviour
     public float RotateSpeedFactor { get; private set; }
     private int _maxRotateCnt, _currRotateCnt;
     private int _targetScore, _currScore;
+    
+    // TODO: 가격 수정
+    public readonly Dictionary<SushiTypes, int> Price = new Dictionary<SushiTypes, int>()
+    {
+        { SushiTypes.Egg, 5 },
+        { SushiTypes.Shrimp, 7 },
+        { SushiTypes.Unagi, 10 },
+        { SushiTypes.Tuna, 11 },
+        { SushiTypes.Maki, 12 },
+    };
 
     private void Awake()
     {
@@ -61,4 +71,6 @@ public class MainSceneManager : MonoBehaviour
     {
         scoreText.text = $"Score [{_currScore}/{_targetScore}]";
     }
+
+    
 }

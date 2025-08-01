@@ -1,4 +1,4 @@
-Stage,RailCnt,RotateCnt,DishColor,StartSushi,NextSushi,SushiType,TargetScore
+Stage,RailCnt,RotateCnt,DishColor,StartSushi,NextSushi,Menu,TargetScore
 101,1,3,W,Egg$Egg,X,Egg,101
 102,2,3,W$W,Egg$Egg$Shrimp,X,Egg$Shrimp,102
 103,3,3,W$W$W,Egg$Egg$Shrimp$Shrimp,Shrimp,Egg$Shrimp,103

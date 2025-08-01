@@ -10,11 +10,17 @@ public class TableManager : MonoBehaviour, IInit
     [Header("Rail")]
     [SerializeField] private Sprite[] railSprites;
     [SerializeField] private GameObject railPref, railParent;
-    public int RailCnt { get; private set; }
     
     [Header("Serving")]
     [SerializeField] private List<DishBehaviour> dishes;
     [SerializeField] private GameObject dishPref, dishParent;
+
+    [Header("Menu")]
+    [SerializeField] private GameObject menuPref;
+    [SerializeField] private GameObject menuParent;
+    
+    [HideInInspector]
+    public int RailCnt { get; private set; }
     public int DishCnt { get; private set; }
     
     public Dictionary<int, DishBehaviour> DishBehaviourDict { get; private set; }
@@ -45,6 +51,7 @@ public class TableManager : MonoBehaviour, IInit
         
         GenerateRail();
         GenerateDish();
+        GenerateMenu();
     }
 
     private void GenerateRail()
@@ -110,19 +117,32 @@ public class TableManager : MonoBehaviour, IInit
         currPosX += RailCnt % 2 == 1 ? 0f : 0.5f * MainSceneManager.Instance.PosXFactor;
         ServingMinPosX = currPosX;
         
-        GameObject tmpObj;
-
         for (int i = 0; i < DishCnt; i++)
         {
-            tmpObj = Instantiate(dishPref, dishParent.transform);
+            GameObject tmpObj = Instantiate(dishPref, dishParent.transform);
             dishes.Add(tmpObj.GetComponent<DishBehaviour>());
-            DishTypes color;
-            if (Enum.TryParse(dishColor[i], ignoreCase: true, out color))
+            if (Enum.TryParse(dishColor[i], ignoreCase: true, out DishTypes color))
             {
                 dishes[i].InitDish(SushiTypes.Empty, color, new Vector3(currPosX, _railMaxPosY * -1f, 0));
                 currPosX += MainSceneManager.Instance.PosXFactor;
             }
             else Debug.LogError("Color Error: " + dishColor[i]);
+        }
+    }
+    
+    private void GenerateMenu()
+    {
+        string[] menuSushi = CSVReader.ParseDollar((string)MainSceneManager.Instance.CurrStageData["Menu"]);
+        if (menuSushi.Length < 1) { Debug.LogError($"something's wrong [menuSushi.Length == {menuSushi.Length}]"); return; }
+        
+        foreach (Transform menu in menuParent.transform)
+            Destroy(menu.gameObject);
+        
+        for (int i = 0; i < menuSushi.Length; i++)
+        {
+            var menuBehaviour = Instantiate(menuPref, menuParent.transform).GetComponent<MenuBehaviour>();
+            if (Enum.TryParse(menuSushi[i], ignoreCase: true, out SushiTypes sushi)) menuBehaviour.InitMenu(sushi);
+            else Debug.LogError("Menu Sushi Error: " + menuSushi[i]);
         }
     }
 
