@@ -45,11 +45,6 @@ public class TooltipManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // Keep this instance across scenes
-        }
-        else
-        {
-            Destroy(gameObject); // Destroy duplicate instances
         }
         
         tooltipText = tooltip.GetComponentInChildren<TextMeshProUGUI>();

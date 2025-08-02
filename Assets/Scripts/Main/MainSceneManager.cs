@@ -62,7 +62,7 @@ public class MainSceneManager : MonoBehaviour
 
     public void Init()
     {
-        CurrStageData = GameManager.Instance.GetStageData();
+        CurrStageData = GameManager.Instance.GetcurrStageData();
         
         _maxRotateCnt = _currRotateCnt = (int)CurrStageData["RotateCnt"];
         UpdateRotateCnt();

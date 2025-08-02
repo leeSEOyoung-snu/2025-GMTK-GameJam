@@ -82,7 +82,7 @@ public class StageNodeBehaviour : MonoBehaviour
     {
         if (stageState == StageState.Open || stageState == StageState.Clear)
         {
-            GameManager.Instance.SetStageData(BigStage, SmallStage);
+            GameManager.Instance.SetcurrStageData(BigStage, SmallStage);
         }
         
     }

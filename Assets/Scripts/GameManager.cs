@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     //singleton instance
     public static GameManager Instance { get; private set; }
     
-    private List<Dictionary<string, object>> _stageData;
+    private List<Dictionary<string, object>> _currStageData;
     private List<Dictionary<string, object>> _catData;
     private string StageFileName;
     private bool isClear;
@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     //Save Part
     [SerializeField] public List<int> StageCount;
     public SaveData _saveData;
-    private string StageData;
+    private string currStageData;
     private string path;
     
     private void Awake()
@@ -45,26 +45,26 @@ public class GameManager : MonoBehaviour
 
     private void Init()
     {
-        _stageData = CSVReader.Read("Data/Test");
+        _currStageData = CSVReader.Read("Data/Test");
         _catData = CSVReader.Read("Data/TestCat");
         LoadSaveData();
         CurrStageIdx = 0;
     }
 
-    public void SetStageData(int BigStage, int SmallStage)
+    public void SetcurrStageData(int BigStage, int SmallStage)
     {
-        StageData = BigStage.ToString() +"0"+ SmallStage.ToString();
+        currStageData = BigStage.ToString() +"0"+ SmallStage.ToString();
         //then load Scene
         SceneManager.LoadScene("Scenes/Test SEO");
     }
 
-    public Dictionary<string, object> GetStageData(){
-        foreach(Dictionary<string,object> d in _stageData) {
-            if (int.Parse(StageData) == (int)d["Stage"]) {
+    public Dictionary<string, object> GetcurrStageData(){
+        foreach(Dictionary<string,object> d in _currStageData) {
+            if (int.Parse(currStageData) == (int)d["Stage"]) {
                 return d;
             }
         } 
-        Debug.LogError("Stage data not found for Stage: " + StageData);
+        Debug.LogError("Stage data not found for Stage: " + currStageData);
         return new Dictionary<string, object>();
     }
     
@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviour
         List<Dictionary<string, object>> result = new List<Dictionary<string, object>>();
         foreach (var catData in _catData)
         {
-            if (  int.Parse(StageData) != (int)catData["Stage"])
+            if (  int.Parse(currStageData) != (int)catData["Stage"])
             {
                 if (goodToEnd) break;
             }
@@ -154,4 +154,33 @@ public class GameManager : MonoBehaviour
     }
     
     #endregion
+
+    public void ClearStage()
+    {
+        int BS = int.Parse(currStageData.Substring(0, 1));
+        int SS = int.Parse(currStageData.Substring(1));
+
+        _saveData.saveData[BS][SS] = 2;
+        SaveSaveData();
+    }
+
+    public void unlockStage()   //call when stage is cleared
+    {
+        foreach (var s in _currStageData)
+        {
+            if(int.Parse(s["Stage"].ToString()) == int.Parse(currStageData))
+            {
+                string[] tmp = s["Unlock"].ToString().Split('$');
+                foreach (var t in tmp)
+                {
+                    int BS = int.Parse(t.Substring(0, 1));  //Chapter Can be smaller thaan 10
+                    int SS = int.Parse(t.Substring(1));
+                    
+                    _saveData.saveData[BS][SS] = 1;
+                }
+                SaveSaveData();
+                break;
+            }
+        }
+    }
 }
