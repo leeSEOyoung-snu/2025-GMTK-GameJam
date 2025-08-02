@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using Newtonsoft.Json;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -66,14 +67,14 @@ public class GameManager : MonoBehaviour
         Debug.LogError("Stage data not found for Stage: " + StageData);
         return new Dictionary<string, object>();
     }
-
+    
     public List<Dictionary<string, object>> GetCatData()
     {
         bool goodToEnd = false;
         List<Dictionary<string, object>> result = new List<Dictionary<string, object>>();
         foreach (var catData in _catData)
         {
-            if ((int)catData["Stage"] != (int)_stageData[CurrStageIdx]["Stage"])
+            if (  int.Parse(StageData) != (int)catData["Stage"])
             {
                 if (goodToEnd) break;
             }
