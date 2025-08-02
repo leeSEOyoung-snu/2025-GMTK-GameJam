@@ -21,8 +21,8 @@ public class CatBehaviour : MonoBehaviour
 
     public ConditionTypes conditionType { get; private set; }
     public string Condition;
-    
-    private ResultTypes resultType;
+
+    public ResultTypes resultType;
     private bool isResultSingle, isResult1Sushi, isResult2Sushi;
     public string Result1;
     public string Result2;
