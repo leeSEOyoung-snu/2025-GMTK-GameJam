@@ -97,4 +97,9 @@ public class MainSceneManager : MonoBehaviour
         UpdateRotateCnt();
         TableManager.Instance.RotateDishOnce();
     }
+
+    public void CheckConditionCompleted()
+    {
+        Debug.Log("Check!");
+    }
 }

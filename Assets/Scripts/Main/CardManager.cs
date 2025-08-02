@@ -106,6 +106,7 @@ public class CardManager : MonoBehaviour, IInit
     {
         if (_selectedCard == null) return;
         dish.PutSushiOnDish(_selectedCard.Sushi);
+        InteractionManager.Instance.CheckCondition(ConditionTypes.CardPlaced, _selectedCard.Sushi.ToString());
         DiscardCard(_selectedCard);
         _selectedCard = null;
     }

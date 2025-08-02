@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using DG.Tweening;
 using UnityEngine;
 
 public class CatBehaviour : MonoBehaviour
@@ -13,7 +14,12 @@ public class CatBehaviour : MonoBehaviour
     private readonly float _sushiTypeScale, _dishTypeScale;
     private ColorTypes color;
 
-    private ConditionTypes conditionType;
+    private readonly float _tmpAnimationFactor = 0.5f;
+    private Sequence _catSeq;
+
+    private int id;
+
+    public ConditionTypes conditionType { get; private set; }
     public string Condition { private get; set; }
     
     private ResultTypes resultType;
@@ -21,8 +27,10 @@ public class CatBehaviour : MonoBehaviour
     public string Result1 { private get; set; }
     public string Result2 { private get; set; }
 
-    public void InitCat(Vector3 initPos, Dictionary<string, object> catData)
+    public void InitCat(Vector3 initPos, Dictionary<string, object> catData, int id)
     {
+        this.id = id;
+        
         transform.localPosition = initPos;
         
         catSr.sprite = DiningManager.Instance.catSprites[(int)catData["Sprite"]];
@@ -40,9 +48,9 @@ public class CatBehaviour : MonoBehaviour
         else Debug.LogError("Cat Color Error: " + (string)catData["Color"]);
 
         // Generate Condition
-
-        if (Enum.TryParse((string)catData["Condition"], ignoreCase: true, out conditionType))
+        if (Enum.TryParse((string)catData["Condition"], ignoreCase: true, out ConditionTypes cond))
         {
+            conditionType = cond;
             var conditionData =
                 ConditionMethods.Instance.GetConditionSprites(conditionType, catData["ConVal1"]);
             catConditionBehaviour.InitCondition(conditionData.Item1, conditionData.Item2, conditionData.Item3);
@@ -94,6 +102,23 @@ public class CatBehaviour : MonoBehaviour
         
         catResultBehaviour.InitResult(sprites, isVal1Sushi, isVal2Sushi, isVal1StandBy, isVal2StandBy);
     }
-    
-    
+
+    public void CheckCondition(ConditionTypes conditionType, string condition)
+    {
+        bool check = this.conditionType == conditionType && Condition == condition;
+        // TODO: Condition 충족 시 애니메이션 수정
+        if (_catSeq != null && _catSeq.IsActive() && _catSeq.IsPlaying())
+        {
+            _catSeq.Kill();
+        }
+        _catSeq = DOTween.Sequence();
+        Vector3[] path = { new Vector3(transform.localPosition.x, transform.localPosition.y + _tmpAnimationFactor, transform.localPosition.z), transform.localPosition };
+        _catSeq.Append(transform.DOLocalPath(path, _tmpAnimationFactor));
+        _catSeq.Play().OnComplete(() => { InteractionManager.Instance.CheckConditionCompleted(check, id);});
+    }
+
+    public void ActivateResult()
+    {
+        
+    }
 }
