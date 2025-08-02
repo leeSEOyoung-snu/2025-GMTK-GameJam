@@ -277,7 +277,6 @@ public class TableManager : MonoBehaviour, IInit
 
             Vector3 firstDishPos = DishBehaviourDict[0].DishData.CurrPos;
             
-            Debug.Log(firstDishPos);
 
             if (isAllDishEmpty && firstDishPos.y < 0f && Mathf.Abs(firstDishPos.x - ServingMinPosX) <= 0.0001f)
             {

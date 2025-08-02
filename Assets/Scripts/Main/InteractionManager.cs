@@ -9,19 +9,23 @@ public class InteractionManager : MonoBehaviour, IInit
     public static InteractionManager Instance { get; private set; }
 
     public Dictionary<int, DishBehaviour> CatDishRelative;
-    
-    
-    private List<int> eatenList;
+    private Dictionary<int, DishBehaviour> passedDish;
+    private Dictionary<int, bool> activationInfo;
+
+    private Dictionary<int, bool> isSushiEaten;
     
     private int currCompletedRelative;
 
     private Queue<(ConditionTypes, string)> conditionQueue;
-    private Queue<int> activateCatIdx;
     private (ConditionTypes, string) currentCondition;
 
     public bool isProcessing;
+
+    private int activatedId;
     
     private int currCompletedCondition;
+
+    private bool isFirstTurn;
 
     private void Awake()
     {
@@ -30,12 +34,15 @@ public class InteractionManager : MonoBehaviour, IInit
 
     public void Init()
     {
-        eatenList = new List<int>();
         CatDishRelative = new Dictionary<int, DishBehaviour>();
+        passedDish = new Dictionary<int, DishBehaviour>();
+        activationInfo = new Dictionary<int, bool>();
+        isSushiEaten = new Dictionary<int, bool>();
         currCompletedRelative = 0;
+
+        isFirstTurn = true;
         
         conditionQueue = new Queue<(ConditionTypes, string)>();
-        activateCatIdx = new Queue<int>();
         isProcessing = false;
         
         currCompletedCondition = 0;
@@ -47,53 +54,63 @@ public class InteractionManager : MonoBehaviour, IInit
         conditionQueue.Enqueue((conditionType, val1));
     }
 
-    public void TriggerProcess()
+    public void TriggerProcess(bool force = false)
     {
-        if (isProcessing || conditionQueue.Count == 0) return;
+        if (!force && isProcessing) return;
+        if (conditionQueue.Count == 0) return;
         isProcessing = true;
+        activatedId = 0;
         currentCondition = conditionQueue.Dequeue();
         CheckCondition();
     }
 
     private void CheckCondition()
     {
-        activateCatIdx.Clear();
+        if (isFirstTurn) InitCatDishRelative();
         currCompletedCondition = 0;
         for (int i = 0; i < DiningManager.Instance.CatCnt; i++)
         {
-            DiningManager.Instance.CatBehaviourDict[i].CheckCondition(currentCondition.Item1, currentCondition.Item2);
+            if (activationInfo[i]) continue;
+            activationInfo[i] = DiningManager.Instance.CatBehaviourDict[i].CheckCondition(currentCondition.Item1, currentCondition.Item2);
         }
-    }
 
-    public void CheckConditionCompleted(bool isSatisfied, int catId)
-    {
-        if (isSatisfied) { activateCatIdx.Enqueue(catId); }
-        if (currCompletedCondition < DiningManager.Instance.CatCnt - 1) { currCompletedCondition++; return; }
-        
-        currCompletedCondition = 0;
-
-        ActivateResult();
+        if (conditionQueue.Count > 0)
+        {
+            currentCondition = conditionQueue.Dequeue();
+            CheckCondition();
+        }
+        else
+        {
+            ActivateResult();
+        }
     }
 
     public void ActivateResult()
     {
-        if (activateCatIdx.Count > 0)
+        bool noActive = true;
+        foreach (bool active in activationInfo.Values)
         {
-            DiningManager.Instance.CatBehaviourDict[activateCatIdx.Dequeue()].ActivateResult();
+            Debug.Log(active);
+            if (active) noActive = false;
         }
-        else
+        
+        if (noActive)
         {
-            if (conditionQueue.Count == 0)
-            {
-                isProcessing = false;
-                MainSceneManager.Instance.CheckConditionCompleted();
-            }
-            else
-            {
-                currentCondition = conditionQueue.Dequeue();
-                CheckCondition();
-            }
+            isProcessing = false;
+            MainSceneManager.Instance.CheckConditionCompleted();
+            return;
         }
+
+        activatedId++;
+        if (!activationInfo[activatedId % DiningManager.Instance.CatCnt])
+        {
+            ActivateResult();
+            return;
+        }
+        
+        
+        activationInfo[activatedId % DiningManager.Instance.CatCnt] = false;
+        DiningManager.Instance.CatBehaviourDict[activatedId % DiningManager.Instance.CatCnt].ActivateResult();
     }
     
     #endregion
@@ -102,131 +119,65 @@ public class InteractionManager : MonoBehaviour, IInit
     
     public void InitCatDishRelative()
     {
-        CatDishRelative.Clear();
+        if (CatDishRelative.Count == 0)
+        {
+            for (int i = 0; i < DiningManager.Instance.CatCnt; i++)
+            {
+                passedDish.Add(i, null);
+                CatDishRelative.Add(i, null);
+                activationInfo.Add(i, false);
+                isSushiEaten.Add(i, false);
+            }
+        }
+        
         for (int i = 0; i < DiningManager.Instance.CatCnt; i++)
         {
-            CatDishRelative.Add(i, null);
+            passedDish[i] = CatDishRelative[i];
+            CatDishRelative[i] = null;
+            activationInfo[i] = false;
+            isSushiEaten[i] = false;
         }
+
+        
+        activatedId = 0;
     }
     
     public void CheckCatDishRelative()
     {
-        eatenList.Clear();
+        // TODO: passed 추가
         currCompletedRelative = 0;
         foreach (var pair in CatDishRelative)
         {
             if (pair.Value == null)
             {
-                currCompletedRelative++;
+                // currCompletedRelative++;
+                CheckRelativeCompleted();
                 continue;
             }
-            DiningManager.Instance.CatBehaviourDict[pair.Key].TryEat(pair.Value.DishData.Color);
+            isSushiEaten[pair.Key] = DiningManager.Instance.CatBehaviourDict[pair.Key].TryEat(pair.Value.DishData.Color, pair.Value);
         }
     }
     
-    public void CheckRelativeCompleted(bool eaten, int catId)
+    public void CheckRelativeCompleted()
     {
-        if (eaten)
-        {
-            eatenList.Add(catId);
-            activateCatIdx.Enqueue(catId);
-        }
         if (currCompletedRelative < DiningManager.Instance.CatCnt - 1) { currCompletedRelative++; return; }
 
         currCompletedRelative = 0;
-        
-        for (int i = 0; i < eatenList.Count; i++)
+
+        foreach (var pair in isSushiEaten)
         {
-            CatDishRelative[eatenList[i]].ChangeSushiType(SushiTypes.Empty);
+            if (!pair.Value) continue;
+            if (!activationInfo[pair.Key])
+            {
+                activationInfo[pair.Key] = DiningManager.Instance.CatBehaviourDict[pair.Key]
+                    .CheckCondition(ConditionTypes.SushiEaten, CatDishRelative[pair.Key].DishData.Sushi.ToString());
+            }
+            Debug.Log(CatDishRelative[pair.Key]);
+            CatDishRelative[pair.Key].ChangeSushiType(SushiTypes.Empty);
         }
         
         ActivateResult();
     }
     
     #endregion
-
-    /*
-    public void InitCatDishRelative()
-    {
-        CatDishRelative.Clear();
-        for (int i = 0; i < DiningManager.Instance.CatCnt; i++)
-        {
-            CatDishRelative.Add(i, null);
-        }
-    }
-
-    public void CheckCatDishRelative()
-    {
-        eatenList.Clear();
-        currCompletedRelative = 0;
-        foreach (var pair in CatDishRelative)
-        {
-            if (pair.Value == null)
-            {
-                currCompletedRelative++;
-                continue;
-            }
-            DiningManager.Instance.CatBehaviourDict[pair.Key].TryEat(pair.Value.DishData.Color);
-        }
-    }
-
-    public void CheckRelativeCompleted(bool eaten, int catId)
-    {
-        if (eaten)
-        {
-            eatenList.Add(catId);
-        }
-        if (currCompletedRelative < DiningManager.Instance.CatCnt - 1) { currCompletedRelative++; return; }
-
-        currCompletedRelative = 0;
-        
-        for (int i = 0; i < eatenList.Count; i++)
-        {
-            var dish = CatDishRelative[eatenList[i]];
-            CheckCondition(ConditionTypes.SushiEaten, dish.DishData.Sushi.ToString());
-            dish.ChangeSushiType(SushiTypes.Empty);
-        }
-    }
-
-    private void CheckCondition(ConditionTypes condition, string valStr)
-    {
-        satisfiedIds.Clear();
-        currCompletedCondition = 0;
-        for (int i = 0; i < DiningManager.Instance.CatCnt; i++)
-        {
-            DiningManager.Instance.CatBehaviourDict[i].CheckCondition(condition, valStr);
-        }
-    }
-
-    public void CheckConditionCompleted(bool check, int id)
-    {
-        if (check)
-        {
-            satisfiedIds.Add(id);
-        }
-        if (currCompletedCondition < DiningManager.Instance.CatCnt - 1) { currCompletedCondition++; return; }
-        
-        currCompletedCondition = 0;
-
-        if (satisfiedIds.Count == 0)
-        {
-            MainSceneManager.Instance.CheckConditionCompleted();
-            return;
-        }
-
-        currCompletedResult = 0;
-        foreach (int catId in satisfiedIds)
-        {
-            DiningManager.Instance.CatBehaviourDict[catId].ActivateResult();
-        }
-    }
-
-    public void CheckResultCompleted()
-    {
-        Debug.Log("Ended");
-        if (currCompletedResult < DiningManager.Instance.CatCnt - 1) { currCompletedResult++; return; }
-        currCompletedResult = 0;
-        MainSceneManager.Instance.CheckConditionCompleted();
-    }
-    */
 }
