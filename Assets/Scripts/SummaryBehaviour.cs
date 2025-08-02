@@ -9,7 +9,7 @@ public class SummaryBehaviour : MonoBehaviour
 {
     [SerializeField] private Sprite NextStageButtonSprite;
     [SerializeField] private Sprite RetryButtonSprite;
-    [SerializeField] private TextMeshProUGUI MessageText;
+    [SerializeField] private Image Image;
     [SerializeField] private TextMeshProUGUI ScoreText;
     [SerializeField] private Image VariButton;
     private int currScore, targetScore;
@@ -34,13 +34,11 @@ public class SummaryBehaviour : MonoBehaviour
         this.targetScore = targetScore;
         if (isClear)
         {
-            MessageText.text = "Stage Cleared!";
             ScoreText.text = "Score: " + currScore + " / " + targetScore;
             VariButton.sprite = NextStageButtonSprite;
         }
         else
         {
-            MessageText.text = "Stage Failed!";
             ScoreText.text = "Score: " + currScore + " / " + targetScore;
             VariButton.sprite = RetryButtonSprite;
         }
