@@ -12,7 +12,7 @@ public class StagePanelBehaviour : MonoBehaviour
     private string selectedStageFileName;
     private int currentSelectedNode = -1;
 
-    public List<int> StageNodeData;
+    public List<int> StageNodesData;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,7 +31,7 @@ public class StagePanelBehaviour : MonoBehaviour
             trigger.triggers.Add(entry);
         }
 
-        if (StageNodeData == null)
+        if (StageNodesData == null)
         {
             Debug.LogError("saveData is null, please check the StagePanelBehaviour component");
         }

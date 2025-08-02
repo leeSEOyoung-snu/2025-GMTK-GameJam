@@ -7,6 +7,8 @@ using UnityEngine.EventSystems;
 
 public class StageManager : MonoBehaviour
 {
+    //singleton
+    public static StageManager Instance { get; private set; }
     #region Fields
     private int currentSelectedStage = 0;
     private string selectedStageFileName;
@@ -33,11 +35,26 @@ public class StageManager : MonoBehaviour
     [SerializeField] private GameObject OptionButton;
     [SerializeField] private GameObject LeftButton;
     [SerializeField] private GameObject RightButton;
+    
+    [Header("ImageIcon")]
+    [SerializeField] public Sprite ClearIcon;
+    [SerializeField] public Sprite OpenIcon;
+    [SerializeField] public Sprite ClosedIcon;
     #endregion
 
     #region LifeCycle
     private void Awake()
     {
+        // Ensure that there is only one instance of StageManager
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // Keep this instance across scenes
+        }
+        else
+        {
+            Destroy(gameObject); // Destroy duplicate instances
+        }
         stagePanelSequence = DOTween.Sequence();
         foreach (var st in StagePanels)
         {
@@ -52,7 +69,7 @@ public class StageManager : MonoBehaviour
         _saveData = GameManager.Instance._saveData;
         for(int i = 0; i < StagePanels.Count; i++)
         {
-            StagePanels[i].GetComponent<StagePanelBehaviour>().StageNodeData = _saveData.saveData[i];
+            StagePanels[i].GetComponent<StagePanelBehaviour>().StageNodesData = _saveData.saveData[i];
         }
         LeftButton.SetActive(false);
     }

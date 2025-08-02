@@ -1661,6 +1661,9 @@ MonoBehaviour:
   OptionButton: {fileID: 925042034}
   LeftButton: {fileID: 1996934080}
   RightButton: {fileID: 406493705}
+  ClearIcon: {fileID: 21300000, guid: c55cd68d8fbfefc4280db65d1ea83358, type: 3}
+  OpenIcon: {fileID: 21300000, guid: d68c9bea4ef84534fa97d3d2aa528ce7, type: 3}
+  ClosedIcon: {fileID: 21300000, guid: 91d630e5432d013438feffbc604e4eba, type: 3}
 --- !u!1 &580745265
 GameObject:
   m_ObjectHideFlags: 0
