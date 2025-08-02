@@ -99,16 +99,9 @@ public class OptionController : MonoBehaviour
         PointerEventData ped = (PointerEventData)data;
         GameObject hoveredObject = ped.pointerEnter;
 
-        if (hoveredObject == BackTotheGameButton)
-        {
-            BackTotheGameButton.GetComponent<RectTransform>().localScale =
-                new Vector3(1.2f, 1.2f, 1f);
-        }
-        else if (hoveredObject == BackTotheTitleButton)
-        {
-            BackTotheTitleButton.GetComponent<RectTransform>().localScale =
-                new Vector3(1.2f, 1.2f, 1f);
-        }
+        hoveredObject.GetComponent<RectTransform>().localScale =
+            new Vector3(1.2f, 1.2f, 1f); // Scale up the hovered button
+        
     }
 
     public void OnHoverExit(BaseEventData data)
