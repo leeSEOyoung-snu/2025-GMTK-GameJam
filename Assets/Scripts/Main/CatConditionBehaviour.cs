@@ -36,7 +36,7 @@ public class CatConditionBehaviour : IPointerHandler
     public override void HandlePointerEnter()
     {
         TooltipManager.Instance.ShowTooltip();
-        TooltipManager.Instance.setupTooltip("FuckshitFuckshit\nHello World!", Camera.main.WorldToScreenPoint(this.transform.position)+new Vector3(0,+75f,0));
+        TooltipManager.Instance.setupTooltip(catBehaviour.conditionType, Camera.main.WorldToScreenPoint(this.transform.position)+new Vector3(0,+75f,0));
 
     }
 

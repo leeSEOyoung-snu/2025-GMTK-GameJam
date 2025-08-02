@@ -5,7 +5,8 @@ using UnityEngine;
 
 public enum ResultTypes
 {
-    GenerateCard,
+    GenerateCard1,
+    GenerateCard2,
     GenerateSushi,
     GiveTip,
     EmptyNextDish,
@@ -59,10 +60,12 @@ public class ResultMethods : MonoBehaviour
         
         switch (type)
         {
-            case ResultTypes.GenerateCard:
+            case ResultTypes.GenerateCard1:
                 CardManager.Instance.AddCard(sushi1);
                 break;
-            
+            case ResultTypes.GenerateCard2:
+                //TODO : Will be implemneted by SEO later
+                break;
             case ResultTypes.GenerateSushi:
                 break;
             case ResultTypes.GiveTip:
