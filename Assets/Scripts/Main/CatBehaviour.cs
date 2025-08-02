@@ -108,9 +108,6 @@ public class CatBehaviour : MonoBehaviour
 
     public void CheckCondition(ConditionTypes conditionType, string condition)
     {
-        Debug.Log($"This [{this.conditionType} - {Condition}]");
-        Debug.Log($"Val [{conditionType} - {condition}]");
-        
         if (this.conditionType == conditionType && Condition == condition)
         {
             // TODO: Condition 충족 시 애니메이션 수정
@@ -147,5 +144,14 @@ public class CatBehaviour : MonoBehaviour
         Vector3[] path = { new Vector3(transform.localPosition.x, transform.localPosition.y + _tmpAnimationFactor, transform.localPosition.z), transform.localPosition };
         _catSeq.Append(transform.DOLocalPath(path, _tmpAnimationFactor));
         // _catSeq.Play().OnComplete(() => { InteractionManager.Instance.CheckConditionCompleted(check, id);});
+    }
+
+    public bool TryEat(ColorTypes dishColor)
+    {
+        bool result;
+        if (color == ColorTypes.W || dishColor == ColorTypes.W) result = true;
+        else if (dishColor == color) result = true;
+        else result = false;
+        return result;
     }
 }

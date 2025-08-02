@@ -454,14 +454,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   iconSprites:
-  - {fileID: 21300000, guid: 25dd8f5c7f2ea7549908c615069899a7, type: 3}
-  - {fileID: 21300000, guid: 159d2eb2d8951a346b6fe4840b401be9, type: 3}
-  - {fileID: 21300000, guid: 3280d50fd52f24d479eb6e5688b2f8ed, type: 3}
-  - {fileID: 21300000, guid: 97167d0a189dc8c48aac2decf4965abd, type: 3}
-  - {fileID: 21300000, guid: b424f6836eee7ca49bf704c2b8e12e10, type: 3}
+  - {fileID: 21300000, guid: 84b2df843d32c2e4fb352913d3845533, type: 3}
+  - {fileID: 21300000, guid: 346d456f446b598479e3175593fa2a21, type: 3}
   - {fileID: 21300000, guid: 06edc2365e3baed49b8acc5b2e47c798, type: 3}
-  - {fileID: 21300000, guid: 113df0cddab94784d89995c7bcf0ed98, type: 3}
-  - {fileID: 21300000, guid: 8a46046e75f9e9a4cbb873d0bf2123c5, type: 3}
+  - {fileID: 21300000, guid: 06edc2365e3baed49b8acc5b2e47c798, type: 3}
+  - {fileID: 21300000, guid: 06edc2365e3baed49b8acc5b2e47c798, type: 3}
+  - {fileID: 21300000, guid: 06edc2365e3baed49b8acc5b2e47c798, type: 3}
+  - {fileID: 21300000, guid: 06edc2365e3baed49b8acc5b2e47c798, type: 3}
+  - {fileID: 21300000, guid: 06edc2365e3baed49b8acc5b2e47c798, type: 3}
 --- !u!114 &270993563
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1472,6 +1472,7 @@ MonoBehaviour:
   rotateCntText: {fileID: 50612735}
   scoreText: {fileID: 723648653}
   startCookButton: {fileID: 425218143}
+  isRotating: 0
 --- !u!114 &1056297272
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -65,13 +65,7 @@ public class DishBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnterH
         _rotateSq.Play().OnComplete(TableManager.Instance.CheckDishCondition);
         DishData.CurrPos = endPos;
     }
-
-    public void Eat()
-    {
-        // TODO: Eat 구현
-        Debug.Log("앙");
-    }
-
+    
     public void ChangeDishType(ColorTypes color)
     {
         DishData.Color = color;
