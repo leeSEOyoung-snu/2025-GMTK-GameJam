@@ -1469,9 +1469,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2a540420f3c28842862ba6da90fd314, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  popupPrefab: {fileID: 3336283338421226276, guid: c9c55260a81aa4344a5fdb3f45f7a0bd, type: 3}
   rotateCntText: {fileID: 50612735}
   scoreText: {fileID: 723648653}
   startCookButton: {fileID: 425218143}
+  mainCanvas: {fileID: 547865272}
   isRotating: 0
 --- !u!114 &1056297272
 MonoBehaviour:
