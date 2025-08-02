@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class StagePanelBehaviour : MonoBehaviour
 {
     [SerializeField] private List<GameObject> StageNodes;
+    [SerializeField] private TextMeshProUGUI StageNameText;
     private string selectedStageFileName;
     private int currentSelectedNode = -1;
     // Start is called before the first frame update
@@ -26,6 +28,7 @@ public class StagePanelBehaviour : MonoBehaviour
             
             trigger.triggers.Add(entry);
         }
+        StageNameText.text = "Stage " + transform.name[transform.name.Length-1]; // Assuming the name of the panel is the stage name
     }
 
     // Update is called once per frame
