@@ -16,6 +16,8 @@ public class InteractionManager : MonoBehaviour, IInit
     private int currCompletedRelative;
     private int currCompletedResult;
 
+    public Queue<(ConditionTypes, string)> ConditionsQueue;
+
     private void Awake()
     {
         if (Instance == null) Instance = this;
@@ -29,6 +31,8 @@ public class InteractionManager : MonoBehaviour, IInit
         currCompletedCondition = 0;
         currCompletedRelative = 0;
         currCompletedResult = 0;
+        
+        ConditionsQueue = new Queue<(ConditionTypes, string)>();
     }
 
     public void InitCatDishRelative()
