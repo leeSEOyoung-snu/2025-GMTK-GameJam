@@ -64,12 +64,15 @@ public class StageNodeBehaviour : MonoBehaviour
     public void OnHoverEnter(BaseEventData data)
     {
         if(stageState == StageState.Open){
-            this.GetComponent<RectTransform>().localScale = new Vector3(1.2f, 1.2f, 1f); // Scale up the node
+            this.GetComponent<RectTransform>().localScale = new Vector3(1.3f, 1.3f, 1f); // Scale up the node
+        }
+        if(stageState == StageState.Clear){
+            this.GetComponent<RectTransform>().localScale = new Vector3(1.1f, 1.1f, 1f); // Scale up the node
         }
     }
     public void OnHoverExit(BaseEventData data)
     {
-        if (stageState == StageState.Open)
+        if (stageState == StageState.Open || stageState == StageState.Clear)
         {
             this.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1f); // Reset scale
         }
@@ -77,9 +80,10 @@ public class StageNodeBehaviour : MonoBehaviour
 
     public void OnClicked()
     {
-        if (stageState == StageState.Open)
+        if (stageState == StageState.Open || stageState == StageState.Clear)
         {
             GameManager.Instance.SetStageData(BigStage, SmallStage);
         }
+        
     }
 }

@@ -1,4 +1,4 @@
-Stage,RailCnt,RotateCnt,DishColor,StartSushi,NextSushi,Menu,TargetScore,NewIcon,Description
-101,1,3,W,Egg$Egg,Maki,Egg,101,1_2,FUCK$MyLife
-102,2,3,W$W,Egg$Egg$Shrimp,X,Egg$Shrimp,102,-1,test
+Stage,RailCnt,RotateCnt,DishColor,StartSushi,NextSushi,Menu,TargetScore,NewIcon,Description,Unlock
+101,1,3,W,Egg$Egg,Maki,Egg,101,1_2,FUCK$MyLife,102$103$104
+102,2,3,W$W,Egg$Egg$Shrimp,X,Egg$Shrimp,102,-1,test,-1
 103,3,3,W$W$W,Egg$Egg$Shrimp$Shrimp,Shrimp,Egg$Shrimp,103,2_3,test1$hello world!
