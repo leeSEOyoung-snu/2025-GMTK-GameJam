@@ -50,7 +50,7 @@ public class DiningManager : MonoBehaviour, IInit
         for (int i = 0; i < CatCnt; i++)
         {
             CatBehaviourDict.Add(i, Instantiate(catPref, catParent.transform).GetComponent<CatBehaviour>());
-            CatBehaviourDict[i].InitCat(new Vector3(currPosX, _catPosY, 0), currCatData[i]);
+            CatBehaviourDict[i].InitCat(new Vector3(currPosX, _catPosY, 0), currCatData[i], i);
             currPosX += MainSceneManager.Instance.PosXFactor;
         }
     }

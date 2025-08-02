@@ -21,7 +21,7 @@ public class MainSceneManager : MonoBehaviour
     public static MainSceneManager Instance { get; private set; }
     
     public Dictionary<string, object> CurrStageData { get; private set; }
-    public readonly float PosXFactor = 1.8f;
+    public readonly float PosXFactor = 1.75f;
     private List<IInit> _initScripts = new List<IInit>();
     
     public float RotateSpeedFactor { get; private set; }
@@ -30,6 +30,7 @@ public class MainSceneManager : MonoBehaviour
     private List<int> _newIcon;
     private List<string> _newIconDescription;
     public bool isRotating { get; private set; }
+    public bool isRotating;
     
     public bool CookStarted { get; private set; }
     
@@ -125,6 +126,12 @@ public class MainSceneManager : MonoBehaviour
         isRotating = true;
         _currRotateCnt--;
         UpdateRotateCnt();
+        TableManager.Instance.RotateDishOnce();
+    }
+
+    public void CheckConditionCompleted()
+    {
+        if (!isRotating) return;
         TableManager.Instance.RotateDishOnce();
     }
 

@@ -196,6 +196,8 @@ public class TableManager : MonoBehaviour, IInit
     
     public void RotateDishOnce()
     {
+        InteractionManager.Instance.InitCatDishRelative();
+        
         currCompletedRotCnt = 0;
         _checkDishIdx = new List<int>();
         
@@ -242,6 +244,15 @@ public class TableManager : MonoBehaviour, IInit
                                              MainSceneManager.Instance.PosXFactor * DiningManager.Instance.CatCnt) <= 0.0001f)
                 _checkDishIdx.Insert(0, i);
             
+            if (dishEndPos.y >= 0.0001f)
+            {
+                int idx = Mathf.RoundToInt((dishEndPos.x - DiningManager.Instance.DiningMinPosX) /
+                                           MainSceneManager.Instance.PosXFactor);
+                if (idx >= 0 && idx < DiningManager.Instance.CatCnt)
+                {
+                    InteractionManager.Instance.CatDishRelative[idx] = dish;
+                }
+            }
             dish.Rotate(dishEndPos, moveXFirst);
         }
     }
@@ -249,26 +260,31 @@ public class TableManager : MonoBehaviour, IInit
     public void CheckDishCondition()
     {
         if (currCompletedRotCnt < DishCnt - 1) { currCompletedRotCnt++; return; }
-
-        string list = "";
-        foreach(int idx in _checkDishIdx) list += idx + ", ";
-        Debug.Log($"completed: {currCompletedRotCnt}, dishCnt: {DishCnt}, list: [{list}]");
         
         currCompletedRotCnt = 0;
 
         if (_checkDishIdx.Count == 0)
         {
-            RotateDishOnce();
+            bool isAllDishEmpty = true;
+            foreach (DishBehaviour dish in DishBehaviourDict.Values)
+            {
+                if (dish.DishData.Sushi != SushiTypes.Empty)
+                {
+                    isAllDishEmpty = false;
+                    break;
+                }
+            }
+
+            Vector3 firstDishPos = DishBehaviourDict[0].DishData.CurrPos;
+
+            if (isAllDishEmpty && firstDishPos.y < 0f && Mathf.Abs(firstDishPos.x - ServingMinPosX) <= 0.0001f)
+            {
+                MainSceneManager.Instance.isRotating = false;
+            }
+            else RotateDishOnce();
             return;
         }
-
-        foreach (int idx in _checkDishIdx)
-        {
-            bool eatSushi = DiningManager.Instance.ActivateDishEffect(DishBehaviourDict[idx].DishData);
-            if (eatSushi)
-            {
-                DishBehaviourDict[idx].Eat();
-            }
-        }
+        
+        InteractionManager.Instance.CheckCatDishRelative();
     }
 }

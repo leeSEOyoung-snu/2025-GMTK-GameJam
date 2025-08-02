@@ -106,6 +106,8 @@ public class CardManager : MonoBehaviour, IInit
     {
         if (_selectedCard == null) return;
         dish.PutSushiOnDish(_selectedCard.Sushi);
+        // InteractionManager.Instance.ConditionsQueue.Enqueue();
+        InteractionManager.Instance.CheckCondition(ConditionTypes.CardPlaced, _selectedCard.Sushi.ToString());
         DiscardCard(_selectedCard);
         _selectedCard = null;
     }
@@ -114,8 +116,9 @@ public class CardManager : MonoBehaviour, IInit
     {
         CardBehaviour cardBehaviour = Instantiate(cardPref, cardParent.transform).GetComponent<CardBehaviour>();
         CurrCards.Add(cardBehaviour);
-        cardBehaviour.InitCard(sushi, new Vector3(_cardMaxPosX, _addCardStartPosY, 0f), _defaultOrder + CurrCards.Count - 1);
+        cardBehaviour.InitCard(sushi, new Vector3(_cardMaxPosX, _addCardStartPosY, 0f), _defaultOrder + CurrCards.Count - 1);   
         ArrangeCard();
+        InteractionManager.Instance.CheckCondition(ConditionTypes.CardGenerated, _selectedCard.Sushi.ToString());
     }
 
     public void DebugAddCard()

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using DG.Tweening;
 using UnityEngine;
 
 public class CatBehaviour : MonoBehaviour
@@ -13,16 +14,23 @@ public class CatBehaviour : MonoBehaviour
     private readonly float _sushiTypeScale, _dishTypeScale;
     private ColorTypes color;
 
-    private ConditionTypes conditionType;
-    public string Condition { private get; set; }
+    private readonly float _tmpAnimationFactor = 0.5f;
+    private Sequence _catSeq;
+
+    private int id;
+
+    public ConditionTypes conditionType { get; private set; }
+    public string Condition;
     
     private ResultTypes resultType;
-    private bool isResultSingle;
-    public string Result1 { private get; set; }
-    public string Result2 { private get; set; }
+    private bool isResultSingle, isResult1Sushi, isResult2Sushi;
+    public string Result1;
+    public string Result2;
 
-    public void InitCat(Vector3 initPos, Dictionary<string, object> catData)
+    public void InitCat(Vector3 initPos, Dictionary<string, object> catData, int id)
     {
+        this.id = id;
+        
         transform.localPosition = initPos;
         
         catSr.sprite = DiningManager.Instance.catSprites[(int)catData["Sprite"]];
@@ -40,9 +48,10 @@ public class CatBehaviour : MonoBehaviour
         else Debug.LogError("Cat Color Error: " + (string)catData["Color"]);
 
         // Generate Condition
-
-        if (Enum.TryParse((string)catData["Condition"], ignoreCase: true, out conditionType))
+        if (Enum.TryParse((string)catData["Condition"], ignoreCase: true, out ConditionTypes cond))
         {
+            Condition = (string)catData["ConVal1"];
+            conditionType = cond;
             var conditionData =
                 ConditionMethods.Instance.GetConditionSprites(conditionType, catData["ConVal1"]);
             catConditionBehaviour.InitCondition(conditionData.Item1, conditionData.Item2, conditionData.Item3);
@@ -91,9 +100,73 @@ public class CatBehaviour : MonoBehaviour
             }
             else Debug.LogError("Result Val2 Error: " + Result2);
         }
-        
+
+        isResult1Sushi = isVal1Sushi;
+        isResult2Sushi = isVal2Sushi;
         catResultBehaviour.InitResult(sprites, isVal1Sushi, isVal2Sushi, isVal1StandBy, isVal2StandBy);
     }
-    
-    
+
+    public void CheckCondition(ConditionTypes conditionType, string condition)
+    {
+        if (this.conditionType == conditionType && Condition == condition)
+        {
+            // TODO: Condition 충족 시 애니메이션 수정
+            if (_catSeq != null && _catSeq.IsActive() && _catSeq.IsPlaying())
+            {
+                _catSeq.Kill();
+            }
+
+            _catSeq = DOTween.Sequence();
+            Vector3[] path =
+            {
+                new Vector3(transform.localPosition.x, transform.localPosition.y + _tmpAnimationFactor,
+                    transform.localPosition.z),
+                transform.localPosition
+            };
+            _catSeq.Append(transform.DOLocalPath(path, _tmpAnimationFactor));
+            _catSeq.Play().OnComplete(() => { InteractionManager.Instance.CheckConditionCompleted(true, id); });
+        }
+        else
+        {
+            InteractionManager.Instance.CheckConditionCompleted(false, id);
+        }
+    }
+
+    public void ActivateResult()
+    {
+        ResultMethods.Instance.ActivateResult(resultType, isResultSingle, Result1, Result2, isResult1Sushi, isResult2Sushi);
+        // TODO: Condition 충족 시 애니메이션 수정
+        if (_catSeq != null && _catSeq.IsActive() && _catSeq.IsPlaying())
+        {
+            _catSeq.Kill();
+        }
+        _catSeq = DOTween.Sequence();
+        Vector3[] path = { new Vector3(transform.localPosition.x, transform.localPosition.y + _tmpAnimationFactor, transform.localPosition.z), transform.localPosition };
+        _catSeq.Append(transform.DOLocalPath(path, _tmpAnimationFactor));
+        _catSeq.Play().OnComplete(() => { InteractionManager.Instance.CheckResultCompleted();});
+    }
+
+    public bool TryEat(ColorTypes dishColor)
+    {
+        bool result;
+        if (color == ColorTypes.W || dishColor == ColorTypes.W) result = true;
+        else if (dishColor == color) result = true;
+        else result = false;
+        
+        if (result) EatMotion();
+        return result;
+    }
+
+    private void EatMotion()
+    {
+        // TODO: 먹는 모션 수정
+        if (_catSeq != null && _catSeq.IsActive() && _catSeq.IsPlaying())
+        {
+            _catSeq.Kill();
+        }
+        _catSeq = DOTween.Sequence();
+        Vector3[] path = { new Vector3(transform.localPosition.x, transform.localPosition.y - _tmpAnimationFactor, transform.localPosition.z), transform.localPosition };
+        _catSeq.Append(transform.DOLocalPath(path, _tmpAnimationFactor));
+        _catSeq.Play().OnComplete(() => { InteractionManager.Instance.CheckRelativeCompleted(true, id); });
+    }
 }

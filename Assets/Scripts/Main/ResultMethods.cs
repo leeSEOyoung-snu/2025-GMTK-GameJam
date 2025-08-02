@@ -27,21 +27,40 @@ public class ResultMethods : MonoBehaviour
         if (Instance == null) Instance = this;
     }
     
-    public void ActivateResult(ResultTypes type, object resVal1, object resVal2)
+    public void ActivateResult(ResultTypes type, bool isResultSingle, string resVal1, string resVal2, bool isVal1Sushi, bool isVal2Sushi)
     {
+        SushiTypes sushi1 = SushiTypes.Any, sushi2 = SushiTypes.Any;
+        ColorTypes dish1 = ColorTypes.DishStandBy, dish2 = ColorTypes.DishStandBy;
+
+        if (isVal1Sushi)
+        {
+            if (Enum.TryParse(resVal1, ignoreCase: true, out sushi1)) { }
+            else Debug.LogError($"Result Value1 Error: {resVal1}");
+        }
+        else
+        {
+            if (Enum.TryParse(resVal2, ignoreCase: true, out dish1)) { }
+            else Debug.LogError($"Result Value2 Error: {resVal1}");
+        }
+
+        if (!isResultSingle)
+        {
+            if (isVal2Sushi)
+            {
+                if (Enum.TryParse(resVal1, ignoreCase: true, out sushi2)) { }
+                else Debug.LogError($"Result Value1 Error: {resVal2}");
+            }
+            else
+            {
+                if (Enum.TryParse(resVal2, ignoreCase: true, out dish2)) { }
+                else Debug.LogError($"Result Value2 Error: {resVal2}");
+            }
+        }
+        
         switch (type)
         {
             case ResultTypes.GenerateCard:
-                SushiTypes sushi1, sushi2;
-                if (Enum.TryParse((string)resVal1, ignoreCase: true, out sushi1))
-                {
-                    if (Enum.TryParse((string)resVal2, ignoreCase: true, out sushi2))
-                    {
-                        // GenerateCard(sushi1, sushi2);
-                    }
-                    else GenerateCard(sushi1);
-                }
-                else Debug.LogError($"GenerateCard Value Error: {resVal1}");
+                CardManager.Instance.AddCard(sushi1);
                 break;
             
             case ResultTypes.GenerateSushi:
@@ -61,14 +80,4 @@ public class ResultMethods : MonoBehaviour
         }
     }
     
-    
-    
-    #region GenerateCard
-
-    public void GenerateCard(SushiTypes sushiType)
-    {
-        CardManager.Instance.AddCard(sushiType);
-    }
-    
-    #endregion
 }

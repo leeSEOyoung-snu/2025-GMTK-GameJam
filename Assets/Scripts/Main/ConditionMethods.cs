@@ -59,6 +59,7 @@ public class ConditionMethods : MonoBehaviour
 
         return (sprites, isStandBy, isSushiType);
     }
+    
 
     // 0
     #region SushiEaten
