@@ -113,7 +113,7 @@ public class CatBehaviour : MonoBehaviour
             // TODO: Condition 충족 시 애니메이션 수정
             if (_catSeq != null && _catSeq.IsActive() && _catSeq.IsPlaying())
             {
-                _catSeq.Kill();
+                _catSeq.Kill(true);
             }
 
             _catSeq = DOTween.Sequence();
@@ -138,12 +138,12 @@ public class CatBehaviour : MonoBehaviour
         // TODO: Condition 충족 시 애니메이션 수정
         if (_catSeq != null && _catSeq.IsActive() && _catSeq.IsPlaying())
         {
-            _catSeq.Kill();
+            _catSeq.Kill(true);
         }
         _catSeq = DOTween.Sequence();
         Vector3[] path = { new Vector3(transform.localPosition.x, transform.localPosition.y + _tmpAnimationFactor, transform.localPosition.z), transform.localPosition };
         _catSeq.Append(transform.DOLocalPath(path, _tmpAnimationFactor));
-        _catSeq.Play().OnComplete(() => { InteractionManager.Instance.CheckResultCompleted();});
+        _catSeq.Play().OnComplete(InteractionManager.Instance.ActivateResult);
     }
 
     public bool TryEat(ColorTypes dishColor)
@@ -162,7 +162,7 @@ public class CatBehaviour : MonoBehaviour
         // TODO: 먹는 모션 수정
         if (_catSeq != null && _catSeq.IsActive() && _catSeq.IsPlaying())
         {
-            _catSeq.Kill();
+            _catSeq.Kill(true);
         }
         _catSeq = DOTween.Sequence();
         Vector3[] path = { new Vector3(transform.localPosition.x, transform.localPosition.y - _tmpAnimationFactor, transform.localPosition.z), transform.localPosition };

@@ -60,7 +60,7 @@ public class ResultMethods : MonoBehaviour
         switch (type)
         {
             case ResultTypes.GenerateCard:
-                CardManager.Instance.AddCard(sushi1);
+                CardManager.Instance.AddCard(sushi1, true);
                 break;
             
             case ResultTypes.GenerateSushi:

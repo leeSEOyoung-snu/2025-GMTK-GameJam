@@ -241,7 +241,7 @@ public class TableManager : MonoBehaviour, IInit
             if (dishEndPos.y > 0.0001f
                 && dishEndPos.x - DiningManager.Instance.DiningMinPosX >= -0.0001f
                 && dishEndPos.x - (DiningManager.Instance.DiningMinPosX +
-                                             MainSceneManager.Instance.PosXFactor * DiningManager.Instance.CatCnt) <= 0.0001f)
+                                             MainSceneManager.Instance.PosXFactor * (DiningManager.Instance.CatCnt - 1)) <= 0.0001f)
                 _checkDishIdx.Insert(0, i);
             
             if (dishEndPos.y >= 0.0001f)
@@ -276,6 +276,8 @@ public class TableManager : MonoBehaviour, IInit
             }
 
             Vector3 firstDishPos = DishBehaviourDict[0].DishData.CurrPos;
+            
+            Debug.Log(firstDishPos);
 
             if (isAllDishEmpty && firstDishPos.y < 0f && Mathf.Abs(firstDishPos.x - ServingMinPosX) <= 0.0001f)
             {
