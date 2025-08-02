@@ -44,7 +44,7 @@ public class CatResultBehaviour : IPointerHandler
         
         this.isVal1StandBy = isVal1Sushi;
         this.isVal2StandBy = isVal2Sushi;
-        pointerDetector.SetActive(isVal1StandBy || isVal2StandBy);
+        pointerDetector.SetActive(true);
     }
 
     public override void HandlePointerClick()
@@ -57,21 +57,18 @@ public class CatResultBehaviour : IPointerHandler
     {
         if (isResultSingle)
         {
-            pointerDetector.SetActive(false);
             isVal1StandBy = isVal2StandBy = false;
             result.GetComponent<SpriteRenderer>().sprite = TableManager.Instance.sushiSprites[(int)sushi];
             catBehaviour.Result1 = sushi.ToString();
         }
         else if (isVal1StandBy)
         {
-            if (!isVal2StandBy) pointerDetector.SetActive(false);
             isVal1StandBy = false;
             result.transform.Find("Result1").GetComponent<SpriteRenderer>().sprite = TableManager.Instance.sushiSprites[(int)sushi];
             catBehaviour.Result1 = sushi.ToString();
         }
         else
         {
-            pointerDetector.SetActive(false);
             isVal2StandBy = false;
             result.transform.Find("Result2").GetComponent<SpriteRenderer>().sprite = TableManager.Instance.sushiSprites[(int)sushi];
             catBehaviour.Result2 = sushi.ToString();

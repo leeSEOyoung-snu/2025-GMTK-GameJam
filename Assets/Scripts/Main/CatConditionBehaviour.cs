@@ -13,9 +13,13 @@ public class CatConditionBehaviour : IPointerHandler
     
     private GameObject type;
 
+    private bool isStandBy;
+
     public void InitCondition(Sprite[] sprites, bool isStandBy, bool isSushiType)
     {
         iconSr.sprite = sprites[0];
+        
+        this.isStandBy = isStandBy;
         
         type = Instantiate(typePref, transform);
         type.transform.SetAsFirstSibling();
@@ -24,12 +28,12 @@ public class CatConditionBehaviour : IPointerHandler
         else type.transform.localScale = new Vector3(DiningManager.Instance.BubbleDishScale, DiningManager.Instance.BubbleDishScale, 0);
         type.GetComponent<SpriteRenderer>().sprite = sprites[1];
         
-        pointerDetector.SetActive(isStandBy);
+        pointerDetector.SetActive(true);
     }
 
     public override void HandlePointerClick()
     {
-        if (MainSceneManager.Instance.CookStarted) return;
+        if (MainSceneManager.Instance.CookStarted || !isStandBy) return;
         CardManager.Instance.ConditionSelected(this);
     }
 
@@ -47,7 +51,7 @@ public class CatConditionBehaviour : IPointerHandler
 
     public void SetCondition(SushiTypes condition)
     {
-        pointerDetector.SetActive(false);
+        isStandBy = false;
         type.GetComponent<SpriteRenderer>().sprite = TableManager.Instance.sushiSprites[(int)condition];
         catBehaviour.Condition = condition.ToString();
     }
