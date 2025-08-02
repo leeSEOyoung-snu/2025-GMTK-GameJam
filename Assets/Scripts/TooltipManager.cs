@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TooltipManager : MonoBehaviour
@@ -29,15 +30,12 @@ public class TooltipManager : MonoBehaviour
         
         tooltipText = tooltip.GetComponentInChildren<TextMeshProUGUI>();
         tooltipRectTransform = tooltip.GetComponent<RectTransform>();
-        setupTooltip("Tlqkf");  //for testing purposes
-        
         HideTooltip();
     }
 
     void Update()
     {
         //For test
-        tooltipRectTransform.transform.position = Input.mousePosition;
     }
 
     public void ShowTooltip()
@@ -49,12 +47,13 @@ public class TooltipManager : MonoBehaviour
     {
         tooltip.SetActive(false);
     }
-    public void setupTooltip(string text)
+    public void setupTooltip(string text, Vector2 tooltipposition)
     {
         tooltipText.text = text;
         tooltipText.ForceMeshUpdate();  // Force the text to update its mesh
         tooltip.GetComponent<RectTransform>().sizeDelta = tooltipText.GetPreferredValues();
-        //TODO : tooltip position should be fixed 
+        
+        tooltipRectTransform.transform.position = tooltipposition;
     }
     
     
