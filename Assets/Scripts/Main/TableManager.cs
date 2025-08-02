@@ -196,7 +196,7 @@ public class TableManager : MonoBehaviour, IInit
     
     public void RotateDishOnce()
     {
-        InteractionManager.Instance.InitCatDishRelative();
+        // InteractionManager.Instance.InitCatDishRelative();
         
         currCompletedRotCnt = 0;
         _checkDishIdx = new List<int>();
@@ -248,7 +248,6 @@ public class TableManager : MonoBehaviour, IInit
             {
                 int idx = Mathf.RoundToInt((dishEndPos.x - DiningManager.Instance.DiningMinPosX) /
                                            MainSceneManager.Instance.PosXFactor);
-                
                 if (idx >= 0 && idx < DiningManager.Instance.CatCnt)
                 {
                     InteractionManager.Instance.CatDishRelative[idx] = dish;

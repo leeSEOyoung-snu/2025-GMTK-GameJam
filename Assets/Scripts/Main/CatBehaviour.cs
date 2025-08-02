@@ -152,6 +152,21 @@ public class CatBehaviour : MonoBehaviour
         if (color == ColorTypes.W || dishColor == ColorTypes.W) result = true;
         else if (dishColor == color) result = true;
         else result = false;
+        
+        if (result) EatMotion();
         return result;
+    }
+
+    private void EatMotion()
+    {
+        // TODO: 먹는 모션 수정
+        if (_catSeq != null && _catSeq.IsActive() && _catSeq.IsPlaying())
+        {
+            _catSeq.Kill();
+        }
+        _catSeq = DOTween.Sequence();
+        Vector3[] path = { new Vector3(transform.localPosition.x, transform.localPosition.y + _tmpAnimationFactor, transform.localPosition.z), transform.localPosition };
+        _catSeq.Append(transform.DOLocalPath(path, _tmpAnimationFactor));
+        _catSeq.Play().OnComplete(() => { InteractionManager.Instance.CheckRelativeCompleted(true, id); });
     }
 }
