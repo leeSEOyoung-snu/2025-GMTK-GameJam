@@ -2206,6 +2206,10 @@ PrefabInstance:
       propertyPath: m_Delegates.Array.data[2].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 1285486628670527471, guid: ca303131c44cc0c4589a74084982120b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2246921008764131719, guid: ca303131c44cc0c4589a74084982120b, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -400

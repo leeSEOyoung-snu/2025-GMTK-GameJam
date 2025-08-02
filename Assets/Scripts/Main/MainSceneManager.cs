@@ -9,11 +9,15 @@ public enum ColorTypes { W = 0, R = 1, Y = 2, B = 3, DishStandBy = 4 }
 
 public class MainSceneManager : MonoBehaviour
 {
+
+    [Header("Prefabs")]
+    [SerializeField] private GameObject popupPrefab;
+    
     [Header("References")]
     [SerializeField] private TextMeshProUGUI rotateCntText;
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private GameObject startCookButton;
-    
+    [SerializeField] private Canvas mainCanvas;
     public static MainSceneManager Instance { get; private set; }
     
     public Dictionary<string, object> CurrStageData { get; private set; }
@@ -23,6 +27,8 @@ public class MainSceneManager : MonoBehaviour
     public float RotateSpeedFactor { get; private set; }
     private int _maxRotateCnt, _currRotateCnt;
     private int _targetScore, _currScore;
+    private List<int> _newIcon;
+    private List<string> _newIconDescription;
     public bool isRotating { get; private set; }
     
     public bool CookStarted { get; private set; }
@@ -49,6 +55,7 @@ public class MainSceneManager : MonoBehaviour
     private void Start()
     {
         Init();
+        Madepopup();
     }
 
     public void Init()
@@ -63,6 +70,29 @@ public class MainSceneManager : MonoBehaviour
         _targetScore = (int)CurrStageData["TargetScore"];
         _currScore = 0;
         UpdateScore();
+        
+        _newIcon = new List<int>();
+        foreach (string i in CurrStageData["NewIcon"].ToString().Split('_'))
+        {
+            if (i == "-1")  //there is no new Popup
+            {
+                _newIcon.Clear();
+                break;
+            }
+            _newIcon.Add(int.Parse(i));
+        }
+
+        _newIconDescription = new List<string>();
+        foreach (string i in CurrStageData["Description"].ToString().Split('$'))
+        {
+            if (i == "NULL")  //there is no new Popup
+            {
+                _newIconDescription.Clear();
+                break;
+            }
+            _newIconDescription.Add(i);
+        }
+        
         
         isRotating = false;
 
@@ -96,5 +126,15 @@ public class MainSceneManager : MonoBehaviour
         _currRotateCnt--;
         UpdateRotateCnt();
         TableManager.Instance.RotateDishOnce();
+    }
+
+    private void Madepopup()
+    {
+        foreach(int i in _newIcon)
+        {
+            GameObject popup = Instantiate(popupPrefab, transform);
+            popup.transform.SetParent(mainCanvas.transform, false);
+            popup.GetComponent<PopupBehaviour>().InitPopup(i-1, _newIconDescription[i-1]);
+        }
     }
 }
