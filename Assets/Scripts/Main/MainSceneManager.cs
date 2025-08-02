@@ -142,6 +142,7 @@ public class MainSceneManager : MonoBehaviour
         if (!CookStarted || isRotating || _currRotateCnt == 0) return;
         isRotating = true;
         _currRotateCnt--;
+        if(_currRotateCnt == 1){ Destroy(nextSushiPanel);}
         UpdateRotateCnt();
         TableManager.Instance.RotateDishOnce();
     }
