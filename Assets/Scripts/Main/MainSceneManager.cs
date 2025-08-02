@@ -12,11 +12,13 @@ public class MainSceneManager : MonoBehaviour
 
     [Header("Prefabs")]
     [SerializeField] private GameObject popupPrefab;
-    
+
+    [SerializeField] private GameObject JustImagePrefab;
     [Header("References")]
     [SerializeField] private TextMeshProUGUI rotateCntText;
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private GameObject startCookButton;
+    [SerializeField] private GameObject nextSushiPanel;
     [SerializeField] private Canvas mainCanvas;
     public static MainSceneManager Instance { get; private set; }
     
@@ -29,6 +31,7 @@ public class MainSceneManager : MonoBehaviour
     private int _targetScore, _currScore;
     private List<int> _newIcon;
     private List<string> _newIconDescription;
+    private List<string> _nextSushi;
     public bool isRotating;
     
     public bool CookStarted { get; private set; }
@@ -71,6 +74,20 @@ public class MainSceneManager : MonoBehaviour
         _currScore = 0;
         UpdateScore();
         
+        //nextSushi
+        _nextSushi = new List<string>();
+        foreach (string i in CurrStageData["NextSushi"].ToString().Split('$'))
+        {
+            if (i == "X")  //there is no next Sushi
+            {
+                _nextSushi.Clear();
+                break;
+            }
+            _nextSushi.Add(i);
+        }
+        initNextSushi();
+        
+        //newIcon
         _newIcon = new List<int>();
         foreach (string i in CurrStageData["NewIcon"].ToString().Split('_'))
         {
@@ -81,7 +98,8 @@ public class MainSceneManager : MonoBehaviour
             }
             _newIcon.Add(int.Parse(i));
         }
-
+        
+        //newIconDescription
         _newIconDescription = new List<string>();
         foreach (string i in CurrStageData["Description"].ToString().Split('$'))
         {
@@ -141,6 +159,32 @@ public class MainSceneManager : MonoBehaviour
             GameObject popup = Instantiate(popupPrefab, transform);
             popup.transform.SetParent(mainCanvas.transform, false);
             popup.GetComponent<PopupBehaviour>().InitPopup(i-1, _newIconDescription[i-1]);
+        }
+    }
+
+    private void initNextSushi()
+    {
+        switch (_nextSushi.Count)
+        {
+            case 0:
+                Destroy(nextSushiPanel);
+                break;
+            case 1:
+                GameObject go = Instantiate(JustImagePrefab, nextSushiPanel.transform);
+                go.transform.SetParent(nextSushiPanel.transform, false);
+                
+                break;
+            case 2:
+                GameObject go1 = Instantiate(JustImagePrefab, nextSushiPanel.transform);
+                go1.transform.SetParent(nextSushiPanel.transform, false);
+                GameObject go2 = Instantiate(JustImagePrefab, nextSushiPanel.transform);
+                go2.transform.SetParent(nextSushiPanel.transform, false);
+                go1.transform.position += new Vector3(-100, 0, 0);
+                go2.transform.position += new Vector3(100, 0, 0);
+                break;
+            default:
+                Debug.LogError("There is fucking somthing wrong with csv of nextSushi!!!");
+                break;
         }
     }
 }
