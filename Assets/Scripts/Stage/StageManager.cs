@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class StageManager : MonoBehaviour
 {
@@ -25,7 +26,10 @@ public class StageManager : MonoBehaviour
     [Header("Stage Panels Objects")]
     [SerializeField] private GameObject StageSet;
     [SerializeField] private List<GameObject> StagePanels = new List<GameObject>();
-    
+
+    [Header("Buttons")] 
+    [SerializeField] private GameObject TitleButton;
+    [SerializeField] private GameObject OptionButton;
     
     #endregion
 
@@ -140,6 +144,27 @@ public class StageManager : MonoBehaviour
     {
         if(stagePanelSequence == null || stagePanelSequence.IsPlaying()) return;
         OptionPanel.SetActive(true);
+    }
+    
+    public void OnHoverEnter(BaseEventData data)
+    {
+        PointerEventData ped = (PointerEventData)data;
+        GameObject hoveredObject = ped.pointerEnter;
+
+        hoveredObject.GetComponent<RectTransform>().localScale =
+            new Vector3(1.2f, 1.2f, 1f); // Scale up the hovered button
+        
+    }
+    
+    public void OnHoverExit(BaseEventData data)
+    {
+        initButtonSize();
+    }
+
+    private void initButtonSize()
+    {
+        TitleButton.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1f);
+        OptionButton.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1f);
     }
 
 }

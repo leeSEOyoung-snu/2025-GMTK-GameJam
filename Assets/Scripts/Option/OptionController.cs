@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -10,8 +11,10 @@ public class OptionController : MonoBehaviour
     [SerializeField] Scrollbar BGMVolumeScrollbar;
     [SerializeField] Scrollbar SFXVolumeScrollbar;
 
-    [SerializeField] private GameObject BacktotheGameButton;
+    [SerializeField] private GameObject BackTotheTitleButton;
+    [SerializeField] private GameObject BackTotheGameButton;
     private string SceneName;
+
     private void Awake()
     {
         BGMVolumeScrollbar.value = 0.5f;
@@ -22,9 +25,9 @@ public class OptionController : MonoBehaviour
     {
         //BacktotheGameButton
         SceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-        if (SceneName == "Title") Destroy(BacktotheGameButton);
-        
-        
+        if (SceneName == "Title") Destroy(BackTotheTitleButton);
+
+
         //SoundManager
         SoundManager.Instance.backgroundMusicSource.volume = BGMVolumeScrollbar.value;
         SoundManager.Instance.soundEffectSource.volume = SFXVolumeScrollbar.value;
@@ -41,13 +44,15 @@ public class OptionController : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape)) {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
             Debug.Log("Escape key pressed");
             if (SceneName == "Title")
             {
                 BackButtonClicked();
             }
-            else {
+            else
+            {
                 // During Gaming Close the options panel
                 gameObject.SetActive(false);
             }
@@ -88,4 +93,27 @@ public class OptionController : MonoBehaviour
         // Example: Close the options panel
         gameObject.SetActive(false);
     }
+
+    public void OnHoverEnter(BaseEventData data)
+    {
+        PointerEventData ped = (PointerEventData)data;
+        GameObject hoveredObject = ped.pointerEnter;
+
+        hoveredObject.GetComponent<RectTransform>().localScale =
+            new Vector3(1.2f, 1.2f, 1f); // Scale up the hovered button
+        
+    }
+
+    public void OnHoverExit(BaseEventData data)
+    {
+        initButtonSize();
+    }
+
+    private void initButtonSize()
+    {
+        BackTotheGameButton.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1f);
+        if(SceneName != "Title") BackTotheTitleButton.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1f);
+    }
 }
+
+
