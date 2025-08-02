@@ -29,7 +29,6 @@ public class MainSceneManager : MonoBehaviour
     private int _targetScore, _currScore;
     private List<int> _newIcon;
     private List<string> _newIconDescription;
-    public bool isRotating { get; private set; }
     public bool isRotating;
     
     public bool CookStarted { get; private set; }
