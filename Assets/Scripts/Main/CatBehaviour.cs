@@ -23,7 +23,7 @@ public class CatBehaviour : MonoBehaviour
     public string Condition { private get; set; }
     
     private ResultTypes resultType;
-    private bool isResultSingle;
+    private bool isResultSingle, isResult1Sushi, isResult2Sushi;
     public string Result1 { private get; set; }
     public string Result2 { private get; set; }
 
@@ -50,6 +50,7 @@ public class CatBehaviour : MonoBehaviour
         // Generate Condition
         if (Enum.TryParse((string)catData["Condition"], ignoreCase: true, out ConditionTypes cond))
         {
+            Condition = (string)catData["ConVal1"];
             conditionType = cond;
             var conditionData =
                 ConditionMethods.Instance.GetConditionSprites(conditionType, catData["ConVal1"]);
@@ -99,13 +100,44 @@ public class CatBehaviour : MonoBehaviour
             }
             else Debug.LogError("Result Val2 Error: " + Result2);
         }
-        
+
+        isResult1Sushi = isVal1Sushi;
+        isResult2Sushi = isVal2Sushi;
         catResultBehaviour.InitResult(sprites, isVal1Sushi, isVal2Sushi, isVal1StandBy, isVal2StandBy);
     }
 
     public void CheckCondition(ConditionTypes conditionType, string condition)
     {
-        bool check = this.conditionType == conditionType && Condition == condition;
+        Debug.Log($"This [{this.conditionType} - {Condition}]");
+        Debug.Log($"Val [{conditionType} - {condition}]");
+        
+        if (this.conditionType == conditionType && Condition == condition)
+        {
+            // TODO: Condition 충족 시 애니메이션 수정
+            if (_catSeq != null && _catSeq.IsActive() && _catSeq.IsPlaying())
+            {
+                _catSeq.Kill();
+            }
+
+            _catSeq = DOTween.Sequence();
+            Vector3[] path =
+            {
+                new Vector3(transform.localPosition.x, transform.localPosition.y + _tmpAnimationFactor,
+                    transform.localPosition.z),
+                transform.localPosition
+            };
+            _catSeq.Append(transform.DOLocalPath(path, _tmpAnimationFactor));
+            _catSeq.Play().OnComplete(() => { InteractionManager.Instance.CheckConditionCompleted(true, id); });
+        }
+        else
+        {
+            InteractionManager.Instance.CheckConditionCompleted(false, id);
+        }
+    }
+
+    public void ActivateResult()
+    {
+        ResultMethods.Instance.ActivateResult(resultType, isResultSingle, Result1, Result2, isResult1Sushi, isResult2Sushi);
         // TODO: Condition 충족 시 애니메이션 수정
         if (_catSeq != null && _catSeq.IsActive() && _catSeq.IsPlaying())
         {
@@ -114,11 +146,6 @@ public class CatBehaviour : MonoBehaviour
         _catSeq = DOTween.Sequence();
         Vector3[] path = { new Vector3(transform.localPosition.x, transform.localPosition.y + _tmpAnimationFactor, transform.localPosition.z), transform.localPosition };
         _catSeq.Append(transform.DOLocalPath(path, _tmpAnimationFactor));
-        _catSeq.Play().OnComplete(() => { InteractionManager.Instance.CheckConditionCompleted(check, id);});
-    }
-
-    public void ActivateResult()
-    {
-        
+        // _catSeq.Play().OnComplete(() => { InteractionManager.Instance.CheckConditionCompleted(check, id);});
     }
 }

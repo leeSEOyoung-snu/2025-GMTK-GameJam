@@ -50,7 +50,6 @@ public class CatResultBehaviour : IPointerHandler
     public override void HandlePointerClick()
     {
         if (MainSceneManager.Instance.CookStarted || !(isVal1StandBy || isVal2StandBy)) return;
-        Debug.Log("Card Result Clicked");
         CardManager.Instance.ResultSelected(this);
     }
 

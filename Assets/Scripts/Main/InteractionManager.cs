@@ -28,6 +28,7 @@ public class InteractionManager : MonoBehaviour, IInit
     public void CheckCondition(ConditionTypes condition, string valStr)
     {
         satisfiedIds = new List<int>();
+        currCompletedCondition = 0;
         for (int i = 0; i < DiningManager.Instance.CatCnt; i++)
         {
             DiningManager.Instance.CatBehaviourDict[i].CheckCondition(condition, valStr);
@@ -37,9 +38,14 @@ public class InteractionManager : MonoBehaviour, IInit
 
     public void CheckConditionCompleted(bool check, int id)
     {
-        if (check) satisfiedIds.Add(id);
+        Debug.Log($"id: {id}, {check}");
+        if (check)
+        {
+            satisfiedIds.Add(id);
+        }
         if (currCompletedCondition < DiningManager.Instance.CatCnt - 1) { currCompletedCondition++; return; }
 
+        Debug.Log(satisfiedIds);
         currCompletedCondition = 0;
 
         if (satisfiedIds.Count == 0)

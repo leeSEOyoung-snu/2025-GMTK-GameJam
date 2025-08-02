@@ -117,6 +117,7 @@ public class CardManager : MonoBehaviour, IInit
         CurrCards.Add(cardBehaviour);
         cardBehaviour.InitCard(sushi, new Vector3(_cardMaxPosX, _addCardStartPosY, 0f), _defaultOrder + CurrCards.Count - 1);
         ArrangeCard();
+        InteractionManager.Instance.CheckCondition(ConditionTypes.CardGenerated, _selectedCard.Sushi.ToString());
     }
 
     public void DebugAddCard()

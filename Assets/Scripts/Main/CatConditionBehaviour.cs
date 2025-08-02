@@ -13,8 +13,6 @@ public class CatConditionBehaviour : IPointerHandler
     
     private GameObject type;
 
-    
-
     public void InitCondition(Sprite[] sprites, bool isStandBy, bool isSushiType)
     {
         iconSr.sprite = sprites[0];
@@ -32,7 +30,6 @@ public class CatConditionBehaviour : IPointerHandler
     public override void HandlePointerClick()
     {
         if (MainSceneManager.Instance.CookStarted) return;
-        Debug.Log("Card Condition Clicked");
         CardManager.Instance.ConditionSelected(this);
     }
     

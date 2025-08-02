@@ -17,7 +17,7 @@ public class MainSceneManager : MonoBehaviour
     public static MainSceneManager Instance { get; private set; }
     
     public Dictionary<string, object> CurrStageData { get; private set; }
-    public readonly float PosXFactor = 1.8f;
+    public readonly float PosXFactor = 1.75f;
     private List<IInit> _initScripts = new List<IInit>();
     
     public float RotateSpeedFactor { get; private set; }
