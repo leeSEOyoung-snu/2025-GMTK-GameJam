@@ -29,7 +29,6 @@ public class CatConditionBehaviour : IPointerHandler
 
     public override void HandlePointerClick()
     {
-        Debug.Log("HandlePointerClick");
         if (MainSceneManager.Instance.CookStarted) return;
         CardManager.Instance.ConditionSelected(this);
     }

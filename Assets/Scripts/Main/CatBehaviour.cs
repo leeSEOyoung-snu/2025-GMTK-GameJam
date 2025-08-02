@@ -20,12 +20,12 @@ public class CatBehaviour : MonoBehaviour
     private int id;
 
     public ConditionTypes conditionType { get; private set; }
-    public string Condition { private get; set; }
+    public string Condition;
     
     private ResultTypes resultType;
     private bool isResultSingle, isResult1Sushi, isResult2Sushi;
-    public string Result1 { private get; set; }
-    public string Result2 { private get; set; }
+    public string Result1;
+    public string Result2;
 
     public void InitCat(Vector3 initPos, Dictionary<string, object> catData, int id)
     {
@@ -143,7 +143,7 @@ public class CatBehaviour : MonoBehaviour
         _catSeq = DOTween.Sequence();
         Vector3[] path = { new Vector3(transform.localPosition.x, transform.localPosition.y + _tmpAnimationFactor, transform.localPosition.z), transform.localPosition };
         _catSeq.Append(transform.DOLocalPath(path, _tmpAnimationFactor));
-        // _catSeq.Play().OnComplete(() => { InteractionManager.Instance.CheckConditionCompleted(check, id);});
+        _catSeq.Play().OnComplete(() => { InteractionManager.Instance.CheckResultCompleted();});
     }
 
     public bool TryEat(ColorTypes dishColor)
@@ -165,7 +165,7 @@ public class CatBehaviour : MonoBehaviour
             _catSeq.Kill();
         }
         _catSeq = DOTween.Sequence();
-        Vector3[] path = { new Vector3(transform.localPosition.x, transform.localPosition.y + _tmpAnimationFactor, transform.localPosition.z), transform.localPosition };
+        Vector3[] path = { new Vector3(transform.localPosition.x, transform.localPosition.y - _tmpAnimationFactor, transform.localPosition.z), transform.localPosition };
         _catSeq.Append(transform.DOLocalPath(path, _tmpAnimationFactor));
         _catSeq.Play().OnComplete(() => { InteractionManager.Instance.CheckRelativeCompleted(true, id); });
     }

@@ -100,6 +100,7 @@ public class MainSceneManager : MonoBehaviour
 
     public void CheckConditionCompleted()
     {
-        Debug.Log("Check!");
+        if (!isRotating) return;
+        TableManager.Instance.RotateDishOnce();
     }
 }

@@ -14,6 +14,7 @@ public class InteractionManager : MonoBehaviour, IInit
 
     private int currCompletedCondition;
     private int currCompletedRelative;
+    private int currCompletedResult;
 
     private void Awake()
     {
@@ -26,6 +27,8 @@ public class InteractionManager : MonoBehaviour, IInit
         eatenList = new List<int>();
         CatDishRelative = new Dictionary<int, DishBehaviour>();
         currCompletedCondition = 0;
+        currCompletedRelative = 0;
+        currCompletedResult = 0;
     }
 
     public void InitCatDishRelative()
@@ -50,8 +53,6 @@ public class InteractionManager : MonoBehaviour, IInit
             }
             DiningManager.Instance.CatBehaviourDict[pair.Key].TryEat(pair.Value.DishData.Color);
         }
-        
-        // TableManager.Instance.RotateDishOnce();
     }
 
     public void CheckRelativeCompleted(bool eaten, int catId)
@@ -63,26 +64,13 @@ public class InteractionManager : MonoBehaviour, IInit
         if (currCompletedRelative < DiningManager.Instance.CatCnt - 1) { currCompletedRelative++; return; }
 
         currCompletedRelative = 0;
-
-        Debug.Log(eatenList.Count);
-        Debug.Log($"Relative.Count - {CatDishRelative.Count}");
-        foreach (var pair in CatDishRelative)
-        {
-            Debug.Log($"Key - {pair.Key}, Value - {pair.Value}");
-        }
-
+        
         for (int i = 0; i < eatenList.Count; i++)
         {
-            Debug.Log(eatenList[i]);
-            Debug.Log($"{eatenList[i]}, {CatDishRelative[eatenList[i]].gameObject.name}");
-            CatDishRelative[eatenList[i]].ChangeSushiType(SushiTypes.Empty);
+            var dish = CatDishRelative[eatenList[i]];
+            CheckCondition(ConditionTypes.SushiEaten, dish.DishData.Sushi.ToString());
+            dish.ChangeSushiType(SushiTypes.Empty);
         }
-        
-        // foreach (int id in eatenList)
-        // {
-        //     Debug.Log($"{id}, {CatDishRelative[id].gameObject.name}");
-        //     CatDishRelative[id].ChangeSushiType(SushiTypes.Empty);
-        // }
     }
 
     public void CheckCondition(ConditionTypes condition, string valStr)
@@ -111,9 +99,18 @@ public class InteractionManager : MonoBehaviour, IInit
             return;
         }
 
+        currCompletedResult = 0;
         foreach (int catId in satisfiedIds)
         {
             DiningManager.Instance.CatBehaviourDict[catId].ActivateResult();
         }
+    }
+
+    public void CheckResultCompleted()
+    {
+        Debug.Log("Ended");
+        if (currCompletedResult < DiningManager.Instance.CatCnt - 1) { currCompletedResult++; return; }
+        currCompletedResult = 0;
+        MainSceneManager.Instance.CheckConditionCompleted();
     }
 }

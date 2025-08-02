@@ -78,7 +78,6 @@ public class DishBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnterH
         if (sushi == SushiTypes.Empty)
         {
             sushiSr.color = Color.clear;
-            
         }
         else
         {

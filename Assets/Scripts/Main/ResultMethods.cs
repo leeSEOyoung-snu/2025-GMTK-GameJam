@@ -29,7 +29,6 @@ public class ResultMethods : MonoBehaviour
     
     public void ActivateResult(ResultTypes type, bool isResultSingle, string resVal1, string resVal2, bool isVal1Sushi, bool isVal2Sushi)
     {
-        Debug.Log($"{type} - {resVal1}");
         SushiTypes sushi1 = SushiTypes.Any, sushi2 = SushiTypes.Any;
         ColorTypes dish1 = ColorTypes.DishStandBy, dish2 = ColorTypes.DishStandBy;
 
@@ -81,14 +80,4 @@ public class ResultMethods : MonoBehaviour
         }
     }
     
-    
-    
-    #region GenerateCard
-
-    public void GenerateCard(SushiTypes sushiType)
-    {
-        CardManager.Instance.AddCard(sushiType);
-    }
-    
-    #endregion
 }

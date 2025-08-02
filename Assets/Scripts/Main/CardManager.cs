@@ -115,7 +115,7 @@ public class CardManager : MonoBehaviour, IInit
     {
         CardBehaviour cardBehaviour = Instantiate(cardPref, cardParent.transform).GetComponent<CardBehaviour>();
         CurrCards.Add(cardBehaviour);
-        cardBehaviour.InitCard(sushi, new Vector3(_cardMaxPosX, _addCardStartPosY, 0f), _defaultOrder + CurrCards.Count - 1);
+        cardBehaviour.InitCard(sushi, new Vector3(_cardMaxPosX, _addCardStartPosY, 0f), _defaultOrder + CurrCards.Count - 1);   
         ArrangeCard();
         InteractionManager.Instance.CheckCondition(ConditionTypes.CardGenerated, _selectedCard.Sushi.ToString());
     }

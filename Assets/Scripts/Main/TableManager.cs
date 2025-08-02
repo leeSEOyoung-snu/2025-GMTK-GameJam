@@ -196,7 +196,7 @@ public class TableManager : MonoBehaviour, IInit
     
     public void RotateDishOnce()
     {
-        // InteractionManager.Instance.InitCatDishRelative();
+        InteractionManager.Instance.InitCatDishRelative();
         
         currCompletedRotCnt = 0;
         _checkDishIdx = new List<int>();
