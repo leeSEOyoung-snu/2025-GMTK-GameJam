@@ -1483,7 +1483,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   popupPrefab: {fileID: 3336283338421226276, guid: c9c55260a81aa4344a5fdb3f45f7a0bd, type: 3}
-  JustImagePrefab: {fileID: 3578163153635360424, guid: ae3d32476329f794ab04368fae9f362a, type: 3}
+  CardImagePrefab: {fileID: 3578163153635360424, guid: ae3d32476329f794ab04368fae9f362a, type: 3}
   rotateCntText: {fileID: 50612735}
   scoreText: {fileID: 723648653}
   startCookButton: {fileID: 425218143}

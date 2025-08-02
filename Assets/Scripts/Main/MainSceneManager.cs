@@ -13,7 +13,7 @@ public class MainSceneManager : MonoBehaviour
     [Header("Prefabs")]
     [SerializeField] private GameObject popupPrefab;
 
-    [SerializeField] private GameObject JustImagePrefab;
+    [SerializeField] private GameObject CardImagePrefab;
     [Header("References")]
     [SerializeField] private TextMeshProUGUI rotateCntText;
     [SerializeField] private TextMeshProUGUI scoreText;
@@ -170,17 +170,22 @@ public class MainSceneManager : MonoBehaviour
                 Destroy(nextSushiPanel);
                 break;
             case 1:
-                GameObject go = Instantiate(JustImagePrefab, nextSushiPanel.transform);
+                GameObject go = Instantiate(CardImagePrefab, nextSushiPanel.transform);
                 go.transform.SetParent(nextSushiPanel.transform, false);
-                
+                Enum.TryParse<SushiTypes>(_nextSushi[0], out SushiTypes sushiType);
+                go.GetComponent<Image>().sprite = CardManager.Instance.cardSprites[(int)sushiType];
                 break;
             case 2:
-                GameObject go1 = Instantiate(JustImagePrefab, nextSushiPanel.transform);
+                GameObject go1 = Instantiate(CardImagePrefab, nextSushiPanel.transform);
+                GameObject go2 = Instantiate(CardImagePrefab, nextSushiPanel.transform);
                 go1.transform.SetParent(nextSushiPanel.transform, false);
-                GameObject go2 = Instantiate(JustImagePrefab, nextSushiPanel.transform);
                 go2.transform.SetParent(nextSushiPanel.transform, false);
-                go1.transform.position += new Vector3(-100, 0, 0);
-                go2.transform.position += new Vector3(100, 0, 0);
+                go1.transform.position += new Vector3(-80, 0, 0);
+                go2.transform.position += new Vector3(80, 0, 0);
+                Enum.TryParse<SushiTypes>(_nextSushi[0], out SushiTypes sushiType1);
+                Enum.TryParse<SushiTypes>(_nextSushi[1], out SushiTypes sushiType2);
+                go1.GetComponent<Image>().sprite = CardManager.Instance.cardSprites[(int)sushiType1];
+                go2.GetComponent<Image>().sprite = CardManager.Instance.cardSprites[(int)sushiType2];
                 break;
             default:
                 Debug.LogError("There is fucking somthing wrong with csv of nextSushi!!!");
