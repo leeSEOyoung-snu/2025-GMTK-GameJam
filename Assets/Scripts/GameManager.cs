@@ -13,11 +13,12 @@ public class GameManager : MonoBehaviour
     private List<Dictionary<string, object>> _stageData;
     private List<Dictionary<string, object>> _catData;
     private string StageFileName;
-    
+    private bool isClear;
     public int CurrStageIdx { get; private set; }
     public readonly float RotateDuration = 1f;
 
 
+    [SerializeField] public GameObject StageSummaryPanel;
     //Save Part
     [SerializeField] public List<int> StageCount;
     private SaveData _saveData;
@@ -71,7 +72,14 @@ public class GameManager : MonoBehaviour
         return result;
     }
 
-    public void EndStage()
+    public void StageSummaryPanelOn()
+    {
+        StageSummaryPanel.SetActive(true);
+        StageSummaryPanel.GetComponent<SummaryBehaviour>().SetSummary(
+            isClear, MainSceneManager.Instance._currScore, MainSceneManager.Instance._targetScore);
+    }
+    
+    public void EndStage()  //gotoNextStage
     {
         CurrStageIdx++;
         Debug.Log("Curr Stage Idx: " + CurrStageIdx);

@@ -28,7 +28,7 @@ public class MainSceneManager : MonoBehaviour
     
     public float RotateSpeedFactor { get; private set; }
     private int _maxRotateCnt, _currRotateCnt;
-    private int _targetScore, _currScore;
+    public int _targetScore, _currScore;
     private List<int> _newIcon;
     private List<string> _newIconDescription;
     private List<string> _nextSushi;
@@ -58,7 +58,6 @@ public class MainSceneManager : MonoBehaviour
     private void Start()
     {
         Init();
-        Madepopup();
     }
 
     public void Init()
@@ -111,6 +110,7 @@ public class MainSceneManager : MonoBehaviour
             _newIconDescription.Add(i);
         }
         
+        Madepopup();
         
         isRotating = false;
 
