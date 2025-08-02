@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using Newtonsoft.Json;
+using Unity.VisualScripting.Antlr3.Runtime;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,15 +15,17 @@ public class GameManager : MonoBehaviour
     private List<Dictionary<string, object>> _stageData;
     private List<Dictionary<string, object>> _catData;
     private string StageFileName;
-    
+    private bool isClear;
     public int CurrStageIdx { get; private set; }
     public readonly float RotateDuration = 1f;
+    
 
-
+    [SerializeField] public GameObject StageSummaryPanel;
     //Save Part
     [SerializeField] public List<int> StageCount;
-    private SaveData _saveData;
-    string path;
+    public SaveData _saveData;
+    private string StageData;
+    private string path;
     
     private void Awake()
     {
@@ -47,18 +51,30 @@ public class GameManager : MonoBehaviour
         CurrStageIdx = 0;
     }
 
-    public Dictionary<string, object> GetStageData()
+    public void SetStageData(int BigStage, int SmallStage)
     {
-        return _stageData[CurrStageIdx];
+        StageData = BigStage.ToString() +"0"+ SmallStage.ToString();
+        //then load Scene
+        SceneManager.LoadScene("Scenes/Test SEO");
     }
 
+    public Dictionary<string, object> GetStageData(){
+        foreach(Dictionary<string,object> d in _stageData) {
+            if (int.Parse(StageData) == (int)d["Stage"]) {
+                return d;
+            }
+        } 
+        Debug.LogError("Stage data not found for Stage: " + StageData);
+        return new Dictionary<string, object>();
+    }
+    
     public List<Dictionary<string, object>> GetCatData()
     {
         bool goodToEnd = false;
         List<Dictionary<string, object>> result = new List<Dictionary<string, object>>();
         foreach (var catData in _catData)
         {
-            if ((int)catData["Stage"] != (int)_stageData[CurrStageIdx]["Stage"])
+            if (  int.Parse(StageData) != (int)catData["Stage"])
             {
                 if (goodToEnd) break;
             }
@@ -71,7 +87,14 @@ public class GameManager : MonoBehaviour
         return result;
     }
 
-    public void EndStage()
+    public void StageSummaryPanelOn()
+    {
+        StageSummaryPanel.SetActive(true);
+        StageSummaryPanel.GetComponent<SummaryBehaviour>().SetSummary(
+            isClear, MainSceneManager.Instance._currScore, MainSceneManager.Instance._targetScore);
+    }
+    
+    public void EndStage()  //gotoNextStage
     {
         CurrStageIdx++;
         Debug.Log("Curr Stage Idx: " + CurrStageIdx);

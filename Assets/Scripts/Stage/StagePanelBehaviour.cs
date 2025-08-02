@@ -11,6 +11,8 @@ public class StagePanelBehaviour : MonoBehaviour
     [SerializeField] private TextMeshProUGUI StageNameText;
     private string selectedStageFileName;
     private int currentSelectedNode = -1;
+
+    public List<int> StageNodesData;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +30,13 @@ public class StagePanelBehaviour : MonoBehaviour
             
             trigger.triggers.Add(entry);
         }
+
+        if (StageNodesData == null)
+        {
+            Debug.LogError("saveData is null, please check the StagePanelBehaviour component");
+        }
+        // Initialize the stage nodes based on the StageNodeData
+        
         StageNameText.text = "Stage " + transform.name[transform.name.Length-1]; // Assuming the name of the panel is the stage name
     }
 

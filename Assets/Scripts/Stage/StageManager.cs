@@ -7,11 +7,14 @@ using UnityEngine.EventSystems;
 
 public class StageManager : MonoBehaviour
 {
+    //singleton
+    public static StageManager Instance { get; private set; }
     #region Fields
     private int currentSelectedStage = 0;
     private string selectedStageFileName;
     private List<RectTransform> StagePanelsRectTransforms = new List<RectTransform>();
-
+    private SaveData _saveData;
+    
     Sequence stagePanelSequence;
     [SerializeField] private GameObject TitlePanel;
     [SerializeField] private GameObject OptionPanel;
@@ -30,12 +33,28 @@ public class StageManager : MonoBehaviour
     [Header("Buttons")] 
     [SerializeField] private GameObject TitleButton;
     [SerializeField] private GameObject OptionButton;
+    [SerializeField] private GameObject LeftButton;
+    [SerializeField] private GameObject RightButton;
     
+    [Header("ImageIcon")]
+    [SerializeField] public Sprite ClearIcon;
+    [SerializeField] public Sprite OpenIcon;
+    [SerializeField] public Sprite ClosedIcon;
     #endregion
 
     #region LifeCycle
     private void Awake()
     {
+        // Ensure that there is only one instance of StageManager
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // Keep this instance across scenes
+        }
+        else
+        {
+            Destroy(gameObject); // Destroy duplicate instances
+        }
         stagePanelSequence = DOTween.Sequence();
         foreach (var st in StagePanels)
         {
@@ -47,6 +66,12 @@ public class StageManager : MonoBehaviour
     {
         // Initialize the stage panels
         ResizeStagePanels();
+        _saveData = GameManager.Instance._saveData;
+        for(int i = 0; i < StagePanels.Count; i++)
+        {
+            StagePanels[i].GetComponent<StagePanelBehaviour>().StageNodesData = _saveData.saveData[i];
+        }
+        LeftButton.SetActive(false);
     }
 
     // Update is called once per frame
@@ -103,6 +128,10 @@ public class StageManager : MonoBehaviour
             currentSelectedStage = StagePanels.Count - 1;
             return;
         }
+        if(currentSelectedStage == StagePanels.Count - 1) RightButton.SetActive(false); 
+        else RightButton.SetActive(true);
+        if(currentSelectedStage > 0) LeftButton.SetActive(true);
+        else LeftButton.SetActive(false);
         
         foreach (RectTransform rectPanels in StagePanelsRectTransforms)
         {
@@ -117,6 +146,12 @@ public class StageManager : MonoBehaviour
             currentSelectedStage = 0;
             return;
         }
+
+        if (currentSelectedStage == 0) LeftButton.SetActive(false);
+        else LeftButton.SetActive(true);
+        if(currentSelectedStage < StagePanels.Count - 1) RightButton.SetActive(true);
+        else RightButton.SetActive(false);
+        
         foreach (RectTransform rectPanels in StagePanelsRectTransforms)
         {
             stagePanelSequence.Join(rectPanels.DOMove(new Vector2(rectPanels.transform.position.x + StagePanelGap, rectPanels.transform.position.y), StagePanelMoveDuration));
