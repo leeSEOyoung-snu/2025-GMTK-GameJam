@@ -61,7 +61,7 @@ public class ResultMethods : MonoBehaviour
         switch (type)
         {
             case ResultTypes.GenerateCard1:
-                CardManager.Instance.AddCard(sushi1);
+                CardManager.Instance.AddCard(sushi1, true);
                 break;
             case ResultTypes.GenerateCard2:
                 //TODO : Will be implemneted by SEO later

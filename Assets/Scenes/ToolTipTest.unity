@@ -1554,6 +1554,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1fa9b0ccc73904449723c06f5a924a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isProcessing: 0
 --- !u!114 &1056297276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1876,7 +1877,7 @@ MonoBehaviour:
   m_SpriteState:
     m_HighlightedSprite: {fileID: 21300000, guid: 1b8891b1897cd474ea228bb936c1b313, type: 3}
     m_PressedSprite: {fileID: 21300000, guid: 426caf30a455d204dae2c2b0c6a6e243, type: 3}
-    m_SelectedSprite: {fileID: 21300000, guid: 1b8891b1897cd474ea228bb936c1b313, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: 426caf30a455d204dae2c2b0c6a6e243, type: 3}
     m_DisabledSprite: {fileID: 21300000, guid: 426caf30a455d204dae2c2b0c6a6e243, type: 3}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
