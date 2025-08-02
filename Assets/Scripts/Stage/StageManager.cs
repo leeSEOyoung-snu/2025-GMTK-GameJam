@@ -141,5 +141,7 @@ public class StageManager : MonoBehaviour
         if(stagePanelSequence == null || stagePanelSequence.IsPlaying()) return;
         OptionPanel.SetActive(true);
     }
+    
+    
 
 }
