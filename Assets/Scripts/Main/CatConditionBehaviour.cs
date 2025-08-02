@@ -32,10 +32,16 @@ public class CatConditionBehaviour : IPointerHandler
         if (MainSceneManager.Instance.CookStarted) return;
         CardManager.Instance.ConditionSelected(this);
     }
-    
-    public override void HandlePointerEnter() {}
-    
-    public override void HandlePointerExit() {}
+
+    public override void HandlePointerEnter()
+    {
+        TooltipManager.Instance.ShowTooltip();
+    }
+
+    public override void HandlePointerExit()
+    {
+        TooltipManager.Instance.HideTooltip();
+    }
 
     public void SetCondition(SushiTypes condition)
     {

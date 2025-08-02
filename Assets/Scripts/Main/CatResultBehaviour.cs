@@ -78,7 +78,13 @@ public class CatResultBehaviour : IPointerHandler
         }
     }
 
-    public override void HandlePointerEnter() { }
+    public override void HandlePointerEnter()
+    {
+        TooltipManager.Instance.ShowTooltip();
+    }
 
-    public override void HandlePointerExit() { }
+    public override void HandlePointerExit()
+    {
+        TooltipManager.Instance.HideTooltip();
+    }
 }
