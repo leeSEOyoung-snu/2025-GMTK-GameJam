@@ -5,12 +5,18 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Text.RegularExpressions;
 
+public enum StageStage
+{
+    Clear,
+    Open,
+    Closed
+}
 public class StageNodeBehaviour : MonoBehaviour
 {
     [SerializeField] private GameObject StageImage;
     [SerializeField] private TextMeshProUGUI StageText;
 
-    private GameObject StagePanel;
+    private StageStage stageStage = StageStage.Closed; // Default stage state
     private int BigStage;
     private int SmallStage;
     // Start is called before the first frame update
@@ -28,9 +34,12 @@ public class StageNodeBehaviour : MonoBehaviour
         {
             Debug.LogError("Invalid stage name format");
         }
+        
+        
     }
 
     // Update is called once per frame
+    
     
     public void OnHoverEnter(BaseEventData data)
     {
@@ -39,5 +48,10 @@ public class StageNodeBehaviour : MonoBehaviour
     public void OnHoverExit(BaseEventData data)
     {
         this.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1f); // Reset scale
+    }
+
+    public void OnClicked()
+    {
+        GameManager.Instance.SetStageData(BigStage, SmallStage);
     }
 }

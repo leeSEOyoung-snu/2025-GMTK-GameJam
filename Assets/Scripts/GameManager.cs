@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using Newtonsoft.Json;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,13 +17,14 @@ public class GameManager : MonoBehaviour
     private bool isClear;
     public int CurrStageIdx { get; private set; }
     public readonly float RotateDuration = 1f;
-
+    
 
     [SerializeField] public GameObject StageSummaryPanel;
     //Save Part
     [SerializeField] public List<int> StageCount;
-    private SaveData _saveData;
-    string path;
+    public SaveData _saveData;
+    private string StageData;
+    private string path;
     
     private void Awake()
     {
@@ -48,9 +50,21 @@ public class GameManager : MonoBehaviour
         CurrStageIdx = 0;
     }
 
-    public Dictionary<string, object> GetStageData()
+    public void SetStageData(int BigStage, int SmallStage)
     {
-        return _stageData[CurrStageIdx];
+        StageData = BigStage.ToString() +"0"+ SmallStage.ToString();
+        //then load Scene
+        SceneManager.LoadScene("Scenes/Test SEO");
+    }
+
+    public Dictionary<string, object> GetStageData(){
+        foreach(Dictionary<string,object> d in _stageData) {
+            if (int.Parse(StageData) == (int)d["Stage"]) {
+                return d;
+            }
+        } 
+        Debug.LogError("Stage data not found for Stage: " + StageData);
+        return new Dictionary<string, object>();
     }
 
     public List<Dictionary<string, object>> GetCatData()

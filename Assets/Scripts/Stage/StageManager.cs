@@ -11,7 +11,8 @@ public class StageManager : MonoBehaviour
     private int currentSelectedStage = 0;
     private string selectedStageFileName;
     private List<RectTransform> StagePanelsRectTransforms = new List<RectTransform>();
-
+    private SaveData _saveData;
+    
     Sequence stagePanelSequence;
     [SerializeField] private GameObject TitlePanel;
     [SerializeField] private GameObject OptionPanel;
@@ -47,6 +48,11 @@ public class StageManager : MonoBehaviour
     {
         // Initialize the stage panels
         ResizeStagePanels();
+        _saveData = GameManager.Instance._saveData;
+        for(int i = 0; i < StagePanels.Count; i++)
+        {
+            StagePanels[i].GetComponent<StagePanelBehaviour>().StageNodeData = _saveData.saveData[i];
+        }
     }
 
     // Update is called once per frame
