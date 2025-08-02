@@ -1236,6 +1236,7 @@ MonoBehaviour:
   StartButton: {fileID: 65387755}
   OptionButton: {fileID: 1980967428}
   QuitButton: {fileID: 59555161}
+  videoPlayer: {fileID: 1938864634}
   TitlePanel: {fileID: 656822081}
   OptionPanel: {fileID: 1775134084}
   StageSet: {fileID: 288119115}
@@ -1920,6 +1921,11 @@ GameObject:
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8035088999415619870, guid: d82a9d4ec88b08b48983f7f8d3ba3342, type: 3}
   m_PrefabInstance: {fileID: 1556808659}
+  m_PrefabAsset: {fileID: 0}
+--- !u!328 &1938864634 stripped
+VideoPlayer:
+  m_CorrespondingSourceObject: {fileID: 4936693333144396434, guid: 13d77a80835c69c4f97cdf5f8328e1d2, type: 3}
+  m_PrefabInstance: {fileID: 4624421246989202362}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1980967428 stripped
 GameObject:

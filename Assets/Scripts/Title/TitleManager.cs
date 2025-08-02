@@ -7,6 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 public class TitleManager : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class TitleManager : MonoBehaviour
     [SerializeField] private GameObject StartButton;
     [SerializeField] private GameObject OptionButton;
     [SerializeField] private GameObject QuitButton;
+    [SerializeField] private VideoPlayer videoPlayer;
 
     [Header("Panels")] 
     [SerializeField] private GameObject TitlePanel;
@@ -32,6 +34,9 @@ public class TitleManager : MonoBehaviour
         // Find the TitlePanel GameObject in the scene
         if (TitlePanel == null) Debug.LogWarning("TitlePanel not found in the scene.");
         if (OptionPanel == null) Debug.LogWarning("OptionPanel not found in the scene.");
+        
+        videoPlayer.Prepare();
+        videoPlayer.prepareCompleted += OnVideoPrepared;
         
         TitlePanel.SetActive(true);
         OptionPanel.SetActive(false);
@@ -91,16 +96,14 @@ public class TitleManager : MonoBehaviour
         }
     }
     #endregion
-
-    private void ButtonHighLighting()
+    
+    private void OnVideoPrepared(VideoPlayer source)
     {
-        if (currentSelcectedButton >= 0 && currentSelcectedButton <= Buttons.Count - 1)
-        {
-            Buttons[currentSelcectedButton].GetComponent<RectTransform>().localScale = new Vector3(1.2f, 1.2f, 1f);
-            if(previousSelectedButton != -1) Buttons[previousSelectedButton].GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1f);
-        }
+        // Start playing the video when it is prepared
+        source.Play();
+        Debug.Log("Video prepared and started playing.");
     }
-
+    
     #region ButtonMethods
     public void OnClickStartButton()
     {
@@ -160,6 +163,15 @@ public class TitleManager : MonoBehaviour
     public void OnHoverExit(BaseEventData data)
     {
         initTitleManager();
+    }
+    
+    private void ButtonHighLighting()
+    {
+        if (currentSelcectedButton >= 0 && currentSelcectedButton <= Buttons.Count - 1)
+        {
+            Buttons[currentSelcectedButton].GetComponent<RectTransform>().localScale = new Vector3(1.2f, 1.2f, 1f);
+            if(previousSelectedButton != -1) Buttons[previousSelectedButton].GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1f);
+        }
     }
 
     #endregion
