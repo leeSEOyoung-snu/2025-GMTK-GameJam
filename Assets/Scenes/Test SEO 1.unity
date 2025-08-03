@@ -636,6 +636,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: e81f0ad74ba2f3641a28cd616058fc12, type: 3}
   - {fileID: 21300000, guid: 8d3256001e1116045a72c951477881f9, type: 3}
   - {fileID: 21300000, guid: 59f5f713d8d98ee46be944b866883c80, type: 3}
+  - {fileID: 21300000, guid: ea2c5dd0376e23142bf0bb8bfe5ed2cb, type: 3}
+  - {fileID: 21300000, guid: ea2c5dd0376e23142bf0bb8bfe5ed2cb, type: 3}
 --- !u!4 &270993564
 Transform:
   m_ObjectHideFlags: 0
@@ -2135,6 +2137,7 @@ MonoBehaviour:
   _currRotateCnt: 0
   _targetScore: 0
   _currScore: 0
+  _nextSushi: []
   isRotating: 0
   isClear: 0
 --- !u!114 &1056297272

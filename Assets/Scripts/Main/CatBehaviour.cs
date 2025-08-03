@@ -61,6 +61,8 @@ public class CatBehaviour : MonoBehaviour
         // Generate Condition
         if (Enum.TryParse((string)catData["Condition"], ignoreCase: true, out ConditionTypes cond))
         {
+            // if (cond == ConditionTypes.DishPassed && string.Equals(catData["ConVal1"], ColorTypes.DishEmpty.ToString()))
+                
             Condition = (string)catData["ConVal1"];
             conditionType = cond;
             var conditionData =
@@ -126,7 +128,6 @@ public class CatBehaviour : MonoBehaviour
 
         isResult1Sushi = isVal1Sushi;
         isResult2Sushi = isVal2Sushi;
-        Debug.LogError($"type: {resultType}, result1: {isResult1Sushi}, result2: {isResult2Sushi}");
         catResultBehaviour.InitResult(isVal1Sushi, isVal2Sushi, isVal1StandBy, isVal2StandBy, resultType, Result1, Result2);
     }
 
