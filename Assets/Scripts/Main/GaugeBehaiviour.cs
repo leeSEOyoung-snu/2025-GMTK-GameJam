@@ -23,8 +23,9 @@ public class GaugeBehaiviour : MonoBehaviour
         //for test
         UpdateText(MainSceneManager.Instance._currScore, MainSceneManager.Instance._targetScore);
         UpdateGaugeFinite(MainSceneManager.Instance._currScore, MainSceneManager.Instance._targetScore);
+        FireAnimationImage.gameObject.SetActive(false);
     }
-
+    
     // Update is called once per frame
     void Update()
     {
@@ -55,6 +56,7 @@ public class GaugeBehaiviour : MonoBehaviour
         if (gaugeValue >= 1)
         {
             gaugeValue = 1; // Cap the gauge value at 1
+            FireAnimationImage.gameObject.SetActive(true);
             isFire = true;
         }
         else
@@ -67,6 +69,7 @@ public class GaugeBehaiviour : MonoBehaviour
     public void UpdateGaugeInfinite()
     {
         // For infinite gauge, we can just set it to full
+        FireAnimationImage.gameObject.SetActive(true);
         gaugeBar.fillAmount = 1;
         this.isFire = true;
     }

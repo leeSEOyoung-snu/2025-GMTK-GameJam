@@ -2264,6 +2264,7 @@ MonoBehaviour:
   nextSushiPanel: {fileID: 518697449}
   mainCanvas: {fileID: 547865272}
   StageSummaryPanel: {fileID: 433770907}
+  GaguePanel: {fileID: 1062489838}
   _maxRotateCnt: 0
   _currRotateCnt: 0
   _targetScore: 0
@@ -2349,6 +2350,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tooltip: {fileID: 797349299}
+--- !u!1 &1062489838 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1349217333080949919, guid: bf5fab18079c828479d3395558301d43, type: 3}
+  m_PrefabInstance: {fileID: 742882614}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1229926833 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2637084851347254474, guid: bf5fab18079c828479d3395558301d43, type: 3}

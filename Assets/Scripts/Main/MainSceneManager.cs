@@ -20,6 +20,7 @@ public class MainSceneManager : MonoBehaviour
     [SerializeField] private GameObject nextSushiPanel;
     [SerializeField] private Canvas mainCanvas;
     [SerializeField] private GameObject StageSummaryPanel;
+    [SerializeField] private GameObject GaguePanel;
     public static MainSceneManager Instance { get; private set; }
     
     public Dictionary<string, object> CurrStageData { get; private set; }
@@ -140,6 +141,9 @@ public class MainSceneManager : MonoBehaviour
     }
     public void UpdateScore()
     {
+        GaguePanel.GetComponent<GaugeBehaiviour>().UpdateText(_currScore, _targetScore);
+        GaguePanel.GetComponent<GaugeBehaiviour>().UpdateGaugeFinite(_currScore, _targetScore);
+        //TODO : infinite
         scoreText.text = $"Score [{_currScore}/{_targetScore}]";
     }
 
