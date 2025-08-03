@@ -39,8 +39,8 @@ public class MainSceneManager : MonoBehaviour
     public Dictionary<string, object> CurrStageData { get; private set; }
     public readonly float PosXFactor = 1.75f;
     private List<IInit> _initScripts = new List<IInit>();
-    
-    public float RotateSpeedFactor { get; private set; }
+
+    public float RotateSpeedFactor;
     public int _maxRotateCnt, _currRotateCnt;
     public int _targetScore, _currScore;
     private List<int> _newIcon;

@@ -12,6 +12,20 @@ public class Dish
 
 public class DishBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
+    public enum MoveMethod
+    {
+        Rotate,
+        GenerateSushi,
+        SwapPosition,
+        EmptyMotion,
+        ChangeMotion,
+    }
+
+    private MoveMethod onCompleteMethod;
+    private SushiTypes onCompleteSushi;
+    private bool onCompletedBool;
+    private Vector3 onCompleteVec3;
+    
     [SerializeField] private SpriteRenderer dishSr;
     [SerializeField] private SpriteRenderer sushiSr;
     public Dish DishData { get; private set; }
@@ -34,14 +48,21 @@ public class DishBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnterH
         ChangeSushiType(sushi);
         ChangeDishType(color);
     }
-
+    
     public void Rotate(Vector3 endPos, bool moveXFirst)
     {
         if (_rotateSq != null && _rotateSq.IsActive() && _rotateSq.IsPlaying())
         {
-            _rotateSq.Complete();
-            _rotateSq = null;
+            StartCoroutine(WaitForSequenceAndDoNext(MoveMethod.Rotate, endPos, SushiTypes.SushiStandBy, moveXFirst));
+            return;
         }
+        
+        // if (_rotateSq != null && _rotateSq.IsActive() && _rotateSq.IsPlaying())
+        // {
+        //     _rotateSq.Kill(true);
+        //     _rotateSq = null;
+        // }
+        
         _hoveredPos = new Vector3(endPos.x, endPos.y + _hoveredPosY, endPos.z);
         _rotateSq = DOTween.Sequence();
 
@@ -61,7 +82,7 @@ public class DishBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnterH
                 Vector3[] path = { new (DishData.CurrPos.x, endPos.y, 0f), new (endPos.x, endPos.y, 0f) };
                 _rotateSq.Append(transform.DOLocalPath(path, rotateSpeed, PathType.Linear));
             }
-        } 
+        }
 
         _rotateSq.Play().OnComplete(TableManager.Instance.CheckDishCondition);
         DishData.CurrPos = endPos;
@@ -128,11 +149,18 @@ public class DishBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnterH
 
     public void GenerateSushi(SushiTypes sushi)
     {
-        ChangeSushiType(sushi);
         if (_rotateSq != null && _rotateSq.IsActive() && _rotateSq.IsPlaying())
         {
-            _rotateSq.Kill();
+            StartCoroutine(WaitForSequenceAndDoNext(MoveMethod.GenerateSushi, Vector3.zero, sushi, false));
+            return;
         }
+        
+        ChangeSushiType(sushi);
+        
+        // if (_rotateSq != null && _rotateSq.IsActive() && _rotateSq.IsPlaying())
+        // {
+        //     _rotateSq.Kill(true);
+        // }
         _rotateSq = DOTween.Sequence();
         Vector3[] path = { new Vector3(sushiSr.transform.localPosition.x, sushiSr.transform.localPosition.y + _hoveredPosY, sushiSr.transform.localPosition.z), sushiSr.transform.localPosition };
         _rotateSq.Append(sushiSr.transform.DOLocalPath(path, CardManager.Instance.CardMoveDuration));
@@ -143,8 +171,13 @@ public class DishBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     {
         if (_rotateSq != null && _rotateSq.IsActive() && _rotateSq.IsPlaying())
         {
-            _rotateSq.Kill();
+            StartCoroutine(WaitForSequenceAndDoNext(MoveMethod.SwapPosition, endPos, SushiTypes.SushiStandBy, false));
+            return;
         }
+        // if (_rotateSq != null && _rotateSq.IsActive() && _rotateSq.IsPlaying())
+        // {
+        //     _rotateSq.Kill(true);
+        // }
         _rotateSq = DOTween.Sequence();
         Vector3[] path = new Vector3[3] { _hoveredPos, Vector3.zero, Vector3.zero };
         DishData.CurrPos = endPos;
@@ -170,7 +203,7 @@ public class DishBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnterH
         if (MainSceneManager.Instance.isRotating || isSelected || DishData.Sushi != SushiTypes.SushiEmpty) return;
         if (_rotateSq != null && _rotateSq.IsActive() && _rotateSq.IsPlaying())
         {
-            _rotateSq.Kill();
+            _rotateSq.Kill(true);
         }
         _rotateSq = DOTween.Sequence();
         _rotateSq.Append(transform.DOLocalMove(_hoveredPos, CardManager.Instance.CardMoveDuration));
@@ -182,7 +215,7 @@ public class DishBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnterH
         if (MainSceneManager.Instance.isRotating || isSelected) return;
         if (_rotateSq != null && _rotateSq.IsActive() && _rotateSq.IsPlaying())
         {
-            _rotateSq.Kill();
+            _rotateSq.Kill(true);
         }
         _rotateSq = DOTween.Sequence();
         _rotateSq.Append(transform.DOLocalMove(DishData.CurrPos, CardManager.Instance.CardMoveDuration));
@@ -193,8 +226,13 @@ public class DishBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     {
         if (_rotateSq != null && _rotateSq.IsActive() && _rotateSq.IsPlaying())
         {
-            _rotateSq.Kill();
+            StartCoroutine(WaitForSequenceAndDoNext(MoveMethod.EmptyMotion, Vector3.zero, SushiTypes.SushiStandBy, false));
+            return;
         }
+        // if (_rotateSq != null && _rotateSq.IsActive() && _rotateSq.IsPlaying())
+        // {
+        //     _rotateSq.Kill(true);
+        // }
         _rotateSq = DOTween.Sequence();
         Vector3[] path = { new Vector3(sushiSr.transform.localPosition.x, sushiSr.transform.localPosition.y + _hoveredPosY, sushiSr.transform.localPosition.z), sushiSr.transform.localPosition };
         _rotateSq.Append(sushiSr.transform.DOLocalPath(path, CardManager.Instance.CardMoveDuration));
@@ -211,8 +249,13 @@ public class DishBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     {
         if (_rotateSq != null && _rotateSq.IsActive() && _rotateSq.IsPlaying())
         {
-            _rotateSq.Kill();
+            StartCoroutine(WaitForSequenceAndDoNext(MoveMethod.ChangeMotion, Vector3.zero, sushi, false));
+            return;
         }
+        // if (_rotateSq != null && _rotateSq.IsActive() && _rotateSq.IsPlaying())
+        // {
+        //     _rotateSq.Kill(true);
+        // }
         _rotateSq = DOTween.Sequence();
         Vector3[] path = { new Vector3(sushiSr.transform.localPosition.x, sushiSr.transform.localPosition.y + _hoveredPosY, sushiSr.transform.localPosition.z), sushiSr.transform.localPosition };
         _rotateSq.Append(sushiSr.transform.DOLocalPath(path, CardManager.Instance.CardMoveDuration));
@@ -223,5 +266,37 @@ public class DishBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     {
         ChangeSushiType(sushi);
         TableManager.Instance.EndChangeType();
+    }
+
+    private IEnumerator WaitForSequenceAndDoNext(MoveMethod method, Vector3 vec, SushiTypes sushi, bool boolean)
+    {
+        onCompleteMethod = method;
+        onCompleteSushi = sushi;
+        onCompleteVec3 = vec;
+        onCompletedBool = boolean;
+        yield return _rotateSq.WaitForCompletion();
+
+        switch (method)
+        {
+            case MoveMethod.Rotate:
+                Rotate(onCompleteVec3, onCompletedBool);
+                break;
+            
+            case MoveMethod.GenerateSushi:
+                GenerateSushi(onCompleteSushi);
+                break;
+            
+            case MoveMethod.SwapPosition:
+                SwapPosition(onCompleteVec3);
+                break;
+            
+            case MoveMethod.EmptyMotion:
+                EmptyMotion();
+                break;
+            
+            case MoveMethod.ChangeMotion:
+                ChangeMotion(onCompleteSushi);
+                break;
+        }
     }
 }

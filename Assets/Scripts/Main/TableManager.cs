@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class TableManager : MonoBehaviour, IInit
 {
@@ -10,6 +11,7 @@ public class TableManager : MonoBehaviour, IInit
     
     [Header("Rail")]
     [SerializeField] private Sprite[] railSprites;
+    [SerializeField] private Sprite[] blackRail;
     [SerializeField] private GameObject railPref, railParent;
     
     [Header("Serving")]
@@ -35,6 +37,8 @@ public class TableManager : MonoBehaviour, IInit
     public List<Sprite> dishSprites, sushiSprites;
     
     private DishBehaviour _selectedDish;
+    
+    private int loopCnt;
 
     private void Awake()
     {
@@ -52,6 +56,8 @@ public class TableManager : MonoBehaviour, IInit
         DishBehaviourDict = new Dictionary<int, DishBehaviour>();
         
         _selectedDish = null;
+
+        loopCnt = 0;
         
         GenerateRail();
         GenerateDish();
@@ -70,6 +76,7 @@ public class TableManager : MonoBehaviour, IInit
         _railMinPosX = currPosX + MainSceneManager.Instance.PosXFactor;
 
         GameObject tmpObj;
+        SpriteRenderer child;
         
         for (int i = -1; i < RailCnt+1; i++)
         {
@@ -82,6 +89,8 @@ public class TableManager : MonoBehaviour, IInit
                         tmpObj = Instantiate(railPref, railParent.transform);
                         tmpObj.transform.localPosition = new Vector3(currPosX, 0, 0);
                         tmpObj.GetComponent<SpriteRenderer>().sprite = railSprites[2];
+                        child = tmpObj.transform.GetChild(0).GetComponent<SpriteRenderer>();
+                        child.gameObject.SetActive(false);
                     }
                 }
                 else
@@ -94,10 +103,29 @@ public class TableManager : MonoBehaviour, IInit
                         spr.sprite = railSprites[1];
                         spr.flipX = i == RailCnt;
                         spr.flipY = j == -1;
+                        
+                        if (j > 0)
+                        {
+                            child = tmpObj.transform.GetChild(0).GetComponent<SpriteRenderer>();
+                            child.gameObject.SetActive(false);
+                            // child.sprite = blackRail[2];
+                            // child.flipX = i == RailCnt; 
+                        }
+                        else
+                        {
+                            child = tmpObj.transform.GetChild(0).GetComponent<SpriteRenderer>();
+                            child.sprite = blackRail[3];
+                            child.flipX = i == RailCnt; 
+                        }
+                        
                     }
                     else
                     {
                         tmpObj.GetComponent<SpriteRenderer>().sprite = railSprites[0];
+                        if (j > 0)
+                            tmpObj.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = blackRail[0];
+                        else
+                            tmpObj.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = blackRail[1];
                     }
                 }
             }
@@ -287,15 +315,29 @@ public class TableManager : MonoBehaviour, IInit
             {
                 foreach (CatBehaviour cat in DiningManager.Instance.CatBehaviourDict.Values)
                     cat.isFull = false;
+                loopCnt++;
+                Debug.Log("loopCnt: " + loopCnt);
+                if (loopCnt >= 3) MainSceneManager.Instance.RotateSpeedFactor *= 0.8f;
+                if (loopCnt >= 7)
+                {
+                    Debug.Log("infinite");
+                    MainSceneManager.Instance.isClear = true;
+                    MainSceneManager.Instance.ShowClearPanel();
+                    MainSceneManager.Instance.isRotating = false;
+                    Time.timeScale = 0;
+                    return;
+                }
             }
 
             if (isAllDishEmpty && firstDishPos.y < 0f && Mathf.Abs(firstDishPos.x - ServingMinPosX) <= 0.0001f)
             {
                 MainSceneManager.Instance.isRotating = false;
                 MainSceneManager.Instance.CheckClear();
-
+                
                 if (MainSceneManager.Instance._currRotateCnt == 0 || MainSceneManager.Instance.isClear)
+                {
                     MainSceneManager.Instance.ShowClearPanel();
+                }
                 else
                 {
                     foreach (string sushiStr in MainSceneManager.Instance._nextSushi)
@@ -303,6 +345,9 @@ public class TableManager : MonoBehaviour, IInit
                         if (Enum.TryParse(sushiStr, ignoreCase: true, out SushiTypes sushi))
                             CardManager.Instance.AddCard(sushi);
                     }
+
+                    loopCnt = 0;
+                    MainSceneManager.Instance.RotateSpeedFactor = 1f;
                 }
             }
             else if (passed) InteractionManager.Instance.CheckCatDishRelative();

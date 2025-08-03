@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     private string StageFileName;
     private bool isClear;
     public int CurrStageIdx { get; private set; }
-    public readonly float RotateDuration = 1f;
+    public readonly float RotateDuration = 0.6f;
     
 
     //Save Part
