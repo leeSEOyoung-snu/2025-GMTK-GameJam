@@ -95,7 +95,7 @@ public class ResultMethods : MonoBehaviour
             
             case ResultTypes.ChangeType:
                 if (isVal1Sushi && isVal2Sushi)
-                    TableManager.Instance.ChangeType(sushi1, sushi2);
+                    TableManager.Instance.ChangeSushiType(sushi1, sushi2);
                 else
                     Debug.LogError($"Change Type Error: {resVal1}, {resVal2}");
                 break;
