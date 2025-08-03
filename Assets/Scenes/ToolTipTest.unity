@@ -462,6 +462,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 06edc2365e3baed49b8acc5b2e47c798, type: 3}
   - {fileID: 21300000, guid: 06edc2365e3baed49b8acc5b2e47c798, type: 3}
   - {fileID: 21300000, guid: 06edc2365e3baed49b8acc5b2e47c798, type: 3}
+  singleBlank: {fileID: 0}
+  doubleBlank: []
+  arrow: {fileID: 0}
 --- !u!114 &270993563
 MonoBehaviour:
   m_ObjectHideFlags: 0

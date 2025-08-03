@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviour
     {
         currStageData = BigStage.ToString() +"0"+ SmallStage.ToString();
         //then load Scene
+        SoundManager.Instance.PlayBGM(SoundManager.Instance.BGMs[1]);
         SceneManager.LoadScene("Scenes/Test SEO");
     }
 
