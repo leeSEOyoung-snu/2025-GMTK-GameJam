@@ -187,6 +187,7 @@ public class GameManager : MonoBehaviour
                     int SS = int.Parse(t.Substring(1));
                     
                     _saveData.saveData[BS][SS] = 1;
+                    Debug.Log($"Stage {BS}0{SS} unlocked.");
                 }
                 SaveSaveData();
                 break;
