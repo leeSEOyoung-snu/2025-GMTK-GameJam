@@ -40,6 +40,7 @@ public class CatResultBehaviour : IPointerHandler
                         DiningManager.Instance.BubbleSushiScale, 0);
                 }
                 result1Tr.transform.localPosition = new Vector3(DiningManager.Instance.BubbleTypePosX, 0, 0);
+                result.transform.SetAsFirstSibling();
                 break;
             
             case ResultTypes.GenerateCard2:
@@ -75,18 +76,23 @@ public class CatResultBehaviour : IPointerHandler
                         DiningManager.Instance.BubbleSushiScale, 0);
                 }
                 result.transform.localPosition = new Vector3(DiningManager.Instance.BubbleTypePosX, 0, 0);
+                result.transform.SetAsFirstSibling();
+                break;
+            
+            case ResultTypes.GiveTip:
+                Debug.Log($"Init isVal1StandBy: {isVal1StandBy}");
+                isResultSingle = true;
+                iconSr.sprite = ResultMethods.Instance.iconSprites[(int)resultType];
+                iconSr.transform.localPosition = new Vector3(0, 0, 0);
                 break;
             
             
-            // GiveTip,
             // EmptyNextDish,
             // EmptyColorDish,
             // GenerateSushiOnColorDish,
             // ChangeType,
             // ChangeCard,
         }
-        
-        result.transform.SetAsFirstSibling();
         
         this.isVal1StandBy = isVal1Sushi;
         this.isVal2StandBy = isVal2Sushi;
@@ -97,6 +103,7 @@ public class CatResultBehaviour : IPointerHandler
 
     public override void HandlePointerClick()
     {
+        Debug.Log($"isVal1StandBy: {isVal1StandBy}, isVal2StandBy: {isVal2StandBy}");
         if (MainSceneManager.Instance.CookStarted || !(isVal1StandBy || isVal2StandBy)) return;
         CardManager.Instance.ResultSelected(this);
     }

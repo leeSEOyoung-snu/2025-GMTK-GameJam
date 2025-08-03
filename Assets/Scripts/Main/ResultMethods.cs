@@ -36,6 +36,9 @@ public class ResultMethods : MonoBehaviour
         SushiTypes sushi1 = SushiTypes.Any, sushi2 = SushiTypes.Any;
         ColorTypes dish1 = ColorTypes.DishStandBy, dish2 = ColorTypes.DishStandBy;
 
+        if (type == ResultTypes.GiveTip) return;
+        
+            
         if (isVal1Sushi)
         {
             if (Enum.TryParse(resVal1, ignoreCase: true, out sushi1)) { }
@@ -77,7 +80,6 @@ public class ResultMethods : MonoBehaviour
                 break;
             
             case ResultTypes.GiveTip:
-                // TODO: import result
                 break;
             
             case ResultTypes.EmptyNextDish:

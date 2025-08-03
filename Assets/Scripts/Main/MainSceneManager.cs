@@ -127,6 +127,12 @@ public class MainSceneManager : MonoBehaviour
         rotateCntText.text = _currRotateCnt.ToString();
     }
 
+    public void ChangeScore(int delta)
+    {
+        _currScore += delta;
+        UpdateScore();
+    }
+
     public void UpdateScore()
     {
         scoreText.text = $"Score [{_currScore}/{_targetScore}]";

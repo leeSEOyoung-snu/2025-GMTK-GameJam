@@ -112,6 +112,7 @@ public class InteractionManager : MonoBehaviour, IInit
         }
         
         activationInfo[activatedId % DiningManager.Instance.CatCnt] = false;
+        if (DiningManager.Instance.CatBehaviourDict[activatedId % DiningManager.Instance.CatCnt].resultType == ResultTypes.GiveTip) ActivateResult();
         DiningManager.Instance.CatBehaviourDict[activatedId % DiningManager.Instance.CatCnt].ActivateResult();
     }
     
@@ -192,11 +193,10 @@ public class InteractionManager : MonoBehaviour, IInit
                 activationInfo[pair.Key] = DiningManager.Instance.CatBehaviourDict[pair.Key]
                     .CheckCondition(ConditionTypes.SushiEaten, CatDishRelative[pair.Key].DishData.Sushi.ToString());
             }
+            SushiTypes eatenSushi = CatDishRelative[pair.Key].DishData.Sushi; 
             CatDishRelative[pair.Key].ChangeSushiType(SushiTypes.Empty);
+            DiningManager.Instance.CatBehaviourDict[pair.Key].ShowPrice(eatenSushi);
         }
-        
-        foreach (var pair in activationInfo)
-            Debug.Log($"activationInfo: {pair.Key} - {pair.Value}");
         
         ActivateResult();
     }
