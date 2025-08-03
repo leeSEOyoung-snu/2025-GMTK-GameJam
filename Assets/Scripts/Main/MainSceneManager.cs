@@ -153,6 +153,7 @@ public class MainSceneManager : MonoBehaviour
 
     public void StartCook()
     {
+        // SoundManager.Instance.PlaySFX(SoundManager.Instance.SFXs[4]);
         CookStarted = true;
         startCookButton.SetActive(false);
         TableManager.Instance.ReadyToCook();
