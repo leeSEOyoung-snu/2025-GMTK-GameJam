@@ -25,6 +25,7 @@ public class StageNodeBehaviour : MonoBehaviour
         string numberStr = this.name.Substring("StageNode".Length); // "1010"
         BigStage = int.Parse(numberStr.Substring(0, 1));
         SmallStage = int.Parse(numberStr.Substring(1));
+        Debug.Log(SmallStage + "!!!");
         StageText.text = $"{BigStage} - {SmallStage}";
         
         
