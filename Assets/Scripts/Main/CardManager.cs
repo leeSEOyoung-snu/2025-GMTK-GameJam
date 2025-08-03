@@ -119,12 +119,11 @@ public class CardManager : MonoBehaviour, IInit
 
     public void AddCard(SushiTypes sushi, bool isCondition = false)
     {
-        Debug.Log(CurrCards.Count);
-        foreach (CardBehaviour card in CurrCards)
+        if (CurrCards.Count >= 10)
         {
-            Debug.Log(card.Sushi);
+            if (isCondition) InteractionManager.Instance.ActivateResult();
+            return;
         }
-        
         CardBehaviour cardBehaviour = Instantiate(cardPref, cardParent.transform).GetComponent<CardBehaviour>();
         CurrCards.Add(cardBehaviour);
         cardBehaviour.InitCard(sushi, new Vector3(_cardMaxPosX, _addCardStartPosY, 0f), _defaultOrder + CurrCards.Count - 1);   
