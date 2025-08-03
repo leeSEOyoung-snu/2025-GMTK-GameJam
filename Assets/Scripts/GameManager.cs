@@ -56,6 +56,7 @@ public class GameManager : MonoBehaviour
 
     public void SetcurrStageData(int BigStage, int SmallStage)
     {
+        CurrStageIdx = (BigStage-1)*10 + SmallStage - 1; // 0-indexed
         currStageData = BigStage.ToString() +"0"+ SmallStage.ToString();
         //then load Scene
         SoundManager.Instance.PlayBGM(SoundManager.Instance.BGMs[1]);
