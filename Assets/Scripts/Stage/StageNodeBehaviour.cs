@@ -80,6 +80,7 @@ public class StageNodeBehaviour : MonoBehaviour
 
     public void OnClicked()
     {
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.SFXs[0]);
         if (stageState == StageState.Open || stageState == StageState.Clear)
         {
             GameManager.Instance.SetcurrStageData(BigStage, SmallStage);

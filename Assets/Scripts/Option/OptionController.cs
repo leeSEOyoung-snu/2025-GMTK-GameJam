@@ -80,6 +80,7 @@ public class OptionController : MonoBehaviour
 
     public void TitleButonClicked()
     {
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.SFXs[0]);
         if (SceneName != "Title")
         {
             SceneManager.LoadScene("Title");
@@ -89,6 +90,7 @@ public class OptionController : MonoBehaviour
 
     public void BackButtonClicked()
     {
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.SFXs[0]);
         Debug.Log("Back button clicked");
         // Example: Close the options panel
         gameObject.SetActive(false);

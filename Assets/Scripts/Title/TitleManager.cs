@@ -108,18 +108,21 @@ public class TitleManager : MonoBehaviour
     public void OnClickStartButton()
     {
         // Debug.Log("Start button clicked");
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.SFXs[0]); // Play the start button sound effect
         StageSet.SetActive(true);
         TitlePanel.SetActive(false);
     }
 
     public void OnClickOptionButton()
     {
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.SFXs[0]);
         OptionPanel.SetActive(true);
         // Debug.Log("Option button clicked");
     }
 
     public void OnClickQuitButton()
     {
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.SFXs[0]);
         // Quit the application
         Debug.Log("Quit button clicked");
 #if !UNITY_EDITOR

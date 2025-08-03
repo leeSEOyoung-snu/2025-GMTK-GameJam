@@ -99,6 +99,7 @@ public class StageManager : MonoBehaviour
 
     public void RightStageButtonClicekd()
     {
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.SFXs[0]);
         if (stagePanelSequence == null || stagePanelSequence.IsPlaying()) return;
         
         stagePanelSequence = DOTween.Sequence();
@@ -111,6 +112,7 @@ public class StageManager : MonoBehaviour
     
     public void LeftStageButtonClicekd()
     {
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.SFXs[0]);
         if (stagePanelSequence == null || stagePanelSequence.IsPlaying()) return;
         stagePanelSequence = DOTween.Sequence();
         stagePanelSequence.Append(DOTween.To(() => 0f, x => { }, 0f, 0f));  //dummy tween to ensure the sequence is not empty
@@ -170,6 +172,7 @@ public class StageManager : MonoBehaviour
     
     public void TitleButtonClicked()
     {
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.SFXs[0]);
         if (stagePanelSequence == null || stagePanelSequence.IsPlaying()) return;
         StageSet.SetActive(false);
         TitlePanel.SetActive(true);
@@ -177,6 +180,7 @@ public class StageManager : MonoBehaviour
 
     public void OptionButtonClicked()
     {
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.SFXs[0]);
         if(stagePanelSequence == null || stagePanelSequence.IsPlaying()) return;
         OptionPanel.SetActive(true);
     }

@@ -10,7 +10,11 @@ public class SoundManager : MonoBehaviour
 
     [SerializeField] public AudioSource backgroundMusicSource;
     [SerializeField] public AudioSource soundEffectSource;
+    
+    [Header("BGMs")]
     [SerializeField] public AudioClip[] BGMs;
+    
+    [Header("SFXs")]
     [SerializeField] public AudioClip[] SFXs;
     private void Awake()
     {
