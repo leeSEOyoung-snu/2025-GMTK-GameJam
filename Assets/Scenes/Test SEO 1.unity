@@ -2761,6 +2761,7 @@ GameObject:
   - component: {fileID: 1401912351}
   - component: {fileID: 1401912350}
   - component: {fileID: 1401912352}
+  - component: {fileID: 1401912353}
   m_Layer: 5
   m_Name: Rotate Button
   m_TagString: Untagged
@@ -2833,7 +2834,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1401912348}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
@@ -2882,6 +2883,22 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1401912353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1401912348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5412e7dcac1774c4db5d24086d4753a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotateCnt: {fileID: 50612733}
+  sr: {fileID: 1401912350}
+  normal: {fileID: 21300000, guid: 426caf30a455d204dae2c2b0c6a6e243, type: 3}
+  hovered: {fileID: 21300000, guid: 1b8891b1897cd474ea228bb936c1b313, type: 3}
 --- !u!1 &1555805805
 GameObject:
   m_ObjectHideFlags: 0
