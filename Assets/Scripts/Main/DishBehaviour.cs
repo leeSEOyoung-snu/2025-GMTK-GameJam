@@ -113,8 +113,15 @@ public class DishBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     public void PutSushiOnDish(SushiTypes sushi)
     {
         DishData.Sushi = sushi;
-        sushiSr.sprite = TableManager.Instance.sushiSprites[(int)sushi];
-        sushiSr.color = Color.white;
+        if (sushi == SushiTypes.Empty)
+        {
+            sushiSr.color = Color.clear;
+        }
+        else
+        {
+            sushiSr.sprite = TableManager.Instance.sushiSprites[(int)sushi];
+            sushiSr.color = Color.white;
+        }
         OnPointerExit(null);
     }
 

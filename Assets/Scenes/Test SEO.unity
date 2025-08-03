@@ -588,14 +588,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   iconSprites:
-  - {fileID: 21300000, guid: 84b2df843d32c2e4fb352913d3845533, type: 3}
-  - {fileID: 21300000, guid: 346d456f446b598479e3175593fa2a21, type: 3}
-  - {fileID: 21300000, guid: 06edc2365e3baed49b8acc5b2e47c798, type: 3}
-  - {fileID: 21300000, guid: 06edc2365e3baed49b8acc5b2e47c798, type: 3}
-  - {fileID: 21300000, guid: 06edc2365e3baed49b8acc5b2e47c798, type: 3}
-  - {fileID: 21300000, guid: 06edc2365e3baed49b8acc5b2e47c798, type: 3}
-  - {fileID: 21300000, guid: 06edc2365e3baed49b8acc5b2e47c798, type: 3}
-  - {fileID: 21300000, guid: 06edc2365e3baed49b8acc5b2e47c798, type: 3}
+  - {fileID: 21300000, guid: 7eb88740c4ffe1048a993390a44a2e9e, type: 3}
+  - {fileID: 21300000, guid: 5d8580c75f8ee5c4cb9fa6b26a9d7617, type: 3}
+  - {fileID: 21300000, guid: 6477c1e2cfe0ee34996fc9143a49da4b, type: 3}
+  - {fileID: 21300000, guid: b57dfc519129d1948908c5171c1d4a64, type: 3}
+  - {fileID: 21300000, guid: a6f9b06b4017b2440b7bb994f45bc07b, type: 3}
+  - {fileID: 21300000, guid: 59527e7ae5bd7e2428487060d27c04e3, type: 3}
+  - {fileID: 21300000, guid: 6477c1e2cfe0ee34996fc9143a49da4b, type: 3}
+  - {fileID: 21300000, guid: 8a7ee444e4cbe00498b5c79e8d3a0a39, type: 3}
+  - {fileID: 21300000, guid: 8a7ee444e4cbe00498b5c79e8d3a0a39, type: 3}
+  singleBlank: {fileID: 21300000, guid: 92a566ce2b664564b90560d3c5e86c58, type: 3}
+  doubleBlank:
+  - {fileID: 21300000, guid: e51d859c02814a14ca9fb2de03d6897b, type: 3}
+  - {fileID: 21300000, guid: 5a1033b199b80624ba379b0fd2dd67fe, type: 3}
+  arrow: {fileID: 21300000, guid: 8a7ee444e4cbe00498b5c79e8d3a0a39, type: 3}
 --- !u!114 &270993563
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -609,27 +615,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   iconSprites:
-  - {fileID: 21300000, guid: c9a041ecb7d3175459f5ad2995815023, type: 3}
-  - {fileID: 21300000, guid: 49028a8b72d129e4885b3bf6a07ddd9c, type: 3}
-  - {fileID: 21300000, guid: 84b2df843d32c2e4fb352913d3845533, type: 3}
-  - {fileID: 21300000, guid: 346d456f446b598479e3175593fa2a21, type: 3}
-  - {fileID: 21300000, guid: b24f3e377edb74a428c337db027d5f8a, type: 3}
-  - {fileID: 21300000, guid: e60b85080fb23e9498c8764acb3b7a49, type: 3}
+  - {fileID: 21300000, guid: 3292d6be55fbd35438d08295f076fb84, type: 3}
+  - {fileID: 21300000, guid: 1340faa3c6be2344082e63ca8189154a, type: 3}
+  - {fileID: 21300000, guid: 7eb88740c4ffe1048a993390a44a2e9e, type: 3}
+  - {fileID: 21300000, guid: 6477c1e2cfe0ee34996fc9143a49da4b, type: 3}
+  - {fileID: 21300000, guid: 26bae3ad94f947845b0694fe69242e70, type: 3}
+  - {fileID: 21300000, guid: dfa53e49138c4b54385ae6bb0ef0ed14, type: 3}
   sushiSprites:
   - {fileID: 21300000, guid: fc8afc261b04b3f4db2a269e78c82006, type: 3}
   - {fileID: 21300000, guid: 1be786362aa86464a948cf454bf948fa, type: 3}
   - {fileID: 21300000, guid: 1845298256befe048b3040dbf2bf1662, type: 3}
   - {fileID: 21300000, guid: a5c5a7b2ca0216f4ebbca481690ee8d3, type: 3}
   - {fileID: 21300000, guid: c2d105a4221fda94aa72983327cffd3a, type: 3}
-  - {fileID: 21300000, guid: 25dd8f5c7f2ea7549908c615069899a7, type: 3}
-  - {fileID: 21300000, guid: 159d2eb2d8951a346b6fe4840b401be9, type: 3}
-  - {fileID: 21300000, guid: 06edc2365e3baed49b8acc5b2e47c798, type: 3}
+  - {fileID: 21300000, guid: 3d988f90b737b7f4990077e5a3b865b8, type: 3}
+  - {fileID: 21300000, guid: 59527e7ae5bd7e2428487060d27c04e3, type: 3}
+  - {fileID: 21300000, guid: 3d988f90b737b7f4990077e5a3b865b8, type: 3}
   dishSprites:
   - {fileID: 21300000, guid: aa298071ed2a99b40bfbe623d2956e0c, type: 3}
   - {fileID: 21300000, guid: e81f0ad74ba2f3641a28cd616058fc12, type: 3}
   - {fileID: 21300000, guid: 8d3256001e1116045a72c951477881f9, type: 3}
   - {fileID: 21300000, guid: 59f5f713d8d98ee46be944b866883c80, type: 3}
-  - {fileID: 21300000, guid: 06edc2365e3baed49b8acc5b2e47c798, type: 3}
 --- !u!4 &270993564
 Transform:
   m_ObjectHideFlags: 0
@@ -1347,7 +1352,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1056297274}
         m_TargetAssemblyTypeName: CardManager, Assembly-CSharp
-        m_MethodName: DebugAddCard
+        m_MethodName: DebugAddShrimpCard
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

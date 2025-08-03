@@ -67,23 +67,24 @@ public class CatBehaviour : MonoBehaviour
         Result2 = (string)catData["ResVal2"];
         isResultSingle = Result2.Equals("X", StringComparison.OrdinalIgnoreCase);
         
-        Sprite[] sprites = isResultSingle ? new Sprite[2] : new Sprite[3];
+        // Sprite[] sprites = isResultSingle ? new Sprite[2] : new Sprite[3];
         bool isVal1Sushi = false, isVal2Sushi = false, isVal1StandBy = false, isVal2StandBy = false;
 
         if (Enum.TryParse((string)catData["Result"], ignoreCase: true, out resultType))
-            sprites[0] = ResultMethods.Instance.iconSprites[(int)resultType];
+            // sprites[0] = ResultMethods.Instance.iconSprites[(int)resultType];
+        {}
         else Debug.LogError("Result Error: " + (string)catData["Result"]);
         
         if (Enum.TryParse(Result1, ignoreCase: true, out SushiTypes sushi1))
         {
             isVal1Sushi = true;
-            sprites[1] = ConditionMethods.Instance.sushiSprites[(int)sushi1];
+            // sprites[1] = ConditionMethods.Instance.sushiSprites[(int)sushi1];
             isVal1StandBy = sushi1 == SushiTypes.SushiStandBy;
         }
         else if (Enum.TryParse(Result1, ignoreCase: true, out ColorTypes dish1))
         {
             isVal1Sushi = false;
-            sprites[1] = ConditionMethods.Instance.dishSprites[(int)dish1];
+            // sprites[1] = ConditionMethods.Instance.dishSprites[(int)dish1];
             isVal1StandBy = dish1 == ColorTypes.DishStandBy;
         }
         else Debug.LogError("Result Val1 Error: " + Result1);
@@ -93,13 +94,13 @@ public class CatBehaviour : MonoBehaviour
             if (Enum.TryParse(Result1, ignoreCase: true, out SushiTypes sushi2))
             {
                 isVal2Sushi = true;
-                sprites[2] = ConditionMethods.Instance.sushiSprites[(int)sushi2];
+                // sprites[2] = ConditionMethods.Instance.sushiSprites[(int)sushi2];
                 isVal2StandBy = sushi2 == SushiTypes.SushiStandBy;
             }
             else if (Enum.TryParse(Result1, ignoreCase: true, out ColorTypes dish2))
             {
                 isVal2Sushi = false;
-                sprites[2] = ConditionMethods.Instance.dishSprites[(int)dish2];
+                // sprites[2] = ConditionMethods.Instance.dishSprites[(int)dish2];
                 isVal2StandBy = dish2 == ColorTypes.DishStandBy;
             }
             else Debug.LogError("Result Val2 Error: " + Result2);
@@ -107,7 +108,7 @@ public class CatBehaviour : MonoBehaviour
 
         isResult1Sushi = isVal1Sushi;
         isResult2Sushi = isVal2Sushi;
-        catResultBehaviour.InitResult(sprites, isVal1Sushi, isVal2Sushi, isVal1StandBy, isVal2StandBy);
+        catResultBehaviour.InitResult(isVal1Sushi, isVal2Sushi, isVal1StandBy, isVal2StandBy, resultType, Result1, Result2);
     }
 
     public bool CheckCondition(ConditionTypes conditionType, string condition)

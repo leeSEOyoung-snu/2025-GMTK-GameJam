@@ -24,7 +24,15 @@ public class CatConditionBehaviour : IPointerHandler
         type = Instantiate(typePref, transform);
         type.transform.SetAsFirstSibling();
         type.transform.localPosition = new Vector3(DiningManager.Instance.BubbleTypePosX, 0, 0);
-        if (isSushiType) type.transform.localScale = new Vector3(DiningManager.Instance.BubbleSushiScale, DiningManager.Instance.BubbleSushiScale, 0);
+        if (isSushiType)
+        {
+            if (isStandBy) type.transform.localScale = new Vector3(1, 1, 1);
+            else
+            {
+                type.transform.localScale = new Vector3(DiningManager.Instance.BubbleSushiScale,
+                    DiningManager.Instance.BubbleSushiScale, 0);
+            }
+        }
         else type.transform.localScale = new Vector3(DiningManager.Instance.BubbleDishScale, DiningManager.Instance.BubbleDishScale, 0);
         type.GetComponent<SpriteRenderer>().sprite = sprites[1];
         
@@ -53,6 +61,8 @@ public class CatConditionBehaviour : IPointerHandler
     {
         isStandBy = false;
         type.GetComponent<SpriteRenderer>().sprite = TableManager.Instance.sushiSprites[(int)condition];
+        type.transform.localScale = new Vector3(DiningManager.Instance.BubbleSushiScale,
+            DiningManager.Instance.BubbleSushiScale, 0);
         catBehaviour.Condition = condition.ToString();
     }
 }

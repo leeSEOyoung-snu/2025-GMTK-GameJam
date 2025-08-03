@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 
 public enum ResultTypes
@@ -21,7 +22,9 @@ public class ResultMethods : MonoBehaviour
     public static ResultMethods Instance { get; private set; }
     
     public List<Sprite> iconSprites;
-    
+    public Sprite singleBlank;
+    public Sprite[] doubleBlank;
+    public Sprite arrow;
 
     private void Awake()
     {
@@ -74,16 +77,32 @@ public class ResultMethods : MonoBehaviour
                 break;
             
             case ResultTypes.GiveTip:
+                // TODO: import result
                 break;
+            
             case ResultTypes.EmptyNextDish:
+                // TODO: import result
                 break;
+            
             case ResultTypes.EmptyColorDish:
+                // TODO: import result
                 break;
+            
             case ResultTypes.GenerateSushiOnColorDish:
+                TableManager.Instance.GenerateSushi(sushi1, dish2);
                 break;
+            
             case ResultTypes.ChangeType:
+                if (isVal1Sushi && isVal2Sushi)
+                    TableManager.Instance.ChangeType(sushi1, sushi2);
+                else if (!isVal1Sushi && !isVal2Sushi)
+                    TableManager.Instance.ChangeType(dish1, dish2);
+                else
+                    Debug.LogError($"Change Type Error: {resVal1}, {resVal2}");
                 break;
+            
             case ResultTypes.ChangeCard:
+                // TODO: import result
                 break;
         }
     }

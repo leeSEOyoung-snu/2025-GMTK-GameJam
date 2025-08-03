@@ -312,4 +312,45 @@ public class TableManager : MonoBehaviour, IInit
             InteractionManager.Instance.TriggerProcess();
         }
     }
+    
+    public void GenerateSushi(SushiTypes sushiType, ColorTypes dishColor)
+    {
+        bool isGenerated = false;
+        
+        foreach (DishBehaviour dish in DishBehaviourDict.Values)
+        {
+            if (dish.DishData.Sushi != SushiTypes.Empty || dish.DishData.Color != dishColor) continue;
+            isGenerated = true;
+            dish.PutSushiOnDish(sushiType);
+            break;
+        }
+
+        if (isGenerated)
+        {
+            InteractionManager.Instance.EnQueueCondition(ConditionTypes.SushiGenerated, sushiType.ToString());
+            InteractionManager.Instance.TriggerProcess();
+        }
+    }
+
+    public void ChangeType(SushiTypes sushi1, SushiTypes sushi2)
+    {
+        bool isGenerated = false;
+        foreach (DishBehaviour dish in DishBehaviourDict.Values)
+        {
+            if (dish.DishData.Sushi != sushi1) continue;
+            isGenerated = true;
+            dish.PutSushiOnDish(sushi2);
+            break;
+        }
+        if (isGenerated && sushi2 != SushiTypes.Empty)
+        {
+            InteractionManager.Instance.EnQueueCondition(ConditionTypes.SushiGenerated, sushi2.ToString());
+            InteractionManager.Instance.TriggerProcess();
+        }
+    }
+
+    public void ChangeType(ColorTypes dish1, ColorTypes dish2)
+    {
+        // TODO: 하나만? 전부 다?
+    }
 }
