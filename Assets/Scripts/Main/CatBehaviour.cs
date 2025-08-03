@@ -145,7 +145,6 @@ public class CatBehaviour : MonoBehaviour
     public void ActivateResult()
     {
         if (conditionType == ConditionTypes.Empty) return;
-        Debug.Log($"result: {resultType}");
         if (resultType == ResultTypes.EmptyNextDish) 
             ResultMethods.Instance.ActivateResult(resultType, isResultSingle, id.ToString(), Result2, isResult1Sushi, isResult2Sushi);
         else if (resultType == ResultTypes.GenerateSushiOnColorDish)

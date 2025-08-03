@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -25,6 +26,9 @@ public class DishBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     private SushiTypes onCompleteSushi;
     private bool onCompletedBool;
     private Vector3 onCompleteVec3;
+
+    public Queue<(MoveMethod, Vector3, SushiTypes, bool)> MoveQueue;
+    public bool isMoveCoroutineWorking;
     
     [SerializeField] private SpriteRenderer dishSr;
     [SerializeField] private SpriteRenderer sushiSr;
@@ -39,6 +43,8 @@ public class DishBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnterH
 
     public void InitDish(SushiTypes sushi, ColorTypes color, Vector3 initPos)
     {
+        isMoveCoroutineWorking = false;
+        MoveQueue = new Queue<(MoveMethod, Vector3, SushiTypes, bool)>();
         DishData = new Dish();
         DishData.CurrPos = initPos;
         transform.localPosition = DishData.CurrPos;
@@ -53,7 +59,10 @@ public class DishBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     {
         if (_rotateSq != null && _rotateSq.IsActive() && _rotateSq.IsPlaying())
         {
-            StartCoroutine(WaitForSequenceAndDoNext(MoveMethod.Rotate, endPos, SushiTypes.SushiStandBy, moveXFirst));
+            if (isMoveCoroutineWorking)
+                MoveQueue.Enqueue((MoveMethod.Rotate, endPos, SushiTypes.SushiStandBy, moveXFirst));
+            else
+                StartCoroutine(WaitForSequenceAndDoNext(MoveMethod.Rotate, endPos, SushiTypes.SushiStandBy, moveXFirst));
             return;
         }
         
@@ -151,7 +160,10 @@ public class DishBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     {
         if (_rotateSq != null && _rotateSq.IsActive() && _rotateSq.IsPlaying())
         {
-            StartCoroutine(WaitForSequenceAndDoNext(MoveMethod.GenerateSushi, Vector3.zero, sushi, false));
+            if (isMoveCoroutineWorking)
+                MoveQueue.Enqueue((MoveMethod.GenerateSushi, Vector3.zero, sushi, false));
+            else
+                StartCoroutine(WaitForSequenceAndDoNext(MoveMethod.GenerateSushi, Vector3.zero, sushi, false));
             return;
         }
         
@@ -171,7 +183,10 @@ public class DishBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     {
         if (_rotateSq != null && _rotateSq.IsActive() && _rotateSq.IsPlaying())
         {
-            StartCoroutine(WaitForSequenceAndDoNext(MoveMethod.SwapPosition, endPos, SushiTypes.SushiStandBy, false));
+            if (isMoveCoroutineWorking)
+                MoveQueue.Enqueue((MoveMethod.SwapPosition, endPos, SushiTypes.SushiStandBy, false));
+            else 
+                StartCoroutine(WaitForSequenceAndDoNext(MoveMethod.SwapPosition, endPos, SushiTypes.SushiStandBy, false));
             return;
         }
         // if (_rotateSq != null && _rotateSq.IsActive() && _rotateSq.IsPlaying())
@@ -226,7 +241,10 @@ public class DishBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     {
         if (_rotateSq != null && _rotateSq.IsActive() && _rotateSq.IsPlaying())
         {
-            StartCoroutine(WaitForSequenceAndDoNext(MoveMethod.EmptyMotion, Vector3.zero, SushiTypes.SushiStandBy, false));
+            if (isMoveCoroutineWorking)
+                MoveQueue.Enqueue((MoveMethod.EmptyMotion, Vector3.zero, SushiTypes.SushiStandBy, false));
+            else 
+                StartCoroutine(WaitForSequenceAndDoNext(MoveMethod.EmptyMotion, Vector3.zero, SushiTypes.SushiStandBy, false));
             return;
         }
         // if (_rotateSq != null && _rotateSq.IsActive() && _rotateSq.IsPlaying())
@@ -249,7 +267,10 @@ public class DishBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     {
         if (_rotateSq != null && _rotateSq.IsActive() && _rotateSq.IsPlaying())
         {
-            StartCoroutine(WaitForSequenceAndDoNext(MoveMethod.ChangeMotion, Vector3.zero, sushi, false));
+            if (isMoveCoroutineWorking)
+                MoveQueue.Enqueue((MoveMethod.ChangeMotion, Vector3.zero, sushi, false));
+            else 
+                StartCoroutine(WaitForSequenceAndDoNext(MoveMethod.ChangeMotion, Vector3.zero, sushi, false));
             return;
         }
         // if (_rotateSq != null && _rotateSq.IsActive() && _rotateSq.IsPlaying())
@@ -270,33 +291,49 @@ public class DishBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnterH
 
     private IEnumerator WaitForSequenceAndDoNext(MoveMethod method, Vector3 vec, SushiTypes sushi, bool boolean)
     {
+        isMoveCoroutineWorking = true;
+        
         onCompleteMethod = method;
         onCompleteSushi = sushi;
         onCompleteVec3 = vec;
         onCompletedBool = boolean;
         yield return _rotateSq.WaitForCompletion();
-
-        switch (method)
+        
+        while(true)
         {
-            case MoveMethod.Rotate:
-                Rotate(onCompleteVec3, onCompletedBool);
-                break;
-            
-            case MoveMethod.GenerateSushi:
-                GenerateSushi(onCompleteSushi);
-                break;
-            
-            case MoveMethod.SwapPosition:
-                SwapPosition(onCompleteVec3);
-                break;
-            
-            case MoveMethod.EmptyMotion:
-                EmptyMotion();
-                break;
-            
-            case MoveMethod.ChangeMotion:
-                ChangeMotion(onCompleteSushi);
-                break;
+            switch (onCompleteMethod)
+            {
+                case MoveMethod.Rotate:
+                    Rotate(onCompleteVec3, onCompletedBool);
+                    break;
+
+                case MoveMethod.GenerateSushi:
+                    GenerateSushi(onCompleteSushi);
+                    break;
+
+                case MoveMethod.SwapPosition:
+                    SwapPosition(onCompleteVec3);
+                    break;
+
+                case MoveMethod.EmptyMotion:
+                    EmptyMotion();
+                    break;
+
+                case MoveMethod.ChangeMotion:
+                    ChangeMotion(onCompleteSushi);
+                    break;
+            }
+
+            if (MoveQueue.Count == 0) break;
+
+            var input = MoveQueue.Dequeue();
+            onCompleteMethod = input.Item1;
+            onCompleteVec3 = input.Item2;
+            onCompleteSushi = input.Item3;
+            onCompletedBool = input.Item4;
+            yield return _rotateSq.WaitForCompletion();
         }
+        
+        isMoveCoroutineWorking = false;
     }
 }
