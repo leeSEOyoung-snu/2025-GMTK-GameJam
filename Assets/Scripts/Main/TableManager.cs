@@ -276,12 +276,17 @@ public class TableManager : MonoBehaviour, IInit
             }
 
             Vector3 firstDishPos = DishBehaviourDict[0].DishData.CurrPos;
-            
+
+            bool passed = false;
+            foreach (var pair in InteractionManager.Instance.passedDish)
+                if (pair.Value != null) 
+                    passed = true;
 
             if (isAllDishEmpty && firstDishPos.y < 0f && Mathf.Abs(firstDishPos.x - ServingMinPosX) <= 0.0001f)
             {
                 MainSceneManager.Instance.isRotating = false;
             }
+            else if (passed) InteractionManager.Instance.CheckCatDishRelative();
             else RotateDishOnce();
             return;
         }

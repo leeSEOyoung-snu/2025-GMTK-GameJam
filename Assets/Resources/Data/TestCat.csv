@@ -1,5 +1,5 @@
 Stage,Sprite,Color,Condition,ConVal1,ConVal2,Result,ResVal1,ResVal2
-101,0,W,SushiEaten,Egg,X,GenerateCard1,SushiStandBy,X
+101,0,W,DishPassed,W,X,GenerateCard1,SushiStandBy,X
 102,1,W,SushiEaten,Shrimp,X,GenerateCard1,SushiStandBy,X
 102,2,W,CardPlaced,Shrimp,X,GenerateCard1,SushiStandBy,X
 103,3,W,CardPlaced,Shrimp,X,GenerateCard1,SushiStandBy,X

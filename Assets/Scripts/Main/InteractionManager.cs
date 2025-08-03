@@ -9,7 +9,7 @@ public class InteractionManager : MonoBehaviour, IInit
     public static InteractionManager Instance { get; private set; }
 
     public Dictionary<int, DishBehaviour> CatDishRelative;
-    private Dictionary<int, DishBehaviour> passedDish;
+    public Dictionary<int, DishBehaviour> passedDish;
     private Dictionary<int, bool> activationInfo;
 
     private Dictionary<int, bool> isSushiEaten;
@@ -66,7 +66,11 @@ public class InteractionManager : MonoBehaviour, IInit
 
     private void CheckCondition()
     {
-        if (isFirstTurn) InitCatDishRelative();
+        if (isFirstTurn)
+        {
+            InitCatDishRelative();
+            isFirstTurn = false;
+        }
         currCompletedCondition = 0;
         for (int i = 0; i < DiningManager.Instance.CatCnt; i++)
         {
@@ -90,7 +94,6 @@ public class InteractionManager : MonoBehaviour, IInit
         bool noActive = true;
         foreach (bool active in activationInfo.Values)
         {
-            Debug.Log(active);
             if (active) noActive = false;
         }
         
@@ -108,7 +111,6 @@ public class InteractionManager : MonoBehaviour, IInit
             return;
         }
         
-        
         activationInfo[activatedId % DiningManager.Instance.CatCnt] = false;
         DiningManager.Instance.CatBehaviourDict[activatedId % DiningManager.Instance.CatCnt].ActivateResult();
     }
@@ -121,6 +123,7 @@ public class InteractionManager : MonoBehaviour, IInit
     {
         if (CatDishRelative.Count == 0)
         {
+            Debug.LogWarning("First");
             for (int i = 0; i < DiningManager.Instance.CatCnt; i++)
             {
                 passedDish.Add(i, null);
@@ -138,6 +141,10 @@ public class InteractionManager : MonoBehaviour, IInit
             isSushiEaten[i] = false;
         }
 
+        foreach (var pair in passedDish)
+        {
+            Debug.Log($"passedDish: {pair.Key} - {pair.Value}");
+        }
         
         activatedId = 0;
     }
@@ -146,6 +153,19 @@ public class InteractionManager : MonoBehaviour, IInit
     {
         // TODO: passed 추가
         currCompletedRelative = 0;
+        
+        foreach (var pair in passedDish)
+        {
+            Debug.Log($"passedDish: {pair.Key} - {pair.Value}");
+            if (pair.Value == null || activationInfo[pair.Key]) continue;
+            CatBehaviour cat = DiningManager.Instance.CatBehaviourDict[pair.Key];
+            if (cat.CheckCondition(ConditionTypes.SushiPassed, pair.Value.DishData.Sushi.ToString()))
+                activationInfo[pair.Key] = true;
+            if (cat.CheckCondition(ConditionTypes.DishPassed, pair.Value.DishData.Color.ToString()))
+                activationInfo[pair.Key] = true;
+                
+        }
+        
         foreach (var pair in CatDishRelative)
         {
             if (pair.Value == null)
@@ -172,9 +192,11 @@ public class InteractionManager : MonoBehaviour, IInit
                 activationInfo[pair.Key] = DiningManager.Instance.CatBehaviourDict[pair.Key]
                     .CheckCondition(ConditionTypes.SushiEaten, CatDishRelative[pair.Key].DishData.Sushi.ToString());
             }
-            Debug.Log(CatDishRelative[pair.Key]);
             CatDishRelative[pair.Key].ChangeSushiType(SushiTypes.Empty);
         }
+        
+        foreach (var pair in activationInfo)
+            Debug.Log($"activationInfo: {pair.Key} - {pair.Value}");
         
         ActivateResult();
     }

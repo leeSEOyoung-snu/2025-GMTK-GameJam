@@ -112,6 +112,9 @@ public class CatBehaviour : MonoBehaviour
 
     public bool CheckCondition(ConditionTypes conditionType, string condition)
     {
+        Debug.Log($"Cat Condition: {this.conditionType}, val: {Condition}");
+        Debug.Log($"Val Condition: {conditionType}, val: {condition}");
+        Debug.Log(this.conditionType == conditionType && Condition == condition);
         return this.conditionType == conditionType && Condition == condition;
     }
 
@@ -131,7 +134,6 @@ public class CatBehaviour : MonoBehaviour
 
     public bool TryEat(ColorTypes dishColor, DishBehaviour dish)
     {
-        Debug.Log($"isFull: {isFull}");
         if (isFull)
         {
             InteractionManager.Instance.CheckRelativeCompleted();
