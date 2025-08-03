@@ -10,13 +10,12 @@ public class PopupBehaviour : MonoBehaviour
     public List<Sprite> PopupSpritesList;
     
     [SerializeField] private Image popupImage;
-    [SerializeField] private TextMeshProUGUI popupDescription;
     [SerializeField] private Image checkButton;
     // Start is called before the first frame update
 
     public void InitPopup(int popupIndex)
     {
-        if(popupIndex < PopupSpritesList.Count-1)
+        if(popupIndex > PopupSpritesList.Count-1 || popupIndex < 0 || PopupSpritesList == null)
         {
             Debug.Log("PopupSpritesList is null or index out of range");
             return;
@@ -28,6 +27,7 @@ public class PopupBehaviour : MonoBehaviour
 
     public void CheckButtonClicked()
     {
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.SFXs[0]);
         Destroy(this.gameObject);
     }
     
