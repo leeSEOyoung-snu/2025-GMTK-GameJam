@@ -103,6 +103,7 @@ MonoBehaviour:
   catConditionBehaviour: {fileID: 3516287627137628208}
   catResultBehaviour: {fileID: 5231234874623570259}
   priceSr: {fileID: 5417102126289910291}
+  bubble: {fileID: 2967535954902408930}
   Condition: 
   resultType: 0
   Result1: 

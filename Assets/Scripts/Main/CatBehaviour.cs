@@ -11,7 +11,8 @@ public class CatBehaviour : MonoBehaviour
     [SerializeField] private SpriteRenderer catSr;
     [SerializeField] private CatConditionBehaviour catConditionBehaviour;
     [SerializeField] private CatResultBehaviour catResultBehaviour;
-    [SerializeField] private SpriteRenderer priceSr; 
+    [SerializeField] private SpriteRenderer priceSr;
+    [SerializeField] private GameObject bubble;
     
     private readonly float _sushiTypeScale, _dishTypeScale;
     private ColorTypes color;
@@ -55,15 +56,24 @@ public class CatBehaviour : MonoBehaviour
             }
         }
         else Debug.LogError("Cat Color Error: " + (string)catData["Color"]);
-
+        
+        
         // Generate Condition
         if (Enum.TryParse((string)catData["Condition"], ignoreCase: true, out ConditionTypes cond))
         {
+            // if (cond == ConditionTypes.DishPassed && string.Equals(catData["ConVal1"], ColorTypes.DishEmpty.ToString()))
+                
             Condition = (string)catData["ConVal1"];
             conditionType = cond;
             var conditionData =
                 ConditionMethods.Instance.GetConditionSprites(conditionType, catData["ConVal1"]);
             catConditionBehaviour.InitCondition(conditionData.Item1, conditionData.Item2, conditionData.Item3);
+        }
+        else if (string.Equals((string)catData["Condition"], "X", StringComparison.OrdinalIgnoreCase))
+        {
+            conditionType = ConditionTypes.Empty;
+            bubble.SetActive(false);
+            return;
         }
         else Debug.LogError("Condition Error: " + (string)catData["Condition"]);
         
@@ -75,9 +85,9 @@ public class CatBehaviour : MonoBehaviour
         // Sprite[] sprites = isResultSingle ? new Sprite[2] : new Sprite[3];
         bool isVal1Sushi = false, isVal2Sushi = false, isVal1StandBy = false, isVal2StandBy = false;
 
-        if (Enum.TryParse((string)catData["Result"], ignoreCase: true, out resultType))
-            // sprites[0] = ResultMethods.Instance.iconSprites[(int)resultType];
-        {}
+        
+        if (Enum.TryParse((string)catData["Result"], ignoreCase: true, out ResultTypes rt))
+            this.resultType = rt;
         else Debug.LogError("Result Error: " + (string)catData["Result"]);
 
         if (Result1.Equals("X", StringComparison.OrdinalIgnoreCase))
@@ -123,11 +133,6 @@ public class CatBehaviour : MonoBehaviour
 
     public bool CheckCondition(ConditionTypes conditionType, string condition, bool isSushiEmpty = false)
     {
-        Debug.Log($"this: {this.conditionType}, conditionType: {conditionType}, val: {condition}, thisVal: {Condition}, {isSushiEmpty}");
-        Debug.LogError(conditionType == ConditionTypes.DishPassed
-                  && this.conditionType == conditionType
-                  && Condition == ColorTypes.DishEmpty.ToString()
-                  && isSushiEmpty);
         if (conditionType == ConditionTypes.DishPassed
             && this.conditionType == conditionType
             && Condition == ColorTypes.DishEmpty.ToString()
@@ -137,11 +142,13 @@ public class CatBehaviour : MonoBehaviour
 
     public void ActivateResult()
     {
+        if (conditionType == ConditionTypes.Empty) return;
+        Debug.Log($"result: {resultType}");
         if (resultType == ResultTypes.EmptyNextDish) 
             ResultMethods.Instance.ActivateResult(resultType, isResultSingle, id.ToString(), Result2, isResult1Sushi, isResult2Sushi);
         else if (resultType == ResultTypes.GenerateSushiOnColorDish)
             ResultMethods.Instance.ActivateResult(resultType, false, Result1, Result2, false, true);
-        else 
+        else if ((resultType != ResultTypes.GiveTip))
             ResultMethods.Instance.ActivateResult(resultType, isResultSingle, Result1, Result2, isResult1Sushi, isResult2Sushi);
         // TODO: Condition 충족 시 애니메이션 수정
         if (_catSeq != null && _catSeq.IsActive() && _catSeq.IsPlaying())

@@ -37,7 +37,7 @@ public class MainSceneManager : MonoBehaviour
     public int _targetScore, _currScore;
     private List<int> _newIcon;
     private List<string> _newIconDescription;
-    private List<string> _nextSushi;
+    public List<string> _nextSushi;
     public bool isRotating;
     [HideInInspector] public bool isClear;
     public bool CookStarted { get; private set; }

@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
 
         LoadSaveData();
 #if UNITY_EDITOR
-        SetcurrStageData(1,1, true);
+        SetcurrStageData(3,1, true);
 #endif
         CurrStageIdx = 0;
     }

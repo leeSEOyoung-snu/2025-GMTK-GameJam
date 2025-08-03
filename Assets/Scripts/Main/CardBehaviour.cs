@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class CardBehaviour : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
-    public SushiTypes Sushi { get; private set; }
+    public SushiTypes Sushi;
 
     [SerializeField] private SpriteRenderer cardSr;
 
