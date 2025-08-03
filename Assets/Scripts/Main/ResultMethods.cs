@@ -63,11 +63,16 @@ public class ResultMethods : MonoBehaviour
             case ResultTypes.GenerateCard1:
                 CardManager.Instance.AddCard(sushi1, true);
                 break;
+            
             case ResultTypes.GenerateCard2:
-                //TODO : Will be implemneted by SEO later
+                CardManager.Instance.AddCard(sushi1, true);
+                CardManager.Instance.AddCard(sushi2, sushi1 != sushi2);
                 break;
+            
             case ResultTypes.GenerateSushi:
+                TableManager.Instance.GenerateSushi(sushi1);
                 break;
+            
             case ResultTypes.GiveTip:
                 break;
             case ResultTypes.EmptyNextDish:

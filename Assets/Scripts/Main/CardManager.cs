@@ -126,8 +126,12 @@ public class CardManager : MonoBehaviour, IInit
         }
     }
 
-    public void DebugAddCard()
+    public void DebugAddEggCard()
     {
         AddCard(SushiTypes.Egg);
+    }
+    public void DebugAddShrimpCard()
+    {
+        AddCard(SushiTypes.Shrimp);
     }
 }

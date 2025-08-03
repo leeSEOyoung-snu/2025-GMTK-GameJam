@@ -293,4 +293,23 @@ public class TableManager : MonoBehaviour, IInit
         
         InteractionManager.Instance.CheckCatDishRelative();
     }
+
+    public void GenerateSushi(SushiTypes sushiType)
+    {
+        bool isGenerated = false;
+        
+        foreach (DishBehaviour dish in DishBehaviourDict.Values)
+        {
+            if (dish.DishData.Sushi != SushiTypes.Empty) continue;
+            isGenerated = true;
+            dish.PutSushiOnDish(sushiType);
+            break;
+        }
+
+        if (isGenerated)
+        {
+            InteractionManager.Instance.EnQueueCondition(ConditionTypes.SushiGenerated, sushiType.ToString());
+            InteractionManager.Instance.TriggerProcess();
+        }
+    }
 }
