@@ -15,7 +15,6 @@ public class MainSceneManager : MonoBehaviour
     [SerializeField] private GameObject CardImagePrefab;
     [Header("References")]
     [SerializeField] private TextMeshProUGUI rotateCntText;
-    [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private GameObject startCookButton;
     [SerializeField] private GameObject nextSushiPanel;
     [SerializeField] private Canvas mainCanvas;
@@ -144,7 +143,6 @@ public class MainSceneManager : MonoBehaviour
         GaguePanel.GetComponent<GaugeBehaiviour>().UpdateText(_currScore, _targetScore);
         GaguePanel.GetComponent<GaugeBehaiviour>().UpdateGaugeFinite(_currScore, _targetScore);
         //TODO : infinite
-        scoreText.text = $"Score [{_currScore}/{_targetScore}]";
     }
 
     public void StartCook()

@@ -10,8 +10,10 @@ public class GaugeBehaiviour : MonoBehaviour
     [SerializeField] private Image FireAnimationImage;
     [SerializeField] private TextMeshProUGUI TargetScore;
     [SerializeField] private TextMeshProUGUI CurrentScore;
+    [Header("Sprites")]
     [SerializeField] private Sprite FireAnimiationSprite1;
     [SerializeField] private Sprite FireAnimiationSprite2;
+    [SerializeField] private Sprite VeryHotBar;
     private float gaugeValue = 0f; // Current gauge value
 
     private bool isFire = false;
@@ -55,6 +57,7 @@ public class GaugeBehaiviour : MonoBehaviour
         gaugeValue = Mathf.Clamp01((float)currentValue / maxValue);
         if (gaugeValue >= 1)
         {
+            gaugeBar.sprite = VeryHotBar;
             gaugeValue = 1; // Cap the gauge value at 1
             FireAnimationImage.gameObject.SetActive(true);
             isFire = true;
