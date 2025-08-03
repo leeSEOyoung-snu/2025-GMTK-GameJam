@@ -2459,11 +2459,11 @@ MonoBehaviour:
   catPref: {fileID: 1920889069797192976, guid: 89728e4ea258fb141ae32fc236582923, type: 3}
   catParent: {fileID: 378210435}
   catSprites:
-  - {fileID: 1577768633, guid: 43642cca7a6743c48b695459de4a0bf1, type: 3}
-  - {fileID: 1919098101, guid: 43642cca7a6743c48b695459de4a0bf1, type: 3}
-  - {fileID: -1448299727, guid: 43642cca7a6743c48b695459de4a0bf1, type: 3}
-  - {fileID: 478568577, guid: 43642cca7a6743c48b695459de4a0bf1, type: 3}
-  - {fileID: 1995747726, guid: 43642cca7a6743c48b695459de4a0bf1, type: 3}
+  - {fileID: 1045203449, guid: e7cfc508cb5750c4faba092a165680eb, type: 3}
+  - {fileID: 1506669748, guid: 93cfb971187c78743a94692778b476a7, type: 3}
+  - {fileID: 1256373788, guid: 936e3d14989371444808cbe67af7a747, type: 3}
+  - {fileID: 754574041, guid: c24a01adf479dc447afbd5b36446322e, type: 3}
+  - {fileID: 1777714890, guid: a4a6dbdd22def474a86dd76bf6bc903c, type: 3}
 --- !u!114 &1056297274
 MonoBehaviour:
   m_ObjectHideFlags: 0

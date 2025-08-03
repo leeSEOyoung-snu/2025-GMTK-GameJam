@@ -440,7 +440,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7537207856308118548, guid: d82a9d4ec88b08b48983f7f8d3ba3342, type: 3}
       propertyPath: m_Name
-      value: StageNode3010
+      value: StageNode330
       objectReference: {fileID: 0}
     - target: {fileID: 7945096213943699352, guid: d82a9d4ec88b08b48983f7f8d3ba3342, type: 3}
       propertyPath: m_Name
@@ -950,7 +950,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7537207856308118548, guid: d82a9d4ec88b08b48983f7f8d3ba3342, type: 3}
       propertyPath: m_Name
-      value: StageNode2010
+      value: StageNode220
       objectReference: {fileID: 0}
     - target: {fileID: 7945096213943699352, guid: d82a9d4ec88b08b48983f7f8d3ba3342, type: 3}
       propertyPath: m_Name
@@ -1467,6 +1467,10 @@ PrefabInstance:
     - target: {fileID: 6887406377220097645, guid: d82a9d4ec88b08b48983f7f8d3ba3342, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -125
+      objectReference: {fileID: 0}
+    - target: {fileID: 7537207856308118548, guid: d82a9d4ec88b08b48983f7f8d3ba3342, type: 3}
+      propertyPath: m_Name
+      value: StageNode110
       objectReference: {fileID: 0}
     - target: {fileID: 7945096213943699352, guid: d82a9d4ec88b08b48983f7f8d3ba3342, type: 3}
       propertyPath: m_Name
@@ -2104,7 +2108,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7537207856308118548, guid: d82a9d4ec88b08b48983f7f8d3ba3342, type: 3}
       propertyPath: m_Name
-      value: StageNode5010
+      value: StageNode510
       objectReference: {fileID: 0}
     - target: {fileID: 7945096213943699352, guid: d82a9d4ec88b08b48983f7f8d3ba3342, type: 3}
       propertyPath: m_Name

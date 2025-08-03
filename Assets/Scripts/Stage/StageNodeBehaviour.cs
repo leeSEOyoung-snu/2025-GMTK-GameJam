@@ -15,7 +15,7 @@ public class StageNodeBehaviour : MonoBehaviour
 {
     [SerializeField] private GameObject StageImage;
     [SerializeField] private TextMeshProUGUI StageText;
-
+    
     private StageState stageState = StageState.Closed; // Default stage state
     private int BigStage;
     private int SmallStage;
