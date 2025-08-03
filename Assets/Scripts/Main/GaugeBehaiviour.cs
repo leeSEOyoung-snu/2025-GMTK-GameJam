@@ -20,7 +20,7 @@ public class GaugeBehaiviour : MonoBehaviour
     void Start()
     {
         //for test
-        isFire = true;
+        UpdateText(MainSceneManager.Instance._currScore, MainSceneManager.Instance._targetScore);
     }
 
     // Update is called once per frame
@@ -60,9 +60,9 @@ public class GaugeBehaiviour : MonoBehaviour
         this.isFire = true;
     }
     
-    public void UpdateText() {
-        CurrentScore.text = MainSceneManager.Instance._currScore.ToString();
-        TargetScore.text = MainSceneManager.Instance._targetScore.ToString();
+    public void UpdateText(int currentScore, int targetScore) {
+        CurrentScore.text = currentScore.ToString();
+        TargetScore.text = targetScore.ToString();
     }
     
 

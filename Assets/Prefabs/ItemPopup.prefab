@@ -98,7 +98,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: e81f0ad74ba2f3641a28cd616058fc12, type: 3}
   popupImage: {fileID: 8062115002523594672}
   popupDescription: {fileID: 6451473349701245961}
-  checkButton: {fileID: 0}
+  checkButton: {fileID: 7778915263212777634}
 --- !u!1 &5670327926276523474
 GameObject:
   m_ObjectHideFlags: 0

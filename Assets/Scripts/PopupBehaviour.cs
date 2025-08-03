@@ -11,7 +11,7 @@ public class PopupBehaviour : MonoBehaviour
     
     [SerializeField] private Image popupImage;
     [SerializeField] private TextMeshProUGUI popupDescription;
-    [SerializeField] private TextMeshProUGUI checkButton;
+    [SerializeField] private Image checkButton;
     // Start is called before the first frame update
 
     public void InitPopup(int popupIndex, string popupDescriptionText)
