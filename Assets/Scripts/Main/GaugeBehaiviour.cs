@@ -52,6 +52,15 @@ public class GaugeBehaiviour : MonoBehaviour
     {
         
         gaugeValue = Mathf.Clamp01((float)currentValue / maxValue);
+        if (gaugeValue >= 1)
+        {
+            gaugeValue = 1; // Cap the gauge value at 1
+            isFire = true;
+        }
+        else
+        {
+            isFire = false;
+        }
         gaugeBar.fillAmount = gaugeValue;
     }
 

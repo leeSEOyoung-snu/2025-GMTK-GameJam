@@ -206,4 +206,17 @@ public class MainSceneManager : MonoBehaviour
                 break;
         }
     }
+
+    
+    public void CheckClear()
+    {
+        //for test
+        Instance._currScore = 120;
+        Instance._targetScore = 100;
+        //test finished
+        bool isClear = Instance._currScore >= Instance._targetScore ? true : false;
+        Debug.Log(Instance._currScore + " >= " + Instance._targetScore + " ? " + isClear);
+        GameManager.Instance.StageSummaryPanelOn(isClear);
+        
+    }
 }

@@ -92,7 +92,7 @@ public class GameManager : MonoBehaviour
         return result;
     }
 
-    public void StageSummaryPanelOn()
+    public void StageSummaryPanelOn(bool isClear)
     {
         StageSummaryPanel.SetActive(true);
         StageSummaryPanel.GetComponent<SummaryBehaviour>().SetSummary(
@@ -101,6 +101,8 @@ public class GameManager : MonoBehaviour
     
     public void EndStage()  //gotoNextStage
     {
+        SaveClearData();
+        unlockStage();
         CurrStageIdx++;
         Debug.Log("Curr Stage Idx: " + CurrStageIdx);
     }
@@ -160,7 +162,7 @@ public class GameManager : MonoBehaviour
     
     #endregion
 
-    public void ClearStage()
+    private void SaveClearData()
     {
         int BS = int.Parse(currStageData.Substring(0, 1));
         int SS = int.Parse(currStageData.Substring(1));
@@ -169,7 +171,7 @@ public class GameManager : MonoBehaviour
         SaveSaveData();
     }
 
-    public void unlockStage()   //call when stage is cleared
+    private void unlockStage()   //call when stage is cleared
     {
         foreach (var s in _currStageData)
         {
