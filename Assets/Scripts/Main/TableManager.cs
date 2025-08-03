@@ -290,6 +290,14 @@ public class TableManager : MonoBehaviour, IInit
                 
                 if (MainSceneManager.Instance._currRotateCnt == 0 || MainSceneManager.Instance.isClear)
                     MainSceneManager.Instance.ShowClearPanel();
+                else
+                {
+                    foreach (string sushiStr in MainSceneManager.Instance._nextSushi)
+                    {
+                        if (Enum.TryParse(sushiStr, ignoreCase: true, out SushiTypes sushi))
+                            CardManager.Instance.AddCard(sushi);
+                    }
+                }
             }
             else if (passed) InteractionManager.Instance.CheckCatDishRelative();
             else RotateDishOnce();

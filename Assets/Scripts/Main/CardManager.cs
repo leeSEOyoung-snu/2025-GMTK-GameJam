@@ -17,7 +17,7 @@ public class CardManager : MonoBehaviour, IInit
     public List<CardBehaviour> CurrCards { get; private set; }
     public readonly float CardMoveDuration = 0.5f;
 
-    private readonly float _cardMinPosX = -4f, _cardMaxPosX = 3f, _cardNormalPosY = 0f, _addCardStartPosY = -2f;
+    private readonly float _cardMinPosX = -2f, _cardMaxPosX = 3f, _cardNormalPosY = 0f, _addCardStartPosY = -2f;
     public readonly float CardHoveredPosY = 0.7f;
 
     private readonly int _defaultOrder = 10;
@@ -119,6 +119,12 @@ public class CardManager : MonoBehaviour, IInit
 
     public void AddCard(SushiTypes sushi, bool isCondition = false)
     {
+        Debug.Log(CurrCards.Count);
+        foreach (CardBehaviour card in CurrCards)
+        {
+            Debug.Log(card.Sushi);
+        }
+        
         CardBehaviour cardBehaviour = Instantiate(cardPref, cardParent.transform).GetComponent<CardBehaviour>();
         CurrCards.Add(cardBehaviour);
         cardBehaviour.InitCard(sushi, new Vector3(_cardMaxPosX, _addCardStartPosY, 0f), _defaultOrder + CurrCards.Count - 1);   
@@ -128,6 +134,8 @@ public class CardManager : MonoBehaviour, IInit
             InteractionManager.Instance.EnQueueCondition(ConditionTypes.CardGenerated, sushi.ToString());
             InteractionManager.Instance.TriggerProcess();
         }
+        
+        Debug.Log(CurrCards.Count);
     }
 
     private int all, curr;
