@@ -20,6 +20,7 @@ public class MainSceneManager : MonoBehaviour
     [SerializeField] private GameObject startCookButton;
     [SerializeField] private GameObject nextSushiPanel;
     [SerializeField] private Canvas mainCanvas;
+    [SerializeField] private GameObject StageSummaryPanel;
     public static MainSceneManager Instance { get; private set; }
     
     public Dictionary<string, object> CurrStageData { get; private set; }
@@ -33,7 +34,7 @@ public class MainSceneManager : MonoBehaviour
     private List<string> _newIconDescription;
     private List<string> _nextSushi;
     public bool isRotating;
-    
+    [HideInInspector] public bool isClear;
     public bool CookStarted { get; private set; }
     
     // TODO: 가격 수정
@@ -63,6 +64,7 @@ public class MainSceneManager : MonoBehaviour
     public void Init()
     {
         CurrStageData = GameManager.Instance.GetcurrStageData();
+        Debug.Log("Current Stage Data: " + CurrStageData["Stage"]);
         
         _maxRotateCnt = _currRotateCnt = (int)CurrStageData["RotateCnt"];
         UpdateRotateCnt();
@@ -102,7 +104,7 @@ public class MainSceneManager : MonoBehaviour
         _newIconDescription = new List<string>();
         foreach (string i in CurrStageData["Description"].ToString().Split('$'))
         {
-            if (i == "NULL")  //there is no new Popup
+            if (i == "X")  //there is no new Popup
             {
                 _newIconDescription.Clear();
                 break;
@@ -113,7 +115,7 @@ public class MainSceneManager : MonoBehaviour
         Madepopup();
         
         isRotating = false;
-
+        isClear = false;
         CookStarted = false;
         startCookButton.SetActive(true);
         
@@ -130,7 +132,13 @@ public class MainSceneManager : MonoBehaviour
         _currScore += delta;
         UpdateScore();
     }
-
+    
+    public void StageSummaryPanelOn(bool isClear)
+    {
+        StageSummaryPanel.SetActive(true);
+        StageSummaryPanel.GetComponent<SummaryBehaviour>().SetSummary(
+            isClear, MainSceneManager.Instance._currScore, MainSceneManager.Instance._targetScore);
+    }
     public void UpdateScore()
     {
         scoreText.text = $"Score [{_currScore}/{_targetScore}]";
@@ -167,11 +175,13 @@ public class MainSceneManager : MonoBehaviour
 
     private void Madepopup()
     {
+        int t = 0;
         foreach(int i in _newIcon)
         {
+            Debug.Log("New Icon: " + i);
             GameObject popup = Instantiate(popupPrefab, transform);
             popup.transform.SetParent(mainCanvas.transform, false);
-            popup.GetComponent<PopupBehaviour>().InitPopup(i-1, _newIconDescription[i-1]);
+            popup.GetComponent<PopupBehaviour>().InitPopup(i-1, _newIconDescription[t++]);
         }
     }
 
@@ -185,6 +195,7 @@ public class MainSceneManager : MonoBehaviour
             case 1:
                 GameObject go = Instantiate(CardImagePrefab, nextSushiPanel.transform);
                 go.transform.SetParent(nextSushiPanel.transform, false);
+                go.transform.position += new Vector3(0, -30, 0);
                 Enum.TryParse<SushiTypes>(_nextSushi[0], out SushiTypes sushiType);
                 go.GetComponent<Image>().sprite = CardManager.Instance.cardSprites[(int)sushiType];
                 break;
@@ -193,8 +204,8 @@ public class MainSceneManager : MonoBehaviour
                 GameObject go2 = Instantiate(CardImagePrefab, nextSushiPanel.transform);
                 go1.transform.SetParent(nextSushiPanel.transform, false);
                 go2.transform.SetParent(nextSushiPanel.transform, false);
-                go1.transform.position += new Vector3(-80, 0, 0);
-                go2.transform.position += new Vector3(80, 0, 0);
+                go1.transform.position += new Vector3(-80, -30, 0);
+                go2.transform.position += new Vector3(80, -30, 0);
                 Enum.TryParse<SushiTypes>(_nextSushi[0], out SushiTypes sushiType1);
                 Enum.TryParse<SushiTypes>(_nextSushi[1], out SushiTypes sushiType2);
                 go1.GetComponent<Image>().sprite = CardManager.Instance.cardSprites[(int)sushiType1];
@@ -204,5 +215,17 @@ public class MainSceneManager : MonoBehaviour
                 Debug.LogError("There is fucking somthing wrong with csv of nextSushi!!!");
                 break;
         }
+    }
+
+    
+    public void CheckClear()
+    {
+        //for test
+        Instance._currScore = 120;
+        Instance._targetScore = 100;
+        //test finished
+        isClear = Instance._currScore >= Instance._targetScore ? true : false;
+        Debug.Log(Instance._currScore + " >= " + Instance._targetScore + " ? " + isClear);
+        Instance.StageSummaryPanelOn(isClear);
     }
 }

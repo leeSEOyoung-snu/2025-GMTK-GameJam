@@ -17,10 +17,12 @@ public class GaugeBehaiviour : MonoBehaviour
     private bool isFire = false;
     [SerializeField] float fireAnimationTime; // Time for the fire animation to complete
     private float AnimationTime;
+
     void Start()
     {
         //for test
         UpdateText(MainSceneManager.Instance._currScore, MainSceneManager.Instance._targetScore);
+        UpdateGaugeFinite(MainSceneManager.Instance._currScore, MainSceneManager.Instance._targetScore);
     }
 
     // Update is called once per frame
@@ -50,6 +52,15 @@ public class GaugeBehaiviour : MonoBehaviour
     {
         
         gaugeValue = Mathf.Clamp01((float)currentValue / maxValue);
+        if (gaugeValue >= 1)
+        {
+            gaugeValue = 1; // Cap the gauge value at 1
+            isFire = true;
+        }
+        else
+        {
+            isFire = false;
+        }
         gaugeBar.fillAmount = gaugeValue;
     }
 

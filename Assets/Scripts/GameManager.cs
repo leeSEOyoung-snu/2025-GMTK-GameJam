@@ -20,7 +20,6 @@ public class GameManager : MonoBehaviour
     public readonly float RotateDuration = 1f;
     
 
-    [SerializeField] public GameObject StageSummaryPanel;
     //Save Part
     [SerializeField] public List<int> StageCount;
     public SaveData _saveData;
@@ -57,13 +56,17 @@ public class GameManager : MonoBehaviour
 
     public void SetcurrStageData(int BigStage, int SmallStage)
     {
+        CurrStageIdx = (BigStage-1)*10 + SmallStage - 1; // 0-indexed
         currStageData = BigStage.ToString() +"0"+ SmallStage.ToString();
         //then load Scene
         SoundManager.Instance.PlayBGM(SoundManager.Instance.BGMs[1]);
-        SceneManager.LoadScene("Scenes/Test SEO");
+        SceneManager.LoadScene("Scenes/Test SEO 1");
     }
 
-    public Dictionary<string, object> GetcurrStageData(){
+    public Dictionary<string, object> GetcurrStageData()
+    {
+        return _currStageData[CurrStageIdx];
+        //I don't know why this code works.... but it's still working We dont't need to modify anymore.
         foreach(Dictionary<string,object> d in _currStageData) {
             if (int.Parse(currStageData) == (int)d["Stage"]) {
                 return d;
@@ -92,16 +95,15 @@ public class GameManager : MonoBehaviour
         return result;
     }
 
-    public void StageSummaryPanelOn()
-    {
-        StageSummaryPanel.SetActive(true);
-        StageSummaryPanel.GetComponent<SummaryBehaviour>().SetSummary(
-            isClear, MainSceneManager.Instance._currScore, MainSceneManager.Instance._targetScore);
-    }
+    
     
     public void EndStage()  //gotoNextStage
     {
+        SaveClearData();
+        unlockStage();
+        //
         CurrStageIdx++;
+        MainSceneManager.Instance.Init();
         Debug.Log("Curr Stage Idx: " + CurrStageIdx);
     }
     
@@ -160,7 +162,7 @@ public class GameManager : MonoBehaviour
     
     #endregion
 
-    public void ClearStage()
+    private void SaveClearData()
     {
         int BS = int.Parse(currStageData.Substring(0, 1));
         int SS = int.Parse(currStageData.Substring(1));
@@ -169,7 +171,7 @@ public class GameManager : MonoBehaviour
         SaveSaveData();
     }
 
-    public void unlockStage()   //call when stage is cleared
+    private void unlockStage()   //call when stage is cleared
     {
         foreach (var s in _currStageData)
         {

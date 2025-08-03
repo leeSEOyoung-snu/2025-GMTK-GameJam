@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -11,10 +12,12 @@ public class SummaryBehaviour : MonoBehaviour
     [SerializeField] private Sprite RetryButtonSprite;
     [SerializeField] private Image Image;
     [SerializeField] private TextMeshProUGUI ScoreText;
+    [SerializeField] private Image TitleButton;
     [SerializeField] private Image VariButton;
+    [SerializeField] private Sprite WinCatSprite;
+    [SerializeField] private Sprite LoseCatSprite;
     private int currScore, targetScore;
     
-    private bool isClear; // true if the stage is cleared, false otherwise
     // Start is called before the first frame update
     void Start()
     {
@@ -29,38 +32,63 @@ public class SummaryBehaviour : MonoBehaviour
     
     public void SetSummary(bool isClear, int currScore, int targetScore)
     {
-        this.isClear = isClear;
-        this.currScore = currScore;
-        this.targetScore = targetScore;
+        ScoreText.text = currScore.ToString() + " / " + targetScore.ToString();
         if (isClear)
         {
-            ScoreText.text = "Score: " + currScore + " / " + targetScore;
+            Image.sprite = WinCatSprite;
             VariButton.sprite = NextStageButtonSprite;
         }
         else
         {
-            ScoreText.text = "Score: " + currScore + " / " + targetScore;
+            Image.sprite = LoseCatSprite;
             VariButton.sprite = RetryButtonSprite;
         }
     }
 
     public void OnTitleButtonClicked()
     {
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.SFXs[0]);
         SceneManager.LoadScene("Scenes/Title");
     }
     
     public void OnNextOrReButtonClicked()
     {
-        if (isClear)    //nextButton
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.SFXs[0]);
+        if (MainSceneManager.Instance.isClear)    //nextButton
         {
+            this.gameObject.SetActive(false);
             GameManager.Instance.EndStage();
+            Debug.Log("Next Stage Button Clicked");
         }
-        else
+        else //retryButton
         {
+            this.gameObject.SetActive(false);
             // Retry the current stage
             MainSceneManager.Instance.Init();
         }
     }
+    
+    public void OnHoverEnter(BaseEventData data)
+    {
+        PointerEventData ped = (PointerEventData)data;
+        GameObject hoveredObject = ped.pointerEnter;
 
+        hoveredObject.GetComponent<RectTransform>().localScale =
+            new Vector3(1.2f, 1.2f, 1f); // Scale up the hovered button
+        
+    }
+
+    public void OnHoverExit(BaseEventData data)
+    {
+        initButtonSize();
+    }
+
+    private void initButtonSize()
+    {
+        TitleButton.GetComponent<RectTransform>().localScale =
+            new Vector3(1f, 1f, 1f); // Reset scale of the button
+        VariButton.GetComponent<RectTransform>().localScale =
+            new Vector3(1f, 1f, 1f); // Reset scale of the button
+    }
 
 }

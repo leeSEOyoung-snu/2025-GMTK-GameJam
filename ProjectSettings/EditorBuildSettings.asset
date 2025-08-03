@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Test SEO.unity
     guid: 759747f3fb387904ba14bbcf6c2d7e4a
+  - enabled: 1
+    path: Assets/Scenes/Test SEO 1.unity
+    guid: 442f71bc818fee8448912830a575e7ca
   m_configObjects: {}

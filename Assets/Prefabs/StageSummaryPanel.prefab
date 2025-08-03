@@ -35,7 +35,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -150, y: -300}
+  m_AnchoredPosition: {x: -150, y: -330}
   m_SizeDelta: {x: 180, y: 180}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4771238887054118447
@@ -97,6 +97,38 @@ MonoBehaviour:
           m_TargetAssemblyTypeName: SummaryBehaviour, Assembly-CSharp
           m_MethodName: OnTitleButtonClicked
           m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4461244984569671557}
+          m_TargetAssemblyTypeName: SummaryBehaviour, Assembly-CSharp
+          m_MethodName: OnHoverEnter
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4461244984569671557}
+          m_TargetAssemblyTypeName: SummaryBehaviour, Assembly-CSharp
+          m_MethodName: OnHoverExit
+          m_Mode: 0
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -214,7 +246,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -80}
+  m_AnchoredPosition: {x: 0, y: -100}
   m_SizeDelta: {x: 500, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9043176140967605070
@@ -245,9 +277,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Score
-
-'
+  m_text: 50/100
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1c9b8657cf0594e41878fe64f0fb369d, type: 2}
   m_sharedMaterial: {fileID: -8114594010527277916, guid: 1c9b8657cf0594e41878fe64f0fb369d, type: 2}
@@ -426,7 +456,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 150, y: -300}
+  m_AnchoredPosition: {x: 150, y: -330}
   m_SizeDelta: {x: 180, y: 180}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7216313706257121369
@@ -488,6 +518,38 @@ MonoBehaviour:
           m_TargetAssemblyTypeName: SummaryBehaviour, Assembly-CSharp
           m_MethodName: OnNextOrReButtonClicked
           m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4461244984569671557}
+          m_TargetAssemblyTypeName: SummaryBehaviour, Assembly-CSharp
+          m_MethodName: OnHoverEnter
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4461244984569671557}
+          m_TargetAssemblyTypeName: SummaryBehaviour, Assembly-CSharp
+          m_MethodName: OnHoverExit
+          m_Mode: 0
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -589,8 +651,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a974b913375b2a349bfcc1f65e5a2717, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NextStageButtonSprite: {fileID: 21300000, guid: b24f3e377edb74a428c337db027d5f8a, type: 3}
+  NextStageButtonSprite: {fileID: 21300000, guid: 30a5b4b85ee39a145ad44f97420e37f1, type: 3}
   RetryButtonSprite: {fileID: 21300000, guid: 0de68a0f9a5977e4b91e12ab94af64b4, type: 3}
   Image: {fileID: 360669374148322615}
   ScoreText: {fileID: 2182183727635043074}
+  TitleButton: {fileID: 740200218828535602}
   VariButton: {fileID: 2008503188958993772}
+  WinCatSprite: {fileID: 21300000, guid: 4688397f0e7c6f34598000cea9fb6306, type: 3}
+  LoseCatSprite: {fileID: 21300000, guid: 2d7bca4214657114db4eb1824381b04a, type: 3}
