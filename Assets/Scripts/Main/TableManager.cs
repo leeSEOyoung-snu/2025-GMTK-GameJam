@@ -283,11 +283,17 @@ public class TableManager : MonoBehaviour, IInit
                 if (pair.Value != null) 
                     passed = true;
 
+            if (firstDishPos.y < 0f && Mathf.Abs(firstDishPos.x - ServingMinPosX) <= 0.0001f)
+            {
+                foreach (CatBehaviour cat in DiningManager.Instance.CatBehaviourDict.Values)
+                    cat.isFull = false;
+            }
+
             if (isAllDishEmpty && firstDishPos.y < 0f && Mathf.Abs(firstDishPos.x - ServingMinPosX) <= 0.0001f)
             {
                 MainSceneManager.Instance.isRotating = false;
                 MainSceneManager.Instance.CheckClear();
-                
+
                 if (MainSceneManager.Instance._currRotateCnt == 0 || MainSceneManager.Instance.isClear)
                     MainSceneManager.Instance.ShowClearPanel();
                 else
