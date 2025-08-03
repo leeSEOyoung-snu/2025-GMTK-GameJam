@@ -2400,6 +2400,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2a540420f3c28842862ba6da90fd314, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NormalMoneySprites:
+  - {fileID: 21300000, guid: fb7da91d307b753458d38f43cfd5cdce, type: 3}
+  - {fileID: 21300000, guid: b7fe705dd583ec448a092aa1f4d7da06, type: 3}
+  - {fileID: 21300000, guid: 1493cf09977150449af2ba9913df8e01, type: 3}
+  - {fileID: 21300000, guid: 63a476409031ea0498b98b1a3efe1d06, type: 3}
+  - {fileID: 21300000, guid: 644c37a11011db449a5a6a00e3d89593, type: 3}
+  TipMoneySprites:
+  - {fileID: 21300000, guid: a2a1aa5fbbdc7c2469b7365892f28b19, type: 3}
+  - {fileID: 21300000, guid: d45a7c3bd577ce24b944374ea0287c20, type: 3}
+  - {fileID: 21300000, guid: 8b1f9c41a3296a147af95473bd928bbf, type: 3}
+  - {fileID: 21300000, guid: 4bb639186e1ff704da6120cb91d0cc9a, type: 3}
+  - {fileID: 21300000, guid: 8208a3b4061c8594ca7fe1a23c090b9b, type: 3}
   titleButton: {fileID: 308211059}
   initButton: {fileID: 729538947}
   popupPrefab: {fileID: 3336283338421226276, guid: c9c55260a81aa4344a5fdb3f45f7a0bd, type: 3}

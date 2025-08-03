@@ -202,13 +202,61 @@ public class CatBehaviour : MonoBehaviour
         int price = MainSceneManager.Instance.Price[sushiType];
         if (resultType == ResultTypes.GiveTip) price *= 2;
         MainSceneManager.Instance.ChangeScore(price);
-        StartCoroutine(PriceCoroutine(resultType == ResultTypes.GiveTip));
+        StartCoroutine(PriceCoroutine(resultType == ResultTypes.GiveTip, sushiType));
     }
 
-    public IEnumerator PriceCoroutine(bool hasTip)
+    public IEnumerator PriceCoroutine(bool hasTip, SushiTypes sushiType)
     {
-        if (hasTip) priceSr.color = Color.red;
-        else priceSr.color = Color.green;
+        if (hasTip) //tip Sprite
+        {
+            switch (sushiType)
+            {
+                case SushiTypes.Maki:
+                    priceSr.sprite = MainSceneManager.Instance.TipMoneySprites[0];
+                    break;
+                case SushiTypes.Egg:
+                    priceSr.sprite = MainSceneManager.Instance.TipMoneySprites[1];
+                    break;
+                case SushiTypes.Shrimp:
+                    priceSr.sprite = MainSceneManager.Instance.TipMoneySprites[2];
+                    break;
+                case SushiTypes.Unagi:
+                    priceSr.sprite = MainSceneManager.Instance.TipMoneySprites[3];
+                    break;
+                case SushiTypes.Tuna:
+                    priceSr.sprite = MainSceneManager.Instance.TipMoneySprites[4];
+                    break;
+                default:
+                    Debug.LogError("Unkno Fucked up!");
+                    break;
+            }
+        }
+        else //normal Sprite
+        {
+            switch (sushiType)
+            {
+                case SushiTypes.Maki:
+                    priceSr.sprite = MainSceneManager.Instance.NormalMoneySprites[0];
+                    break;
+                case SushiTypes.Egg:
+                    priceSr.sprite = MainSceneManager.Instance.NormalMoneySprites[1];
+                    break;
+                case SushiTypes.Shrimp:
+                    priceSr.sprite = MainSceneManager.Instance.NormalMoneySprites[2];
+                    break;
+                case SushiTypes.Unagi:
+                    priceSr.sprite = MainSceneManager.Instance.NormalMoneySprites[3];
+                    break;
+                case SushiTypes.Tuna:
+                    priceSr.sprite = MainSceneManager.Instance.NormalMoneySprites[4];
+                    break;
+                default:
+                    Debug.LogError("Unknown Sushi Type for Tip: " + sushiType);
+                    break;
+            }
+        }
+        
+        
         priceSr.gameObject.SetActive(true);
         yield return new WaitForSeconds(_tmpAnimationFactor);
         priceSr.gameObject.SetActive(false);

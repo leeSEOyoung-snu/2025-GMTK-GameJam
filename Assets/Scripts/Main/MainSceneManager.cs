@@ -12,6 +12,9 @@ public enum ColorTypes { W = 0, R = 1, Y = 2, B = 3, DishStandBy = 4, DishEmpty 
 public class MainSceneManager : MonoBehaviour
 {
 
+    [Header("MoneyEffect")]
+    [SerializeField] public Sprite[] NormalMoneySprites;
+    [SerializeField] public Sprite[] TipMoneySprites;
     [Header("Buttons")]
     [SerializeField] private Image titleButton;
     [SerializeField] private Image initButton;
