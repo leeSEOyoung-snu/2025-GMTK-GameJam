@@ -276,17 +276,81 @@ public class TableManager : MonoBehaviour, IInit
             }
 
             Vector3 firstDishPos = DishBehaviourDict[0].DishData.CurrPos;
-            
-            Debug.Log(firstDishPos);
+
+            bool passed = false;
+            foreach (var pair in InteractionManager.Instance.passedDish)
+                if (pair.Value != null) 
+                    passed = true;
 
             if (isAllDishEmpty && firstDishPos.y < 0f && Mathf.Abs(firstDishPos.x - ServingMinPosX) <= 0.0001f)
             {
                 MainSceneManager.Instance.isRotating = false;
             }
+            else if (passed) InteractionManager.Instance.CheckCatDishRelative();
             else RotateDishOnce();
             return;
         }
         
         InteractionManager.Instance.CheckCatDishRelative();
+    }
+
+    public void GenerateSushi(SushiTypes sushiType)
+    {
+        bool isGenerated = false;
+        
+        foreach (DishBehaviour dish in DishBehaviourDict.Values)
+        {
+            if (dish.DishData.Sushi != SushiTypes.Empty) continue;
+            isGenerated = true;
+            dish.PutSushiOnDish(sushiType);
+            break;
+        }
+
+        if (isGenerated)
+        {
+            InteractionManager.Instance.EnQueueCondition(ConditionTypes.SushiGenerated, sushiType.ToString());
+            InteractionManager.Instance.TriggerProcess();
+        }
+    }
+    
+    public void GenerateSushi(SushiTypes sushiType, ColorTypes dishColor)
+    {
+        bool isGenerated = false;
+        
+        foreach (DishBehaviour dish in DishBehaviourDict.Values)
+        {
+            if (dish.DishData.Sushi != SushiTypes.Empty || dish.DishData.Color != dishColor) continue;
+            isGenerated = true;
+            dish.PutSushiOnDish(sushiType);
+            break;
+        }
+
+        if (isGenerated)
+        {
+            InteractionManager.Instance.EnQueueCondition(ConditionTypes.SushiGenerated, sushiType.ToString());
+            InteractionManager.Instance.TriggerProcess();
+        }
+    }
+
+    public void ChangeType(SushiTypes sushi1, SushiTypes sushi2)
+    {
+        bool isGenerated = false;
+        foreach (DishBehaviour dish in DishBehaviourDict.Values)
+        {
+            if (dish.DishData.Sushi != sushi1) continue;
+            isGenerated = true;
+            dish.PutSushiOnDish(sushi2);
+            break;
+        }
+        if (isGenerated && sushi2 != SushiTypes.Empty)
+        {
+            InteractionManager.Instance.EnQueueCondition(ConditionTypes.SushiGenerated, sushi2.ToString());
+            InteractionManager.Instance.TriggerProcess();
+        }
+    }
+
+    public void ChangeType(ColorTypes dish1, ColorTypes dish2)
+    {
+        // TODO: 하나만? 전부 다?
     }
 }

@@ -13,37 +13,85 @@ public class CatResultBehaviour : IPointerHandler
 
     private GameObject result;
     private bool isResultSingle, isVal1StandBy, isVal2StandBy;
+    private Transform result1Tr, result2Tr;
+    private bool isVal1Sushi, isVal2Sushi;
 
-    public void InitResult(Sprite[] sprites, bool isVal1Sushi, bool isVal2Sushi, bool isVal1StandBy, bool isVal2StandBy)
+    public void InitResult(bool isVal1Sushi, bool isVal2Sushi, bool isVal1StandBy, bool isVal2StandBy, ResultTypes resultType, string val1Str, string val2Str)
     {
-        iconSr.sprite = sprites[0];
+        SushiTypes sushi1, sushi2;
+        ColorTypes dish1, dish2;
+        switch (resultType)
+        {
+            case ResultTypes.GenerateCard1:
+                isResultSingle = true;
+                result = Instantiate(singleResultPref, transform);
+                result1Tr = result.transform;
+                iconSr.sprite = ResultMethods.Instance.iconSprites[(int)resultType];
+                sushi1 = Enum.Parse<SushiTypes>(val1Str, true);
+                if (sushi1 == SushiTypes.SushiStandBy)
+                {
+                    result.GetComponent<SpriteRenderer>().sprite = ResultMethods.Instance.singleBlank;
+                    result.transform.localScale = new Vector3(1, 1, 1);
+                }
+                else
+                {
+                    result.GetComponent<SpriteRenderer>().sprite = ConditionMethods.Instance.sushiSprites[(int)sushi1];
+                    result.transform.localScale = new Vector3(DiningManager.Instance.BubbleSushiScale,
+                        DiningManager.Instance.BubbleSushiScale, 0);
+                }
+                result1Tr.transform.localPosition = new Vector3(DiningManager.Instance.BubbleTypePosX, 0, 0);
+                break;
+            
+            case ResultTypes.GenerateCard2:
+                isResultSingle = false;
+                result = Instantiate(doubleResultPref, transform);
+                iconSr.sprite = ResultMethods.Instance.iconSprites[(int)resultType];
+                sushi1 = Enum.Parse<SushiTypes>(val1Str, true);
+                sushi2 = Enum.Parse<SushiTypes>(val2Str, true);
+                result1Tr = transform.Find("Result1");
+                result2Tr = transform.Find("Result2");
+                if (sushi1 == SushiTypes.SushiStandBy)
+                {
+                    result1Tr.GetComponent<SpriteRenderer>().sprite = ResultMethods.Instance.singleBlank;
+                    result1Tr.localScale = new Vector3(1, 1, 1);
+                }
+                else
+                {
+                    result1Tr.GetComponent<SpriteRenderer>().sprite = ConditionMethods.Instance.sushiSprites[(int)sushi1];
+                    result1Tr.localScale = new Vector3(DiningManager.Instance.BubbleSushiScale,
+                        DiningManager.Instance.BubbleSushiScale, 0);
+                }
 
-        if (sprites.Length == 2)
-        {
-            isResultSingle = true;
-            result = Instantiate(singleResultPref, transform);
-            if (isVal1Sushi) result.transform.localScale = new Vector3(DiningManager.Instance.BubbleSushiScale, DiningManager.Instance.BubbleSushiScale, 0);
-            else result.transform.localScale = new Vector3(DiningManager.Instance.BubbleDishScale, DiningManager.Instance.BubbleDishScale, 0);
-            result.GetComponent<SpriteRenderer>().sprite = sprites[1];
-        }
-        else
-        {
-            isResultSingle = false;
-            result = Instantiate(doubleResultPref, transform);
-            Transform result1Tr = transform.Find("Result1"), result2Tr = transform.Find("Result2");
-            if (isVal1Sushi) result1Tr.localScale = new Vector3(DiningManager.Instance.BubbleSushiScale, DiningManager.Instance.BubbleSushiScale, 0);
-            else result1Tr.localScale = new Vector3(DiningManager.Instance.BubbleDishScale, DiningManager.Instance.BubbleDishScale, 0);
-            result1Tr.GetComponent<SpriteRenderer>().sprite = sprites[1];
-            if (isVal2Sushi) result2Tr.localScale = new Vector3(DiningManager.Instance.BubbleSushiScale, DiningManager.Instance.BubbleSushiScale, 0);
-            else result2Tr.localScale = new Vector3(DiningManager.Instance.BubbleDishScale, DiningManager.Instance.BubbleDishScale, 0);
-            result2Tr.GetComponent<SpriteRenderer>().sprite = sprites[2];
+                if (sushi2 == SushiTypes.SushiStandBy)
+                {
+                    result2Tr.GetComponent<SpriteRenderer>().sprite = ResultMethods.Instance.singleBlank;
+                    result2Tr.localScale = new Vector3(1, 1, 1);
+                }
+                else
+                {
+                    result2Tr.GetComponent<SpriteRenderer>().sprite = ConditionMethods.Instance.sushiSprites[(int)sushi2];
+                    result2Tr.localScale = new Vector3(DiningManager.Instance.BubbleSushiScale,
+                        DiningManager.Instance.BubbleSushiScale, 0);
+                }
+                result.transform.localPosition = new Vector3(DiningManager.Instance.BubbleTypePosX, 0, 0);
+                break;
+            
+            // GenerateCard2,
+            // GenerateSushi,
+            // GiveTip,
+            // EmptyNextDish,
+            // EmptyColorDish,
+            // GenerateSushiOnColorDish,
+            // ChangeType,
+            // ChangeCard,
         }
         
         result.transform.SetAsFirstSibling();
-        result.transform.localPosition = new Vector3(DiningManager.Instance.BubbleTypePosX, 0, 0);
         
         this.isVal1StandBy = isVal1Sushi;
         this.isVal2StandBy = isVal2Sushi;
+        this.isVal1Sushi = isVal1Sushi;
+        this.isVal2Sushi = isVal2Sushi;
         pointerDetector.SetActive(true);
     }
 
@@ -55,22 +103,26 @@ public class CatResultBehaviour : IPointerHandler
 
     public void SetResult(SushiTypes sushi)
     {
+        float scaleFactor;
         if (isResultSingle)
         {
             isVal1StandBy = isVal2StandBy = false;
-            result.GetComponent<SpriteRenderer>().sprite = TableManager.Instance.sushiSprites[(int)sushi];
+            result1Tr.GetComponent<SpriteRenderer>().sprite = TableManager.Instance.sushiSprites[(int)sushi];
+            result1Tr.localScale = new Vector3(DiningManager.Instance.BubbleSushiScale, DiningManager.Instance.BubbleSushiScale, 0);
             catBehaviour.Result1 = sushi.ToString();
         }
         else if (isVal1StandBy)
         {
             isVal1StandBy = false;
-            result.transform.Find("Result1").GetComponent<SpriteRenderer>().sprite = TableManager.Instance.sushiSprites[(int)sushi];
+            result1Tr.GetComponent<SpriteRenderer>().sprite = TableManager.Instance.sushiSprites[(int)sushi];
+            result1Tr.localScale = new Vector3(DiningManager.Instance.BubbleSushiScale, DiningManager.Instance.BubbleSushiScale, 0);
             catBehaviour.Result1 = sushi.ToString();
         }
         else
         {
             isVal2StandBy = false;
-            result.transform.Find("Result2").GetComponent<SpriteRenderer>().sprite = TableManager.Instance.sushiSprites[(int)sushi];
+            result2Tr.GetComponent<SpriteRenderer>().sprite = TableManager.Instance.sushiSprites[(int)sushi];
+            result2Tr.localScale = new Vector3(DiningManager.Instance.BubbleSushiScale, DiningManager.Instance.BubbleSushiScale, 0);
             catBehaviour.Result2 = sushi.ToString();
         }
     }

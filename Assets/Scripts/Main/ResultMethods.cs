@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 
 public enum ResultTypes
@@ -21,7 +22,9 @@ public class ResultMethods : MonoBehaviour
     public static ResultMethods Instance { get; private set; }
     
     public List<Sprite> iconSprites;
-    
+    public Sprite singleBlank;
+    public Sprite[] doubleBlank;
+    public Sprite arrow;
 
     private void Awake()
     {
@@ -63,22 +66,43 @@ public class ResultMethods : MonoBehaviour
             case ResultTypes.GenerateCard1:
                 CardManager.Instance.AddCard(sushi1, true);
                 break;
+            
             case ResultTypes.GenerateCard2:
-                //TODO : Will be implemneted by SEO later
+                CardManager.Instance.AddCard(sushi1, true);
+                CardManager.Instance.AddCard(sushi2, sushi1 != sushi2);
                 break;
+            
             case ResultTypes.GenerateSushi:
+                TableManager.Instance.GenerateSushi(sushi1);
                 break;
+            
             case ResultTypes.GiveTip:
+                // TODO: import result
                 break;
+            
             case ResultTypes.EmptyNextDish:
+                // TODO: import result
                 break;
+            
             case ResultTypes.EmptyColorDish:
+                // TODO: import result
                 break;
+            
             case ResultTypes.GenerateSushiOnColorDish:
+                TableManager.Instance.GenerateSushi(sushi1, dish2);
                 break;
+            
             case ResultTypes.ChangeType:
+                if (isVal1Sushi && isVal2Sushi)
+                    TableManager.Instance.ChangeType(sushi1, sushi2);
+                else if (!isVal1Sushi && !isVal2Sushi)
+                    TableManager.Instance.ChangeType(dish1, dish2);
+                else
+                    Debug.LogError($"Change Type Error: {resVal1}, {resVal2}");
                 break;
+            
             case ResultTypes.ChangeCard:
+                // TODO: import result
                 break;
         }
     }
