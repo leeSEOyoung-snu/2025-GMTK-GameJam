@@ -33,6 +33,8 @@ public class CatConditionBehaviour : IPointerHandler
                     DiningManager.Instance.BubbleSushiScale, 0);
             }
         }
+        else if (ConditionMethods.Instance.dishSprites.IndexOf(sprites[0]) != 5)
+            type.transform.localScale = new Vector3(1, 1, 0);
         else type.transform.localScale = new Vector3(DiningManager.Instance.BubbleDishScale, DiningManager.Instance.BubbleDishScale, 0);
         type.GetComponent<SpriteRenderer>().sprite = sprites[1];
         

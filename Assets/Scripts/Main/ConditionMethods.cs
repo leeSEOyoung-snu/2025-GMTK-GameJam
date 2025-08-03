@@ -50,13 +50,13 @@ public class ConditionMethods : MonoBehaviour
         {
             switch (type)
             {
-                case ConditionTypes.DishPassed:     sprites = DishPassed(color);     break;
+                case ConditionTypes.DishPassed: sprites = DishPassed(color); break;
             }
 
+            Debug.Log(sprites.Length);
             isSushiType = false;
             isStandBy = color == ColorTypes.DishStandBy;
         }
-        else Debug.LogError("Condition Val Error: " + conval);
 
         return (sprites, isStandBy, isSushiType);
     }

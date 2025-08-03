@@ -125,7 +125,7 @@ public class TableManager : MonoBehaviour, IInit
             DishBehaviourDict.Add(i, tmpObj.GetComponent<DishBehaviour>());
             if (Enum.TryParse(dishColor[i], ignoreCase: true, out ColorTypes color))
             {
-                DishBehaviourDict[i].InitDish(SushiTypes.Empty, color, new Vector3(currPosX, _railMaxPosY * -1f, 0));
+                DishBehaviourDict[i].InitDish(SushiTypes.SushiEmpty, color, new Vector3(currPosX, _railMaxPosY * -1f, 0));
                 currPosX += MainSceneManager.Instance.PosXFactor;
             }
             else Debug.LogError("Color Error: " + dishColor[i]);
@@ -269,7 +269,7 @@ public class TableManager : MonoBehaviour, IInit
             bool isAllDishEmpty = true;
             foreach (DishBehaviour dish in DishBehaviourDict.Values)
             {
-                if (dish.DishData.Sushi != SushiTypes.Empty)
+                if (dish.DishData.Sushi != SushiTypes.SushiEmpty)
                 {
                     isAllDishEmpty = false;
                     break;
@@ -305,7 +305,7 @@ public class TableManager : MonoBehaviour, IInit
         
         foreach (DishBehaviour dish in DishBehaviourDict.Values)
         {
-            if (dish.DishData.Sushi != SushiTypes.Empty) continue;
+            if (dish.DishData.Sushi != SushiTypes.SushiEmpty) continue;
             isGenerated = true;
             dish.GenerateSushi(sushiType);
             break;
@@ -354,7 +354,7 @@ public class TableManager : MonoBehaviour, IInit
             dish.PutSushiOnDish(sushi2);
             break;
         }
-        if (isGenerated && sushi2 != SushiTypes.Empty)
+        if (isGenerated && sushi2 != SushiTypes.SushiEmpty)
         {
             InteractionManager.Instance.EnQueueCondition(ConditionTypes.SushiGenerated, sushi2.ToString());
             InteractionManager.Instance.TriggerProcess();

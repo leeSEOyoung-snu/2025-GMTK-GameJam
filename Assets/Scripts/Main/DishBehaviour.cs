@@ -76,7 +76,7 @@ public class DishBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     public void ChangeSushiType(SushiTypes sushi)
     {
         DishData.Sushi = sushi;
-        if (sushi == SushiTypes.Empty)
+        if (sushi == SushiTypes.SushiEmpty)
         {
             sushiSr.color = Color.clear;
         }
@@ -91,7 +91,7 @@ public class DishBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     {
         if (MainSceneManager.Instance.CookStarted)
         {
-            if (DishData.Sushi != SushiTypes.Empty) return;
+            if (DishData.Sushi != SushiTypes.SushiEmpty) return;
             CardManager.Instance.PutSushiOnDish(this);
         }
         else
@@ -114,7 +114,7 @@ public class DishBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     public void PutSushiOnDish(SushiTypes sushi)
     {
         DishData.Sushi = sushi;
-        if (sushi == SushiTypes.Empty)
+        if (sushi == SushiTypes.SushiEmpty)
         {
             sushiSr.color = Color.clear;
         }
@@ -167,7 +167,7 @@ public class DishBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnterH
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (MainSceneManager.Instance.isRotating || isSelected || DishData.Sushi != SushiTypes.Empty) return;
+        if (MainSceneManager.Instance.isRotating || isSelected || DishData.Sushi != SushiTypes.SushiEmpty) return;
         if (_rotateSq != null && _rotateSq.IsActive() && _rotateSq.IsPlaying())
         {
             _rotateSq.Kill();
@@ -203,7 +203,7 @@ public class DishBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnterH
 
     public void SetSushiEmpty()
     {
-        ChangeSushiType(SushiTypes.Empty);
+        ChangeSushiType(SushiTypes.SushiEmpty);
         InteractionManager.Instance.ActivateResult();
     }
     

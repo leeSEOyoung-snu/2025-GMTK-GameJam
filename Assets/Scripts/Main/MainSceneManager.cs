@@ -4,15 +4,14 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum SushiTypes { Egg = 0, Shrimp = 1, Unagi = 2, Tuna = 3, Maki = 4, Empty = 5, Any = 6, SushiStandBy = 7 }
-public enum ColorTypes { W = 0, R = 1, Y = 2, B = 3, DishStandBy = 4 }
+public enum SushiTypes { Egg = 0, Shrimp = 1, Unagi = 2, Tuna = 3, Maki = 4, SushiEmpty = 5, Any = 6, SushiStandBy = 7 }
+public enum ColorTypes { W = 0, R = 1, Y = 2, B = 3, DishStandBy = 4, DishEmpty = 5 }
 
 public class MainSceneManager : MonoBehaviour
 {
 
     [Header("Prefabs")]
     [SerializeField] private GameObject popupPrefab;
-
     [SerializeField] private GameObject CardImagePrefab;
     [Header("References")]
     [SerializeField] private TextMeshProUGUI rotateCntText;

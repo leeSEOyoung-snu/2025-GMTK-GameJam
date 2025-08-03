@@ -121,9 +121,18 @@ public class CatBehaviour : MonoBehaviour
         catResultBehaviour.InitResult(isVal1Sushi, isVal2Sushi, isVal1StandBy, isVal2StandBy, resultType, Result1, Result2);
     }
 
-    public bool CheckCondition(ConditionTypes conditionType, string condition)
+    public bool CheckCondition(ConditionTypes conditionType, string condition, bool isSushiEmpty = false)
     {
-        return this.conditionType == conditionType && Condition == condition;
+        Debug.Log($"this: {this.conditionType}, conditionType: {conditionType}, val: {condition}, thisVal: {Condition}, {isSushiEmpty}");
+        Debug.LogError(conditionType == ConditionTypes.DishPassed
+                  && this.conditionType == conditionType
+                  && Condition == ColorTypes.DishEmpty.ToString()
+                  && isSushiEmpty);
+        if (conditionType == ConditionTypes.DishPassed
+            && this.conditionType == conditionType
+            && Condition == ColorTypes.DishEmpty.ToString()
+            && isSushiEmpty) return true;
+        else return this.conditionType == conditionType && Condition == condition;
     }
 
     public void ActivateResult()
@@ -153,7 +162,7 @@ public class CatBehaviour : MonoBehaviour
             return false;
         }
         bool result;
-        if (dish.DishData.Sushi == SushiTypes.Empty) result = false;
+        if (dish.DishData.Sushi == SushiTypes.SushiEmpty) result = false;
         else if (color == ColorTypes.W || dishColor == ColorTypes.W) result = true;
         else if (dishColor == color) result = true;
         else result = false;

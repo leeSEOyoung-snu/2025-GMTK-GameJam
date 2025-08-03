@@ -155,7 +155,7 @@ public class InteractionManager : MonoBehaviour, IInit
             CatBehaviour cat = DiningManager.Instance.CatBehaviourDict[pair.Key];
             if (cat.CheckCondition(ConditionTypes.SushiPassed, pair.Value.DishData.Sushi.ToString()))
                 activationInfo[pair.Key] = true;
-            if (cat.CheckCondition(ConditionTypes.DishPassed, pair.Value.DishData.Color.ToString()))
+            if (cat.CheckCondition(ConditionTypes.DishPassed, pair.Value.DishData.Color.ToString(), pair.Value.DishData.Sushi == SushiTypes.SushiEmpty))
                 activationInfo[pair.Key] = true;
                 
         }
@@ -187,7 +187,7 @@ public class InteractionManager : MonoBehaviour, IInit
                     .CheckCondition(ConditionTypes.SushiEaten, CatDishRelative[pair.Key].DishData.Sushi.ToString());
             }
             SushiTypes eatenSushi = CatDishRelative[pair.Key].DishData.Sushi; 
-            CatDishRelative[pair.Key].ChangeSushiType(SushiTypes.Empty);
+            CatDishRelative[pair.Key].ChangeSushiType(SushiTypes.SushiEmpty);
             DiningManager.Instance.CatBehaviourDict[pair.Key].ShowPrice(eatenSushi);
         }
         
