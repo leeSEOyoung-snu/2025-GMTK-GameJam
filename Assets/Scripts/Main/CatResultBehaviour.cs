@@ -99,7 +99,7 @@ public class CatResultBehaviour : IPointerHandler
                     DiningManager.Instance.BubbleDishScale, 0);
                 Instantiate(ResultMethods.Instance.anyPref, result1Tr);
                 
-                result2Tr.GetComponent<SpriteRenderer>().sprite = ResultMethods.Instance.iconSprites[(int)dish1];
+                result2Tr.GetComponent<SpriteRenderer>().sprite = ConditionMethods.Instance.dishSprites[(int)dish1];
                 result2Tr.localScale = new Vector3(DiningManager.Instance.BubbleDishScale,
                     DiningManager.Instance.BubbleDishScale, 0);
                 result2Tr.transform.localPosition = new Vector3(DiningManager.Instance.BubbleTypePosX, 0, 0);

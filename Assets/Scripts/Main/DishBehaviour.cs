@@ -185,6 +185,12 @@ public class DishBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnterH
         _rotateSq = DOTween.Sequence();
         Vector3[] path = { new Vector3(sushiSr.transform.localPosition.x, sushiSr.transform.localPosition.y - _hoveredPosY, sushiSr.transform.localPosition.z), sushiSr.transform.localPosition };
         _rotateSq.Append(sushiSr.transform.DOLocalPath(path, CardManager.Instance.CardMoveDuration));
-        _rotateSq.Play().OnComplete(InteractionManager.Instance.ActivateResult);
+        _rotateSq.Play().OnComplete(SetSushiEmpty);
+    }
+
+    public void SetSushiEmpty()
+    {
+        ChangeSushiType(SushiTypes.Empty);
+        InteractionManager.Instance.ActivateResult();
     }
 }

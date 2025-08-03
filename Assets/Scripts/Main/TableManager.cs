@@ -367,11 +367,11 @@ public class TableManager : MonoBehaviour, IInit
         DishBehaviourDict[emptyDishId + 1].EmptyMotion();
     }
 
-    public void EmptyNextDish(ColorTypes dishColor, int catId)
+    public void EmptyColorDish(ColorTypes dishColor)
     {
         foreach (DishBehaviour dish in DishBehaviourDict.Values)
         {
-            //if ()
+            if (dish.DishData.Color == dishColor) dish.EmptyMotion();
         }
         
         
