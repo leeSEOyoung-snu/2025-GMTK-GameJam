@@ -89,9 +89,9 @@ public class ResultMethods : MonoBehaviour
                 TableManager.Instance.EmptyColorDish(Enum.Parse<ColorTypes>(resVal1, true));
                 break;
             
-            case ResultTypes.GenerateSushiOnColorDish:
-                TableManager.Instance.GenerateSushi(sushi1, dish2);
-                break;
+            // case ResultTypes.GenerateSushiOnColorDish:
+            //     TableManager.Instance.GenerateSushi(sushi2, dish1);
+            //     break;
             
             case ResultTypes.ChangeType:
                 if (isVal1Sushi && isVal2Sushi)

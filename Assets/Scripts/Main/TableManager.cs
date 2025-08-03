@@ -303,34 +303,41 @@ public class TableManager : MonoBehaviour, IInit
         {
             if (dish.DishData.Sushi != SushiTypes.Empty) continue;
             isGenerated = true;
-            dish.PutSushiOnDish(sushiType);
+            dish.GenerateSushi(sushiType);
             break;
         }
-
-        if (isGenerated)
+        
+        if (!isGenerated) InteractionManager.Instance.ActivateResult();
+        else
         {
-            InteractionManager.Instance.EnQueueCondition(ConditionTypes.SushiGenerated, sushiType.ToString());
-            InteractionManager.Instance.TriggerProcess();
+            all2 = 1;
+            curr2 = 0;
         }
     }
-    
-    public void GenerateSushi(SushiTypes sushiType, ColorTypes dishColor)
-    {
-        bool isGenerated = false;
-        
-        foreach (DishBehaviour dish in DishBehaviourDict.Values)
-        {
-            if (dish.DishData.Sushi != SushiTypes.Empty || dish.DishData.Color != dishColor) continue;
-            isGenerated = true;
-            dish.PutSushiOnDish(sushiType);
-            break;
-        }
 
-        if (isGenerated)
-        {
-            InteractionManager.Instance.EnQueueCondition(ConditionTypes.SushiGenerated, sushiType.ToString());
-            InteractionManager.Instance.TriggerProcess();
-        }
+    private int all2, curr2;
+    
+    // public void GenerateSushi(SushiTypes sushiType, ColorTypes dishColor)
+    // {
+    //     all2 = curr2 = 0;
+    //     foreach (DishBehaviour dish in DishBehaviourDict.Values)
+    //     {
+    //         if (dish.DishData.Sushi != SushiTypes.Empty || dish.DishData.Color != dishColor) continue;
+    //         all2++;
+    //         dish.GenerateSushi(sushiType);
+    //         break;
+    //     }
+    //     
+    //     Debug.Log($"all: {all2}, curr: {curr2}");
+    //
+    //     if (all2 == 0) InteractionManager.Instance.ActivateResult();
+    // }
+
+    public void GenerateSushiCompleted(SushiTypes sushi)
+    {
+        if (curr2 < all2 - 1) { curr2++; return; }
+        InteractionManager.Instance.EnQueueCondition(ConditionTypes.SushiGenerated, sushi.ToString());
+        InteractionManager.Instance.ActivateResult();
     }
 
     public void ChangeType(SushiTypes sushi1, SushiTypes sushi2)

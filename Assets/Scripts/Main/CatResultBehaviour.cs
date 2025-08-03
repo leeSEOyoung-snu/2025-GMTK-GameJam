@@ -107,6 +107,32 @@ public class CatResultBehaviour : IPointerHandler
                 break;
             
             case ResultTypes.GenerateSushiOnColorDish:
+                arrow.SetActive(true);
+                isResultSingle = false;
+                result = Instantiate(singleResultPref, transform);
+                result1Tr = iconSr.transform;
+                result2Tr = result.transform;
+                
+                dish1 = Enum.Parse<ColorTypes>(val1Str, true);
+                iconSr.sprite = TableManager.Instance.dishSprites[(int)dish1];
+                result1Tr.localScale = new Vector3(DiningManager.Instance.BubbleDishScale,
+                    DiningManager.Instance.BubbleDishScale, 0);
+                
+                sushi2 = Enum.Parse<SushiTypes>(val2Str, true);
+                if (sushi2 == SushiTypes.SushiStandBy)
+                {
+                    result2Tr.GetComponent<SpriteRenderer>().sprite = ResultMethods.Instance.doubleBlank[1];;
+                    result2Tr.localScale = new Vector3(1, 1, 1);
+                }
+                else
+                {
+                    result2Tr.GetComponent<SpriteRenderer>().sprite = TableManager.Instance.sushiSprites[(int)sushi2];
+                    result2Tr.localScale = new Vector3(DiningManager.Instance.BubbleSushiScale,
+                        DiningManager.Instance.BubbleSushiScale, 0);
+                }
+                
+                result2Tr.transform.localPosition = new Vector3(DiningManager.Instance.BubbleTypePosX, 0, 0);
+                result.transform.SetAsFirstSibling();
                 break;
             
             case ResultTypes.ChangeType:
@@ -182,11 +208,6 @@ public class CatResultBehaviour : IPointerHandler
                 result2Tr.transform.localPosition = new Vector3(DiningManager.Instance.BubbleTypePosX, 0, 0);
                 result.transform.SetAsFirstSibling();
                 break;
-            
-            
-            
-            // GenerateSushiOnColorDish,
-            // ChangeCard,
         }
         
         this.isVal1StandBy = isVal1Sushi;
