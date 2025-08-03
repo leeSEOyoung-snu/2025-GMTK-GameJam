@@ -26,7 +26,10 @@ public class DiningManager : MonoBehaviour, IInit
     
     public void Init()
     {
-        currCatData = GameManager.Instance.GetCatData();
+        Debug.LogWarning("GetCatData 수정");
+        // currCatData = GameManager.Instance.GetCatData();
+        var tmp = GameManager.Instance._catData[0];
+        currCatData = new List<Dictionary<string, object>>() { tmp };
         
         CatCnt = currCatData.Count;
         

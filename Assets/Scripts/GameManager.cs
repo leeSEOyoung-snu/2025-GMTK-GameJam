@@ -12,8 +12,8 @@ public class GameManager : MonoBehaviour
     //singleton instance
     public static GameManager Instance { get; private set; }
     
-    private List<Dictionary<string, object>> _currStageData;
-    private List<Dictionary<string, object>> _catData;
+    public List<Dictionary<string, object>> _currStageData;
+    public List<Dictionary<string, object>> _catData;
     private string StageFileName;
     private bool isClear;
     public int CurrStageIdx { get; private set; }
@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour
     {
         _currStageData = CSVReader.Read("Data/Test");
         _catData = CSVReader.Read("Data/TestCat");
+
         LoadSaveData();
         CurrStageIdx = 0;
     }

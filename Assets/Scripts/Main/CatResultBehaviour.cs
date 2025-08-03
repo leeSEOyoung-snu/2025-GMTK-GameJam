@@ -48,11 +48,12 @@ public class CatResultBehaviour : IPointerHandler
                 iconSr.sprite = ResultMethods.Instance.iconSprites[(int)resultType];
                 sushi1 = Enum.Parse<SushiTypes>(val1Str, true);
                 sushi2 = Enum.Parse<SushiTypes>(val2Str, true);
-                result1Tr = transform.Find("Result1");
-                result2Tr = transform.Find("Result2");
+                result1Tr = result.transform.Find("Result1");
+                result2Tr = result.transform.Find("Result2");
+                Debug.Log($"result1Tr: {result1Tr}, result2Tr: {result2Tr}");
                 if (sushi1 == SushiTypes.SushiStandBy)
                 {
-                    result1Tr.GetComponent<SpriteRenderer>().sprite = ResultMethods.Instance.singleBlank;
+                    result1Tr.GetComponent<SpriteRenderer>().sprite = ResultMethods.Instance.doubleBlank[1];
                     result1Tr.localScale = new Vector3(1, 1, 1);
                 }
                 else
@@ -64,7 +65,7 @@ public class CatResultBehaviour : IPointerHandler
 
                 if (sushi2 == SushiTypes.SushiStandBy)
                 {
-                    result2Tr.GetComponent<SpriteRenderer>().sprite = ResultMethods.Instance.singleBlank;
+                    result2Tr.GetComponent<SpriteRenderer>().sprite = ResultMethods.Instance.doubleBlank[1];
                     result2Tr.localScale = new Vector3(1, 1, 1);
                 }
                 else
@@ -76,7 +77,6 @@ public class CatResultBehaviour : IPointerHandler
                 result.transform.localPosition = new Vector3(DiningManager.Instance.BubbleTypePosX, 0, 0);
                 break;
             
-            // GenerateCard2,
             // GenerateSushi,
             // GiveTip,
             // EmptyNextDish,
