@@ -73,15 +73,19 @@ public class ResultMethods : MonoBehaviour
         switch (type)
         {
             case ResultTypes.GenerateCard1:
+                if (sushi1 == SushiTypes.SushiStandBy) InteractionManager.Instance.ActivateResult();
                 CardManager.Instance.AddCard(sushi1, true);
                 break;
             
             case ResultTypes.GenerateCard2:
+                if (sushi1 == SushiTypes.SushiStandBy) InteractionManager.Instance.ActivateResult();
                 CardManager.Instance.AddCard(sushi1, true);
+                if (sushi2 == SushiTypes.SushiStandBy) InteractionManager.Instance.ActivateResult();
                 CardManager.Instance.AddCard(sushi2, sushi1 != sushi2);
                 break;
             
             case ResultTypes.GenerateSushi:
+                if (sushi1 == SushiTypes.SushiStandBy) InteractionManager.Instance.ActivateResult();
                 TableManager.Instance.GenerateSushi(sushi1);
                 break;
             
@@ -90,17 +94,25 @@ public class ResultMethods : MonoBehaviour
                 break;
             
             // case ResultTypes.GenerateSushiOnColorDish:
+            //      if (sushi2 == SushiTypes.SushiStandBy) InteractionManager.Instance.ActivateResult();
             //     TableManager.Instance.GenerateSushi(sushi2, dish1);
             //     break;
             
             case ResultTypes.ChangeType:
                 if (isVal1Sushi && isVal2Sushi)
-                    TableManager.Instance.ChangeSushiType(sushi1, sushi2);
+                {
+                    if (sushi1 == SushiTypes.SushiStandBy || sushi2 == SushiTypes.SushiStandBy)
+                    {
+                        InteractionManager.Instance.ActivateResult();
+                        TableManager.Instance.ChangeSushiType(sushi1, sushi2);
+                    }
+                }
                 else
                     Debug.LogError($"Change Type Error: {resVal1}, {resVal2}");
                 break;
             
             case ResultTypes.ChangeCard:
+                if (sushi1 == SushiTypes.SushiStandBy || sushi2 == SushiTypes.SushiStandBy) InteractionManager.Instance.ActivateResult();
                 CardManager.Instance.ChangeCard(sushi1, sushi2);
                 break;
         }
