@@ -935,7 +935,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1056297271}
         m_TargetAssemblyTypeName: MainSceneManager, Assembly-CSharp
-        m_MethodName: CheckClear
+        m_MethodName: DebugClear
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2341,9 +2341,12 @@ MonoBehaviour:
   nextSushiPanel: {fileID: 2019775203}
   mainCanvas: {fileID: 547865272}
   StageSummaryPanel: {fileID: 433770907}
+  _maxRotateCnt: 0
+  _currRotateCnt: 0
   _targetScore: 0
   _currScore: 0
   isRotating: 0
+  isClear: 0
 --- !u!114 &1056297272
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2388,6 +2391,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c0a67d8abba8c0459baf66865f5cc6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isCardChanging: 0
   cardPref: {fileID: 171407329708931927, guid: 2ab85dc1ca33af74cad2d14deb51c222, type: 3}
   cardParent: {fileID: 1814029752}
   cardSprites:

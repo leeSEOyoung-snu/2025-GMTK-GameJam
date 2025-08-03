@@ -286,6 +286,10 @@ public class TableManager : MonoBehaviour, IInit
             if (isAllDishEmpty && firstDishPos.y < 0f && Mathf.Abs(firstDishPos.x - ServingMinPosX) <= 0.0001f)
             {
                 MainSceneManager.Instance.isRotating = false;
+                MainSceneManager.Instance.CheckClear();
+                
+                if (MainSceneManager.Instance._currRotateCnt == 0 || MainSceneManager.Instance.isClear)
+                    MainSceneManager.Instance.ShowClearPanel();
             }
             else if (passed) InteractionManager.Instance.CheckCatDishRelative();
             else RotateDishOnce();

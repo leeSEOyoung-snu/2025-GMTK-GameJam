@@ -28,7 +28,7 @@ public class MainSceneManager : MonoBehaviour
     private List<IInit> _initScripts = new List<IInit>();
     
     public float RotateSpeedFactor { get; private set; }
-    private int _maxRotateCnt, _currRotateCnt;
+    public int _maxRotateCnt, _currRotateCnt;
     public int _targetScore, _currScore;
     private List<int> _newIcon;
     private List<string> _newIconDescription;
@@ -220,12 +220,17 @@ public class MainSceneManager : MonoBehaviour
     
     public void CheckClear()
     {
-        //for test
-        Instance._currScore = 120;
-        Instance._targetScore = 100;
-        //test finished
-        isClear = Instance._currScore >= Instance._targetScore ? true : false;
-        Debug.Log(Instance._currScore + " >= " + Instance._targetScore + " ? " + isClear);
-        Instance.StageSummaryPanelOn(isClear);
+        isClear = _currScore >= _targetScore;
+        Debug.Log(_currScore + " >= " + _targetScore + " ? " + isClear);
+    }
+
+    public void ShowClearPanel()
+    {
+        StageSummaryPanelOn(isClear);
+    }
+
+    public void DebugClear()
+    {
+        StageSummaryPanelOn(true);
     }
 }

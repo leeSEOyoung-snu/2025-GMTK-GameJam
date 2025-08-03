@@ -11,6 +11,7 @@ public enum ConditionTypes
     SushiGenerated,
     SushiPassed,
     DishPassed,
+    Empty
 }
 
 public class ConditionMethods : MonoBehaviour
