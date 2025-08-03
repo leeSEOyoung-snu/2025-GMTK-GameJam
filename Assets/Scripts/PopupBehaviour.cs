@@ -16,10 +16,15 @@ public class PopupBehaviour : MonoBehaviour
 
     public void InitPopup(int popupIndex, string popupDescriptionText)
     {
+        popupDescription.text = popupDescriptionText; 
+        if(popupIndex < PopupSpritesList.Count-1)
+        {
+            Debug.Log("PopupSpritesList is null or index out of range");
+            return;
+        }
         popupImage.sprite = PopupSpritesList[popupIndex];
         popupImage.SetNativeSize(); // Adjust the size of the image to fit the sprite
         //for test
-        popupDescription.text = popupDescriptionText; 
     }
 
     public void CheckButtonClicked()

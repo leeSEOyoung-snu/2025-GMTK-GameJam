@@ -62,7 +62,10 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("Scenes/Test SEO 1");
     }
 
-    public Dictionary<string, object> GetcurrStageData(){
+    public Dictionary<string, object> GetcurrStageData()
+    {
+        return _currStageData[CurrStageIdx];
+        //I don't know why this code works.... but it's still working We dont't need to modify anymore.
         foreach(Dictionary<string,object> d in _currStageData) {
             if (int.Parse(currStageData) == (int)d["Stage"]) {
                 return d;
@@ -97,7 +100,9 @@ public class GameManager : MonoBehaviour
     {
         SaveClearData();
         unlockStage();
+        //
         CurrStageIdx++;
+        MainSceneManager.Instance.Init();
         Debug.Log("Curr Stage Idx: " + CurrStageIdx);
     }
     

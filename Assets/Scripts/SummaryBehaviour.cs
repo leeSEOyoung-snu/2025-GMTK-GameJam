@@ -18,7 +18,6 @@ public class SummaryBehaviour : MonoBehaviour
     [SerializeField] private Sprite LoseCatSprite;
     private int currScore, targetScore;
     
-    private bool isClear; // true if the stage is cleared, false otherwise
     // Start is called before the first frame update
     void Start()
     {
@@ -55,10 +54,11 @@ public class SummaryBehaviour : MonoBehaviour
     public void OnNextOrReButtonClicked()
     {
         SoundManager.Instance.PlaySFX(SoundManager.Instance.SFXs[0]);
-        if (isClear)    //nextButton
+        if (MainSceneManager.Instance.isClear)    //nextButton
         {
             this.gameObject.SetActive(false);
             GameManager.Instance.EndStage();
+            Debug.Log("Next Stage Button Clicked");
         }
         else //retryButton
         {

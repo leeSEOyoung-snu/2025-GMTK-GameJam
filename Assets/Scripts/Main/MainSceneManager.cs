@@ -34,7 +34,7 @@ public class MainSceneManager : MonoBehaviour
     private List<string> _newIconDescription;
     private List<string> _nextSushi;
     public bool isRotating;
-    
+    [HideInInspector] public bool isClear;
     public bool CookStarted { get; private set; }
     
     // TODO: 가격 수정
@@ -64,6 +64,7 @@ public class MainSceneManager : MonoBehaviour
     public void Init()
     {
         CurrStageData = GameManager.Instance.GetcurrStageData();
+        Debug.Log("Current Stage Data: " + CurrStageData["Stage"]);
         
         _maxRotateCnt = _currRotateCnt = (int)CurrStageData["RotateCnt"];
         UpdateRotateCnt();
@@ -103,7 +104,7 @@ public class MainSceneManager : MonoBehaviour
         _newIconDescription = new List<string>();
         foreach (string i in CurrStageData["Description"].ToString().Split('$'))
         {
-            if (i == "NULL")  //there is no new Popup
+            if (i == "X")  //there is no new Popup
             {
                 _newIconDescription.Clear();
                 break;
@@ -114,7 +115,7 @@ public class MainSceneManager : MonoBehaviour
         Madepopup();
         
         isRotating = false;
-
+        isClear = false;
         CookStarted = false;
         startCookButton.SetActive(true);
         
@@ -174,11 +175,13 @@ public class MainSceneManager : MonoBehaviour
 
     private void Madepopup()
     {
+        int t = 0;
         foreach(int i in _newIcon)
         {
+            Debug.Log("New Icon: " + i);
             GameObject popup = Instantiate(popupPrefab, transform);
             popup.transform.SetParent(mainCanvas.transform, false);
-            popup.GetComponent<PopupBehaviour>().InitPopup(i-1, _newIconDescription[i-1]);
+            popup.GetComponent<PopupBehaviour>().InitPopup(i-1, _newIconDescription[t++]);
         }
     }
 
@@ -221,9 +224,8 @@ public class MainSceneManager : MonoBehaviour
         Instance._currScore = 120;
         Instance._targetScore = 100;
         //test finished
-        bool isClear = Instance._currScore >= Instance._targetScore ? true : false;
+        isClear = Instance._currScore >= Instance._targetScore ? true : false;
         Debug.Log(Instance._currScore + " >= " + Instance._targetScore + " ? " + isClear);
         Instance.StageSummaryPanelOn(isClear);
-        
     }
 }
