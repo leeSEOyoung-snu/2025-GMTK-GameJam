@@ -20,7 +20,6 @@ public class GameManager : MonoBehaviour
     public readonly float RotateDuration = 1f;
     
 
-    [SerializeField] public GameObject StageSummaryPanel;
     //Save Part
     [SerializeField] public List<int> StageCount;
     public SaveData _saveData;
@@ -60,7 +59,7 @@ public class GameManager : MonoBehaviour
         currStageData = BigStage.ToString() +"0"+ SmallStage.ToString();
         //then load Scene
         SoundManager.Instance.PlayBGM(SoundManager.Instance.BGMs[1]);
-        SceneManager.LoadScene("Scenes/Test SEO");
+        SceneManager.LoadScene("Scenes/Test SEO 1");
     }
 
     public Dictionary<string, object> GetcurrStageData(){
@@ -92,12 +91,7 @@ public class GameManager : MonoBehaviour
         return result;
     }
 
-    public void StageSummaryPanelOn(bool isClear)
-    {
-        StageSummaryPanel.SetActive(true);
-        StageSummaryPanel.GetComponent<SummaryBehaviour>().SetSummary(
-            isClear, MainSceneManager.Instance._currScore, MainSceneManager.Instance._targetScore);
-    }
+    
     
     public void EndStage()  //gotoNextStage
     {

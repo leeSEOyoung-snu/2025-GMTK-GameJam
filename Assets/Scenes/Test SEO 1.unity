@@ -2340,6 +2340,7 @@ MonoBehaviour:
   startCookButton: {fileID: 425218143}
   nextSushiPanel: {fileID: 2019775203}
   mainCanvas: {fileID: 547865272}
+  StageSummaryPanel: {fileID: 433770907}
   _targetScore: 0
   _currScore: 0
   isRotating: 0

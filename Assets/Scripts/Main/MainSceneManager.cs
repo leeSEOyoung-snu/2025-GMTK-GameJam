@@ -20,6 +20,7 @@ public class MainSceneManager : MonoBehaviour
     [SerializeField] private GameObject startCookButton;
     [SerializeField] private GameObject nextSushiPanel;
     [SerializeField] private Canvas mainCanvas;
+    [SerializeField] private GameObject StageSummaryPanel;
     public static MainSceneManager Instance { get; private set; }
     
     public Dictionary<string, object> CurrStageData { get; private set; }
@@ -130,7 +131,13 @@ public class MainSceneManager : MonoBehaviour
         _currScore += delta;
         UpdateScore();
     }
-
+    
+    public void StageSummaryPanelOn(bool isClear)
+    {
+        StageSummaryPanel.SetActive(true);
+        StageSummaryPanel.GetComponent<SummaryBehaviour>().SetSummary(
+            isClear, MainSceneManager.Instance._currScore, MainSceneManager.Instance._targetScore);
+    }
     public void UpdateScore()
     {
         scoreText.text = $"Score [{_currScore}/{_targetScore}]";
@@ -216,7 +223,7 @@ public class MainSceneManager : MonoBehaviour
         //test finished
         bool isClear = Instance._currScore >= Instance._targetScore ? true : false;
         Debug.Log(Instance._currScore + " >= " + Instance._targetScore + " ? " + isClear);
-        GameManager.Instance.StageSummaryPanelOn(isClear);
+        Instance.StageSummaryPanelOn(isClear);
         
     }
 }

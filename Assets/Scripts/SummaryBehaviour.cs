@@ -33,9 +33,6 @@ public class SummaryBehaviour : MonoBehaviour
     
     public void SetSummary(bool isClear, int currScore, int targetScore)
     {
-        this.isClear = isClear;
-        this.currScore = currScore;
-        this.targetScore = targetScore;
         ScoreText.text = currScore.ToString() + " / " + targetScore.ToString();
         if (isClear)
         {
@@ -63,7 +60,7 @@ public class SummaryBehaviour : MonoBehaviour
             this.gameObject.SetActive(false);
             GameManager.Instance.EndStage();
         }
-        else
+        else //retryButton
         {
             this.gameObject.SetActive(false);
             // Retry the current stage
