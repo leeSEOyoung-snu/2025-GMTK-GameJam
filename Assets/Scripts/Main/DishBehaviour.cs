@@ -34,7 +34,7 @@ public class DishBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnterH
         ChangeSushiType(sushi);
         ChangeDishType(color);
     }
-
+    
     public void Rotate(Vector3 endPos, bool moveXFirst)
     {
         if (_rotateSq != null && _rotateSq.IsActive() && _rotateSq.IsPlaying())
@@ -61,7 +61,7 @@ public class DishBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnterH
                 Vector3[] path = { new (DishData.CurrPos.x, endPos.y, 0f), new (endPos.x, endPos.y, 0f) };
                 _rotateSq.Append(transform.DOLocalPath(path, rotateSpeed, PathType.Linear));
             }
-        } 
+        }
 
         _rotateSq.Play().OnComplete(TableManager.Instance.CheckDishCondition);
         DishData.CurrPos = endPos;

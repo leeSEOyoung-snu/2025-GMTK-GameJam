@@ -48,6 +48,3 @@ Stage,RailCnt,RotateCnt,DishColor,StartSushi,NextSushi,Menu,TargetScore,NewIcon,
 507,4,2,Y$R$R$B,Tuna$Tuna$Tuna$Tuna$Shrimp$Shrimp,X,Shrimp$Tuna,180,-1,X,508
 508,4,3,Y$R$R$B,Egg$Shrimp$Shrimp$Tuna$Tuna,X,Egg$Shrimp$Tuna,190,-1,X,509
 509,4,2,R$Y$B$R,Tuna$Tuna$Unagi$Unagi$Shrimp$Shrimp,Tuna,Shrimp$Unagi$Tuna,999,-1,X,-1
-507,4,2,Y$R$R$B,Tuna$Tuna$Tuna$Tuna$Shrimp$Shrimp,X,Shrimp$Tuna,180,-1,X,508
-508,4,3,Y$R$R$B,Egg$Shrimp$Shrimp$Tuna$Tuna,X,Egg$Shrimp$Tuna,190,-1,X,509
-509,4,2,R$Y$B$R,Tuna$Tuna$Unagi$Unagi$Shrimp$Shrimp,Tuna,Shrimp$Unagi$Tuna,,-1,X,-1

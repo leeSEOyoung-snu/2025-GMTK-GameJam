@@ -35,6 +35,8 @@ public class TableManager : MonoBehaviour, IInit
     public List<Sprite> dishSprites, sushiSprites;
     
     private DishBehaviour _selectedDish;
+    
+    private int loopCnt;
 
     private void Awake()
     {
@@ -52,6 +54,8 @@ public class TableManager : MonoBehaviour, IInit
         DishBehaviourDict = new Dictionary<int, DishBehaviour>();
         
         _selectedDish = null;
+
+        loopCnt = 0;
         
         GenerateRail();
         GenerateDish();
@@ -287,6 +291,9 @@ public class TableManager : MonoBehaviour, IInit
             {
                 foreach (CatBehaviour cat in DiningManager.Instance.CatBehaviourDict.Values)
                     cat.isFull = false;
+                loopCnt++;
+                Debug.Log("loopCnt: " + loopCnt);
+                if (loopCnt >= 2) MainSceneManager.Instance.RotateSpeedFactor *= 0.8f;
             }
 
             if (isAllDishEmpty && firstDishPos.y < 0f && Mathf.Abs(firstDishPos.x - ServingMinPosX) <= 0.0001f)
@@ -294,8 +301,16 @@ public class TableManager : MonoBehaviour, IInit
                 MainSceneManager.Instance.isRotating = false;
                 MainSceneManager.Instance.CheckClear();
 
-                if (MainSceneManager.Instance._currRotateCnt == 0 || MainSceneManager.Instance.isClear)
+                if (loopCnt >= 6)
+                {
+                    Debug.Log("infinite");
+                    MainSceneManager.Instance.isRotating = true;
                     MainSceneManager.Instance.ShowClearPanel();
+                }
+                else if (MainSceneManager.Instance._currRotateCnt == 0 || MainSceneManager.Instance.isClear)
+                {
+                    MainSceneManager.Instance.ShowClearPanel();
+                }
                 else
                 {
                     foreach (string sushiStr in MainSceneManager.Instance._nextSushi)
@@ -303,6 +318,9 @@ public class TableManager : MonoBehaviour, IInit
                         if (Enum.TryParse(sushiStr, ignoreCase: true, out SushiTypes sushi))
                             CardManager.Instance.AddCard(sushi);
                     }
+
+                    loopCnt = 0;
+                    MainSceneManager.Instance.RotateSpeedFactor = 1f;
                 }
             }
             else if (passed) InteractionManager.Instance.CheckCatDishRelative();
