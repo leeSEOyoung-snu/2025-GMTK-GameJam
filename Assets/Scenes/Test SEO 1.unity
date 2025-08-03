@@ -2338,7 +2338,7 @@ MonoBehaviour:
   rotateCntText: {fileID: 50612735}
   scoreText: {fileID: 723648653}
   startCookButton: {fileID: 425218143}
-  nextSushiPanel: {fileID: 2019775203}
+  nextSushiPanel: {fileID: 7174534945293435435, guid: 2e5d58bd2d59cb142a1e77fc4b9c15de, type: 3}
   mainCanvas: {fileID: 547865272}
   StageSummaryPanel: {fileID: 433770907}
   _maxRotateCnt: 0
@@ -3347,11 +3347,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_MaxRayIntersections: 0
---- !u!1 &2019775203 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7174534945293435435, guid: 2e5d58bd2d59cb142a1e77fc4b9c15de, type: 3}
-  m_PrefabInstance: {fileID: 83709683}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &2019775206 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4511855674226746169, guid: 2e5d58bd2d59cb142a1e77fc4b9c15de, type: 3}

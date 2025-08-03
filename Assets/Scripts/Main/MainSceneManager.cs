@@ -156,7 +156,7 @@ public class MainSceneManager : MonoBehaviour
         if (!CookStarted || isRotating || _currRotateCnt == 0) return;
         isRotating = true;
         _currRotateCnt--;
-        if(_currRotateCnt == 1){ Destroy(nextSushiPanel);}
+        if(_currRotateCnt == 1){ nextSushiPanel.SetActive(false);}
         UpdateRotateCnt();
         TableManager.Instance.RotateDishOnce();
     }
@@ -190,26 +190,15 @@ public class MainSceneManager : MonoBehaviour
         switch (_nextSushi.Count)
         {
             case 0:
-                Destroy(nextSushiPanel);
+                nextSushiPanel.SetActive(false);
                 break;
             case 1:
-                GameObject go = Instantiate(CardImagePrefab, nextSushiPanel.transform);
-                go.transform.SetParent(nextSushiPanel.transform, false);
-                go.transform.position += new Vector3(0, -30, 0);
-                Enum.TryParse<SushiTypes>(_nextSushi[0], out SushiTypes sushiType);
-                go.GetComponent<Image>().sprite = CardManager.Instance.cardSprites[(int)sushiType];
+                nextSushiPanel.SetActive(true);
+                nextSushiPanel.GetComponent<NextSushiBehaiviour>().Setup(1, _nextSushi);
                 break;
             case 2:
-                GameObject go1 = Instantiate(CardImagePrefab, nextSushiPanel.transform);
-                GameObject go2 = Instantiate(CardImagePrefab, nextSushiPanel.transform);
-                go1.transform.SetParent(nextSushiPanel.transform, false);
-                go2.transform.SetParent(nextSushiPanel.transform, false);
-                go1.transform.position += new Vector3(-80, -30, 0);
-                go2.transform.position += new Vector3(80, -30, 0);
-                Enum.TryParse<SushiTypes>(_nextSushi[0], out SushiTypes sushiType1);
-                Enum.TryParse<SushiTypes>(_nextSushi[1], out SushiTypes sushiType2);
-                go1.GetComponent<Image>().sprite = CardManager.Instance.cardSprites[(int)sushiType1];
-                go2.GetComponent<Image>().sprite = CardManager.Instance.cardSprites[(int)sushiType2];
+                nextSushiPanel.SetActive(true);
+                nextSushiPanel.GetComponent<NextSushiBehaiviour>().Setup(2, _nextSushi);
                 break;
             default:
                 Debug.LogError("There is fucking somthing wrong with csv of nextSushi!!!");
