@@ -94,7 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 059fb892ad05483488edaae34bc85deb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gaugeBar: {fileID: 0}
+  gaugeBar: {fileID: 5285876884896342513}
   FireAnimationImage: {fileID: 3813815129707248961}
   TargetScore: {fileID: 2495742092927631460}
   CurrentScore: {fileID: 3813837284470575730}

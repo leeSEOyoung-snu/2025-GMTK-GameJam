@@ -185,6 +185,7 @@ public class MainSceneManager : MonoBehaviour
             case 1:
                 GameObject go = Instantiate(CardImagePrefab, nextSushiPanel.transform);
                 go.transform.SetParent(nextSushiPanel.transform, false);
+                go.transform.position += new Vector3(0, -30, 0);
                 Enum.TryParse<SushiTypes>(_nextSushi[0], out SushiTypes sushiType);
                 go.GetComponent<Image>().sprite = CardManager.Instance.cardSprites[(int)sushiType];
                 break;
@@ -193,8 +194,8 @@ public class MainSceneManager : MonoBehaviour
                 GameObject go2 = Instantiate(CardImagePrefab, nextSushiPanel.transform);
                 go1.transform.SetParent(nextSushiPanel.transform, false);
                 go2.transform.SetParent(nextSushiPanel.transform, false);
-                go1.transform.position += new Vector3(-80, 0, 0);
-                go2.transform.position += new Vector3(80, 0, 0);
+                go1.transform.position += new Vector3(-80, -30, 0);
+                go2.transform.position += new Vector3(80, -30, 0);
                 Enum.TryParse<SushiTypes>(_nextSushi[0], out SushiTypes sushiType1);
                 Enum.TryParse<SushiTypes>(_nextSushi[1], out SushiTypes sushiType2);
                 go1.GetComponent<Image>().sprite = CardManager.Instance.cardSprites[(int)sushiType1];
