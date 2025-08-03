@@ -23,17 +23,10 @@ public class StageNodeBehaviour : MonoBehaviour
     void Start()
     {
         string numberStr = this.name.Substring("StageNode".Length); // "1010"
-        int zeroIndex = numberStr.IndexOf('0');
-        if (zeroIndex > 0 && zeroIndex < numberStr.Length - 1)
-        {            // "010" → "1" in this case
-            BigStage = int.Parse(numberStr.Substring(0, zeroIndex));
-            SmallStage = int.Parse(numberStr.Substring(zeroIndex + 1));
-            StageText.text = $"{BigStage} - {SmallStage}";
-        }
-        else
-        {
-            Debug.LogError("Invalid stage name format");
-        }
+        BigStage = int.Parse(numberStr.Substring(0, 1));
+        SmallStage = int.Parse(numberStr.Substring(1));
+        StageText.text = $"{BigStage} - {SmallStage}";
+        
         
         // Set the stage image based on the stage state
         int nodeData = GetComponentInParent<StagePanelBehaviour>().StageNodesData[SmallStage - 1];

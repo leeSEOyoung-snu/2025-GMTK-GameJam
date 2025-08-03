@@ -14,6 +14,7 @@ public class CatBehaviour : MonoBehaviour
     [SerializeField] private SpriteRenderer priceSr;
     [SerializeField] private GameObject bubble;
     
+    [SerializeField] public SpriteRenderer CatCloth;
     private readonly float _sushiTypeScale, _dishTypeScale;
     private ColorTypes color;
 
@@ -49,10 +50,11 @@ public class CatBehaviour : MonoBehaviour
             // TODO: Cat 색상 지정 필요
             switch (color)
             {
-                case ColorTypes.W: catSr.color = Color.white; break;
-                case ColorTypes.R: catSr.color = Color.red; break;
-                case ColorTypes.Y: catSr.color = Color.yellow; break;
-                case ColorTypes.B: catSr.color = Color.blue; break;
+                case ColorTypes.W:  break;
+                case ColorTypes.R:
+                    CatCloth.sprite = MainSceneManager.Instance.redClothes; break;
+                case ColorTypes.Y: CatCloth.sprite = MainSceneManager.Instance.yellowClothes; break;
+                case ColorTypes.B: CatCloth.sprite = MainSceneManager.Instance.blueClothes; break;
             }
         }
         else Debug.LogError("Cat Color Error: " + (string)catData["Color"]);

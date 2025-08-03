@@ -12,6 +12,11 @@ public enum ColorTypes { W = 0, R = 1, Y = 2, B = 3, DishStandBy = 4, DishEmpty 
 public class MainSceneManager : MonoBehaviour
 {
 
+    [Header("Clothes")] 
+    [SerializeField] public Sprite redClothes;
+    [SerializeField] public Sprite yellowClothes;
+    [SerializeField] public Sprite blueClothes;
+    
     [Header("MoneyEffect")]
     [SerializeField] public Sprite[] NormalMoneySprites;
     [SerializeField] public Sprite[] TipMoneySprites;
