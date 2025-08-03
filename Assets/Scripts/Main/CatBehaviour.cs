@@ -130,6 +130,8 @@ public class CatBehaviour : MonoBehaviour
     {
         if (resultType == ResultTypes.EmptyNextDish) 
             ResultMethods.Instance.ActivateResult(resultType, isResultSingle, id.ToString(), Result2, isResult1Sushi, isResult2Sushi);
+        else if (resultType == ResultTypes.EmptyColorDish)
+            ResultMethods.Instance.ActivateResult(resultType, isResultSingle, Result1, id.ToString(), isResult1Sushi, isResult2Sushi);
         else 
             ResultMethods.Instance.ActivateResult(resultType, isResultSingle, Result1, Result2, isResult1Sushi, isResult2Sushi);
         // TODO: Condition 충족 시 애니메이션 수정

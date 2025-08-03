@@ -366,4 +366,29 @@ public class TableManager : MonoBehaviour, IInit
         }
         DishBehaviourDict[emptyDishId + 1].EmptyMotion();
     }
+
+    public void EmptyNextDish(ColorTypes dishColor, int catId)
+    {
+        foreach (DishBehaviour dish in DishBehaviourDict.Values)
+        {
+            //if ()
+        }
+        
+        
+        
+        
+        // DishBehaviour dish = InteractionManager.Instance.CatDishRelative[catId];
+        // if (dish == null)
+        // {
+        //     InteractionManager.Instance.ActivateResult();
+        //     return;
+        // }
+        // int emptyDishId = DishBehaviourDict.FirstOrDefault(pair => pair.Value == dish).Key;
+        // if (emptyDishId == DishCnt - 1)
+        // {
+        //     InteractionManager.Instance.ActivateResult();
+        //     return;
+        // }
+        // DishBehaviourDict[emptyDishId + 1].EmptyMotion();
+    }
 }

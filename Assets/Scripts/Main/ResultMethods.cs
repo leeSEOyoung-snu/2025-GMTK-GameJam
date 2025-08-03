@@ -25,6 +25,7 @@ public class ResultMethods : MonoBehaviour
     public Sprite singleBlank;
     public Sprite[] doubleBlank;
     public Sprite arrow;
+    public GameObject anyPref;
 
     private void Awake()
     {
@@ -41,6 +42,11 @@ public class ResultMethods : MonoBehaviour
         if (type == ResultTypes.EmptyNextDish)
         {
             TableManager.Instance.EmptyNextDish(int.Parse(resVal1));
+            return;
+        }
+        else if (type == ResultTypes.EmptyColorDish)
+        {
+            TableManager.Instance.EmptyNextDish(Enum.Parse<ColorTypes>(resVal1, true), int.Parse(resVal2));
             return;
         }
             

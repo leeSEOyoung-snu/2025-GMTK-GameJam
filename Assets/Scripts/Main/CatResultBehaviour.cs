@@ -10,6 +10,7 @@ public class CatResultBehaviour : IPointerHandler
     [SerializeField] private GameObject singleResultPref;
     [SerializeField] private GameObject doubleResultPref;
     [SerializeField] private GameObject pointerDetector;
+    [SerializeField] private GameObject arrow;
 
     private GameObject result;
     private bool isResultSingle, isVal1StandBy, isVal2StandBy;
@@ -20,6 +21,7 @@ public class CatResultBehaviour : IPointerHandler
     {
         SushiTypes sushi1, sushi2;
         ColorTypes dish1, dish2;
+        arrow.SetActive(false);
         switch (resultType)
         {
             case ResultTypes.GenerateCard1: case ResultTypes.GenerateSushi:
@@ -51,7 +53,6 @@ public class CatResultBehaviour : IPointerHandler
                 sushi2 = Enum.Parse<SushiTypes>(val2Str, true);
                 result1Tr = result.transform.Find("Result1");
                 result2Tr = result.transform.Find("Result2");
-                Debug.Log($"result1Tr: {result1Tr}, result2Tr: {result2Tr}");
                 if (sushi1 == SushiTypes.SushiStandBy)
                 {
                     result1Tr.GetComponent<SpriteRenderer>().sprite = ResultMethods.Instance.doubleBlank[1];
@@ -80,15 +81,40 @@ public class CatResultBehaviour : IPointerHandler
                 break;
             
             case ResultTypes.GiveTip: case ResultTypes.EmptyNextDish:
-                Debug.Log($"Init isVal1StandBy: {isVal1StandBy}");
                 isResultSingle = true;
                 iconSr.sprite = ResultMethods.Instance.iconSprites[(int)resultType];
                 iconSr.transform.localPosition = new Vector3(0, 0, 0);
                 break;
             
+            case ResultTypes.EmptyColorDish:
+                arrow.SetActive(true);
+                isResultSingle = true;
+                result = Instantiate(singleResultPref, transform);
+                result1Tr = iconSr.transform;
+                result2Tr = result.transform;
+                
+                dish1 = Enum.Parse<ColorTypes>(val1Str, true);
+                iconSr.sprite = TableManager.Instance.dishSprites[(int)dish1];
+                iconSr.transform.localScale = new Vector3(DiningManager.Instance.BubbleDishScale,
+                    DiningManager.Instance.BubbleDishScale, 0);
+                Instantiate(ResultMethods.Instance.anyPref, result1Tr);
+                
+                result2Tr.GetComponent<SpriteRenderer>().sprite = ResultMethods.Instance.iconSprites[(int)dish1];
+                result2Tr.localScale = new Vector3(DiningManager.Instance.BubbleDishScale,
+                    DiningManager.Instance.BubbleDishScale, 0);
+                result2Tr.transform.localPosition = new Vector3(DiningManager.Instance.BubbleTypePosX, 0, 0);
+                result.transform.SetAsFirstSibling();
+                break;
             
-            // EmptyNextDish,
-            // EmptyColorDish,
+            case ResultTypes.GenerateSushiOnColorDish:
+                break;
+            case ResultTypes.ChangeType:
+                break;
+            case ResultTypes.ChangeCard:
+                break;
+            
+            
+            
             // GenerateSushiOnColorDish,
             // ChangeType,
             // ChangeCard,

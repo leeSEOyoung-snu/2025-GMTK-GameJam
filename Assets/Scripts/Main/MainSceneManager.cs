@@ -157,7 +157,6 @@ public class MainSceneManager : MonoBehaviour
 
     public void CheckConditionCompleted()
     {
-        Debug.Log("CheckConditionCompleted");
         Vector3 firstDishPos = TableManager.Instance.DishBehaviourDict[0].DishData.CurrPos;
         if (firstDishPos.y <= 0.0001f && Mathf.Abs(firstDishPos.x - TableManager.Instance.ServingMinPosX) <= 0.0001f)
         {
