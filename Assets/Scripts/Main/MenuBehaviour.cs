@@ -14,6 +14,6 @@ public class MenuBehaviour : MonoBehaviour
     {
         sushiImg.sprite = TableManager.Instance.sushiSprites[(int)sushi];
         sushiRect.sizeDelta = TableManager.Instance.sushiSprites[(int)sushi].rect.size;
-        priceText.text = $"{MainSceneManager.Instance.Price[sushi]}$";
+        priceText.text = $"{MainSceneManager.Instance.Price[sushi]}\u00a5";
     }
 }
