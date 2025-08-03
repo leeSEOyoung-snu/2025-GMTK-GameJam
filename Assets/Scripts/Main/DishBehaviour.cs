@@ -1,3 +1,4 @@
+using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -173,5 +174,17 @@ public class DishBehaviour : MonoBehaviour, IPointerClickHandler, IPointerEnterH
         _rotateSq = DOTween.Sequence();
         _rotateSq.Append(transform.DOLocalMove(DishData.CurrPos, CardManager.Instance.CardMoveDuration));
         _rotateSq.Play();
+    }
+
+    public void EmptyMotion()
+    {
+        if (_rotateSq != null && _rotateSq.IsActive() && _rotateSq.IsPlaying())
+        {
+            _rotateSq.Kill();
+        }
+        _rotateSq = DOTween.Sequence();
+        Vector3[] path = { new Vector3(sushiSr.transform.localPosition.x, sushiSr.transform.localPosition.y - _hoveredPosY, sushiSr.transform.localPosition.z), sushiSr.transform.localPosition };
+        _rotateSq.Append(sushiSr.transform.DOLocalPath(path, CardManager.Instance.CardMoveDuration));
+        _rotateSq.Play().OnComplete(InteractionManager.Instance.ActivateResult);
     }
 }

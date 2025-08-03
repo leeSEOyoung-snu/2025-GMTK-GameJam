@@ -123,15 +123,15 @@ public class CatBehaviour : MonoBehaviour
 
     public bool CheckCondition(ConditionTypes conditionType, string condition)
     {
-        Debug.Log($"Cat Condition: {this.conditionType}, val: {Condition}");
-        Debug.Log($"Val Condition: {conditionType}, val: {condition}");
-        Debug.Log(this.conditionType == conditionType && Condition == condition);
         return this.conditionType == conditionType && Condition == condition;
     }
 
     public void ActivateResult()
     {
-        ResultMethods.Instance.ActivateResult(resultType, isResultSingle, Result1, Result2, isResult1Sushi, isResult2Sushi);
+        if (resultType == ResultTypes.EmptyNextDish) 
+            ResultMethods.Instance.ActivateResult(resultType, isResultSingle, id.ToString(), Result2, isResult1Sushi, isResult2Sushi);
+        else 
+            ResultMethods.Instance.ActivateResult(resultType, isResultSingle, Result1, Result2, isResult1Sushi, isResult2Sushi);
         // TODO: Condition 충족 시 애니메이션 수정
         if (_catSeq != null && _catSeq.IsActive() && _catSeq.IsPlaying())
         {

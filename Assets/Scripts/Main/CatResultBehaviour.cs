@@ -79,7 +79,7 @@ public class CatResultBehaviour : IPointerHandler
                 result.transform.SetAsFirstSibling();
                 break;
             
-            case ResultTypes.GiveTip:
+            case ResultTypes.GiveTip: case ResultTypes.EmptyNextDish:
                 Debug.Log($"Init isVal1StandBy: {isVal1StandBy}");
                 isResultSingle = true;
                 iconSr.sprite = ResultMethods.Instance.iconSprites[(int)resultType];

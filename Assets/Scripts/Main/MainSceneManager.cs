@@ -39,11 +39,11 @@ public class MainSceneManager : MonoBehaviour
     // TODO: 가격 수정
     public readonly Dictionary<SushiTypes, int> Price = new Dictionary<SushiTypes, int>()
     {
-        { SushiTypes.Egg, 5 },
-        { SushiTypes.Shrimp, 7 },
-        { SushiTypes.Unagi, 10 },
-        { SushiTypes.Tuna, 11 },
-        { SushiTypes.Maki, 12 },
+        { SushiTypes.Egg, 10 },
+        { SushiTypes.Shrimp, 15 },
+        { SushiTypes.Unagi, 20 },
+        { SushiTypes.Tuna, 25 },
+        { SushiTypes.Maki, -10 },
     };
 
     private void Awake()

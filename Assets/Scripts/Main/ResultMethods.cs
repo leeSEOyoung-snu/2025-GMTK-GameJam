@@ -37,7 +37,12 @@ public class ResultMethods : MonoBehaviour
         ColorTypes dish1 = ColorTypes.DishStandBy, dish2 = ColorTypes.DishStandBy;
 
         if (type == ResultTypes.GiveTip) return;
-        
+
+        if (type == ResultTypes.EmptyNextDish)
+        {
+            TableManager.Instance.EmptyNextDish(int.Parse(resVal1));
+            return;
+        }
             
         if (isVal1Sushi)
         {
@@ -79,13 +84,6 @@ public class ResultMethods : MonoBehaviour
                 TableManager.Instance.GenerateSushi(sushi1);
                 break;
             
-            case ResultTypes.GiveTip:
-                break;
-            
-            case ResultTypes.EmptyNextDish:
-                // TODO: import result
-                break;
-            
             case ResultTypes.EmptyColorDish:
                 // TODO: import result
                 break;
@@ -97,8 +95,6 @@ public class ResultMethods : MonoBehaviour
             case ResultTypes.ChangeType:
                 if (isVal1Sushi && isVal2Sushi)
                     TableManager.Instance.ChangeType(sushi1, sushi2);
-                else if (!isVal1Sushi && !isVal2Sushi)
-                    TableManager.Instance.ChangeType(dish1, dish2);
                 else
                     Debug.LogError($"Change Type Error: {resVal1}, {resVal2}");
                 break;
