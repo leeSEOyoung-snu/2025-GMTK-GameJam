@@ -48,6 +48,9 @@ public class GameManager : MonoBehaviour
         _currStageData = CSVReader.Read("Data/Test");
         _catData = CSVReader.Read("Data/TestCat");
         LoadSaveData();
+#if UNITY_EDITOR
+        currStageData = "101";
+#endif
         CurrStageIdx = 0;
     }
 

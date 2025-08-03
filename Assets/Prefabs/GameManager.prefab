@@ -44,3 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96451a8a26b1cbe4bab47c636b9eb316, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StageSummaryPanel: {fileID: 6095357788766178050, guid: 92f52662dd74ccb48a81b86d71d0fe21, type: 3}
+  StageCount: 0a0000000a0000000a0000000a0000000a000000
+  _saveData:
+    BigStageCount: 5
+    SmallStageCount: 0a0000000a0000000a0000000a0000000a000000

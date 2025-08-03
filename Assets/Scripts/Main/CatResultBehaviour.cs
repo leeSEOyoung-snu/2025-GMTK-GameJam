@@ -48,8 +48,8 @@ public class CatResultBehaviour : IPointerHandler
                 iconSr.sprite = ResultMethods.Instance.iconSprites[(int)resultType];
                 sushi1 = Enum.Parse<SushiTypes>(val1Str, true);
                 sushi2 = Enum.Parse<SushiTypes>(val2Str, true);
-                result1Tr = transform.Find("Result1");
-                result2Tr = transform.Find("Result2");
+                result1Tr = result.transform.Find("Result1");
+                result2Tr = result.transform.Find("Result2");
                 if (sushi1 == SushiTypes.SushiStandBy)
                 {
                     result1Tr.GetComponent<SpriteRenderer>().sprite = ResultMethods.Instance.singleBlank;

@@ -29,7 +29,6 @@ public class DiningManager : MonoBehaviour, IInit
         currCatData = GameManager.Instance.GetCatData();
         
         CatCnt = currCatData.Count;
-        
         if (TableManager.Instance.RailCnt < 1 || CatCnt < 1) { Debug.LogError($"something's wrong [TableManager.Instance.RailCnt == {TableManager.Instance.RailCnt}, CatCnt == {CatCnt}]"); return; }
         if (CatCnt > TableManager.Instance.RailCnt) { Debug.LogError($"CatCnt is bigger than TableManager.Instance.RailCnt [TableManager.Instance.RailCnt == {TableManager.Instance.RailCnt}, CatCnt == {CatCnt}]"); return; }
         
