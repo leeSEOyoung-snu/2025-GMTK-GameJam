@@ -22,7 +22,7 @@ public class CatResultBehaviour : IPointerHandler
         ColorTypes dish1, dish2;
         switch (resultType)
         {
-            case ResultTypes.GenerateCard1:
+            case ResultTypes.GenerateCard1: case ResultTypes.GenerateSushi:
                 isResultSingle = true;
                 result = Instantiate(singleResultPref, transform);
                 result1Tr = result.transform;
@@ -77,7 +77,7 @@ public class CatResultBehaviour : IPointerHandler
                 result.transform.localPosition = new Vector3(DiningManager.Instance.BubbleTypePosX, 0, 0);
                 break;
             
-            // GenerateSushi,
+            
             // GiveTip,
             // EmptyNextDish,
             // EmptyColorDish,
