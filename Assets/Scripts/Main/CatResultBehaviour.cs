@@ -221,6 +221,7 @@ public class CatResultBehaviour : IPointerHandler
     {
         Debug.Log($"isVal1StandBy: {isVal1StandBy}, isVal2StandBy: {isVal2StandBy}");
         if (MainSceneManager.Instance.CookStarted || !(isVal1StandBy || isVal2StandBy)) return;
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.SFXs[5]);
         CardManager.Instance.ResultSelected(this);
     }
 

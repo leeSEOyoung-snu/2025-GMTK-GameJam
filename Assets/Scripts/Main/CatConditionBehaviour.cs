@@ -44,6 +44,7 @@ public class CatConditionBehaviour : IPointerHandler
     public override void HandlePointerClick()
     {
         if (MainSceneManager.Instance.CookStarted || !isStandBy) return;
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.SFXs[5]);
         CardManager.Instance.ConditionSelected(this);
     }
 

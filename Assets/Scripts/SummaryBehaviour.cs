@@ -35,11 +35,15 @@ public class SummaryBehaviour : MonoBehaviour
         ScoreText.text = currScore.ToString() + " / " + targetScore.ToString();
         if (isClear)
         {
+            SoundManager.Instance.backgroundMusicSource.Stop();
+            SoundManager.Instance.PlaySFX(SoundManager.Instance.SFXs[3]);
             Image.sprite = WinCatSprite;
             VariButton.sprite = NextStageButtonSprite;
         }
         else
         {
+            SoundManager.Instance.backgroundMusicSource.Stop();
+            SoundManager.Instance.PlaySFX(SoundManager.Instance.SFXs[6]);
             Image.sprite = LoseCatSprite;
             VariButton.sprite = RetryButtonSprite;
         }
@@ -56,12 +60,14 @@ public class SummaryBehaviour : MonoBehaviour
         SoundManager.Instance.PlaySFX(SoundManager.Instance.SFXs[0]);
         if (MainSceneManager.Instance.isClear)    //nextButton
         {
+            SoundManager.Instance.PlayBGM(SoundManager.Instance.BGMs[0]);
             this.gameObject.SetActive(false);
             GameManager.Instance.EndStage();
             Debug.Log("Next Stage Button Clicked");
         }
         else //retryButton
         {
+            SoundManager.Instance.PlayBGM(SoundManager.Instance.BGMs[1]);
             this.gameObject.SetActive(false);
             // Retry the current stage
             MainSceneManager.Instance.Init();

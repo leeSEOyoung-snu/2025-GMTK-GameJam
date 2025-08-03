@@ -185,6 +185,7 @@ public class CatBehaviour : MonoBehaviour
 
     private void EatMotion(DishBehaviour dish)
     {
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.SFXs[2]);
         // TODO: 먹는 모션 수정
         if (_catSeq != null && _catSeq.IsActive() && _catSeq.IsPlaying())
         {

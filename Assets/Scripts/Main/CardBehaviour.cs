@@ -60,6 +60,7 @@ public class CardBehaviour : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        
         if (CardManager.Instance.isCardChanging) return;
         if (isSelected)
         {
@@ -69,6 +70,7 @@ public class CardBehaviour : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         }
         else
         {
+            SoundManager.Instance.PlaySFX(SoundManager.Instance.SFXs[1]);
             isSelected = true;
             CardManager.Instance.CardSelected(this);
             OnPointerEnter(null);

@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public enum SushiTypes { Egg = 0, Shrimp = 1, Unagi = 2, Tuna = 3, Maki = 4, SushiEmpty = 5, Any = 6, SushiStandBy = 7 }
@@ -10,6 +12,10 @@ public enum ColorTypes { W = 0, R = 1, Y = 2, B = 3, DishStandBy = 4, DishEmpty 
 public class MainSceneManager : MonoBehaviour
 {
 
+    [Header("Buttons")]
+    [SerializeField] private Image titleButton;
+    [SerializeField] private Image initButton;
+    
     [Header("Prefabs")]
     [SerializeField] private GameObject popupPrefab;
     [SerializeField] private GameObject CardImagePrefab;
@@ -147,6 +153,7 @@ public class MainSceneManager : MonoBehaviour
 
     public void StartCook()
     {
+        // SoundManager.Instance.PlaySFX(SoundManager.Instance.SFXs[4]);
         CookStarted = true;
         startCookButton.SetActive(false);
         TableManager.Instance.ReadyToCook();
@@ -227,4 +234,44 @@ public class MainSceneManager : MonoBehaviour
     {
         GameManager.Instance.EndStage();
     }
+
+    public void InitButtonClicked()
+    {
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.SFXs[0]);
+        Init();
+        initButton.GetComponent<RectTransform>().localScale =
+            new Vector3(1f, 1f, 1f); // Reset scale of the button
+    }
+
+    public void TitleButtonClicked()
+    {
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.SFXs[0]);
+        SceneManager.LoadScene("Scenes/Title");
+    }
+    
+    public void OnHoverEnter(BaseEventData data)
+    {
+        PointerEventData ped = (PointerEventData)data;
+        GameObject hoveredObject = ped.pointerEnter;
+
+        hoveredObject.GetComponent<RectTransform>().localScale =
+            new Vector3(1.2f, 1.2f, 1f); // Scale up the hovered button
+        
+    }
+
+    public void OnHoverExit(BaseEventData data)
+    {
+        initButtonSize();
+    }
+
+    private void initButtonSize()
+    {
+        titleButton.GetComponent<RectTransform>().localScale =
+            new Vector3(1f, 1f, 1f); // Reset scale of the button
+        initButton.GetComponent<RectTransform>().localScale =
+            new Vector3(1f, 1f, 1f); // Reset scale of the button
+        
+    }
+    
+    
 }
