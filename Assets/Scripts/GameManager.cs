@@ -12,8 +12,8 @@ public class GameManager : MonoBehaviour
     //singleton instance
     public static GameManager Instance { get; private set; }
     
-    public List<Dictionary<string, object>> _currStageData;
-    public List<Dictionary<string, object>> _catData;
+    private List<Dictionary<string, object>> _currStageData;
+    private List<Dictionary<string, object>> _catData;
     private string StageFileName;
     private bool isClear;
     public int CurrStageIdx { get; private set; }
