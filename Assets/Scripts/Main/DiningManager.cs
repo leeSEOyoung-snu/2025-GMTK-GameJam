@@ -53,9 +53,4 @@ public class DiningManager : MonoBehaviour, IInit
             currPosX += MainSceneManager.Instance.PosXFactor;
         }
     }
-
-    public bool ActivateDishEffect(Dish dishData)
-    {
-        return true;
-    }
 }

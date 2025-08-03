@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 
 public class CatBehaviour : MonoBehaviour
@@ -10,6 +11,7 @@ public class CatBehaviour : MonoBehaviour
     [SerializeField] private SpriteRenderer catSr;
     [SerializeField] private CatConditionBehaviour catConditionBehaviour;
     [SerializeField] private CatResultBehaviour catResultBehaviour;
+    [SerializeField] private SpriteRenderer priceSr; 
     
     private readonly float _sushiTypeScale, _dishTypeScale;
     private ColorTypes color;
@@ -18,6 +20,7 @@ public class CatBehaviour : MonoBehaviour
     private Sequence _catSeq;
 
     private int id;
+    
 
     public ConditionTypes conditionType { get; private set; }
     public string Condition;
@@ -32,6 +35,8 @@ public class CatBehaviour : MonoBehaviour
     public void InitCat(Vector3 initPos, Dictionary<string, object> catData, int id)
     {
         this.id = id;
+        
+        priceSr.gameObject.SetActive(false);
         
         transform.localPosition = initPos;
         
@@ -74,8 +79,13 @@ public class CatBehaviour : MonoBehaviour
             // sprites[0] = ResultMethods.Instance.iconSprites[(int)resultType];
         {}
         else Debug.LogError("Result Error: " + (string)catData["Result"]);
-        
-        if (Enum.TryParse(Result1, ignoreCase: true, out SushiTypes sushi1))
+
+        if (Result1.Equals("X", StringComparison.OrdinalIgnoreCase))
+        {
+            isVal1Sushi = false;
+            isVal1StandBy = false;
+        }
+        else if (Enum.TryParse(Result1, ignoreCase: true, out SushiTypes sushi1))
         {
             isVal1Sushi = true;
             // sprites[1] = ConditionMethods.Instance.sushiSprites[(int)sushi1];
@@ -113,15 +123,17 @@ public class CatBehaviour : MonoBehaviour
 
     public bool CheckCondition(ConditionTypes conditionType, string condition)
     {
-        Debug.Log($"Cat Condition: {this.conditionType}, val: {Condition}");
-        Debug.Log($"Val Condition: {conditionType}, val: {condition}");
-        Debug.Log(this.conditionType == conditionType && Condition == condition);
         return this.conditionType == conditionType && Condition == condition;
     }
 
     public void ActivateResult()
     {
-        ResultMethods.Instance.ActivateResult(resultType, isResultSingle, Result1, Result2, isResult1Sushi, isResult2Sushi);
+        if (resultType == ResultTypes.EmptyNextDish) 
+            ResultMethods.Instance.ActivateResult(resultType, isResultSingle, id.ToString(), Result2, isResult1Sushi, isResult2Sushi);
+        else if (resultType == ResultTypes.EmptyColorDish)
+            ResultMethods.Instance.ActivateResult(resultType, isResultSingle, Result1, id.ToString(), isResult1Sushi, isResult2Sushi);
+        else 
+            ResultMethods.Instance.ActivateResult(resultType, isResultSingle, Result1, Result2, isResult1Sushi, isResult2Sushi);
         // TODO: Condition 충족 시 애니메이션 수정
         if (_catSeq != null && _catSeq.IsActive() && _catSeq.IsPlaying())
         {
@@ -166,5 +178,22 @@ public class CatBehaviour : MonoBehaviour
         Vector3[] path = { new Vector3(transform.localPosition.x, transform.localPosition.y - _tmpAnimationFactor, transform.localPosition.z), transform.localPosition };
         _catSeq.Append(transform.DOLocalPath(path, _tmpAnimationFactor));
         _catSeq.Play().OnComplete(() => { InteractionManager.Instance.CheckRelativeCompleted(); });
+    }
+
+    public void ShowPrice(SushiTypes sushiType)
+    {
+        int price = MainSceneManager.Instance.Price[sushiType];
+        if (resultType == ResultTypes.GiveTip) price *= 2;
+        MainSceneManager.Instance.ChangeScore(price);
+        StartCoroutine(PriceCoroutine(resultType == ResultTypes.GiveTip));
+    }
+
+    public IEnumerator PriceCoroutine(bool hasTip)
+    {
+        if (hasTip) priceSr.color = Color.red;
+        else priceSr.color = Color.green;
+        priceSr.gameObject.SetActive(true);
+        yield return new WaitForSeconds(_tmpAnimationFactor);
+        priceSr.gameObject.SetActive(false);
     }
 }

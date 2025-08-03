@@ -112,6 +112,7 @@ public class InteractionManager : MonoBehaviour, IInit
         }
         
         activationInfo[activatedId % DiningManager.Instance.CatCnt] = false;
+        if (DiningManager.Instance.CatBehaviourDict[activatedId % DiningManager.Instance.CatCnt].resultType == ResultTypes.GiveTip) ActivateResult();
         DiningManager.Instance.CatBehaviourDict[activatedId % DiningManager.Instance.CatCnt].ActivateResult();
     }
     
@@ -123,7 +124,6 @@ public class InteractionManager : MonoBehaviour, IInit
     {
         if (CatDishRelative.Count == 0)
         {
-            Debug.LogWarning("First");
             for (int i = 0; i < DiningManager.Instance.CatCnt; i++)
             {
                 passedDish.Add(i, null);
@@ -141,11 +141,6 @@ public class InteractionManager : MonoBehaviour, IInit
             isSushiEaten[i] = false;
         }
 
-        foreach (var pair in passedDish)
-        {
-            Debug.Log($"passedDish: {pair.Key} - {pair.Value}");
-        }
-        
         activatedId = 0;
     }
     
@@ -156,7 +151,6 @@ public class InteractionManager : MonoBehaviour, IInit
         
         foreach (var pair in passedDish)
         {
-            Debug.Log($"passedDish: {pair.Key} - {pair.Value}");
             if (pair.Value == null || activationInfo[pair.Key]) continue;
             CatBehaviour cat = DiningManager.Instance.CatBehaviourDict[pair.Key];
             if (cat.CheckCondition(ConditionTypes.SushiPassed, pair.Value.DishData.Sushi.ToString()))
@@ -192,11 +186,10 @@ public class InteractionManager : MonoBehaviour, IInit
                 activationInfo[pair.Key] = DiningManager.Instance.CatBehaviourDict[pair.Key]
                     .CheckCondition(ConditionTypes.SushiEaten, CatDishRelative[pair.Key].DishData.Sushi.ToString());
             }
+            SushiTypes eatenSushi = CatDishRelative[pair.Key].DishData.Sushi; 
             CatDishRelative[pair.Key].ChangeSushiType(SushiTypes.Empty);
+            DiningManager.Instance.CatBehaviourDict[pair.Key].ShowPrice(eatenSushi);
         }
-        
-        foreach (var pair in activationInfo)
-            Debug.Log($"activationInfo: {pair.Key} - {pair.Value}");
         
         ActivateResult();
     }

@@ -25,6 +25,7 @@ public class ResultMethods : MonoBehaviour
     public Sprite singleBlank;
     public Sprite[] doubleBlank;
     public Sprite arrow;
+    public GameObject anyPref;
 
     private void Awake()
     {
@@ -36,6 +37,19 @@ public class ResultMethods : MonoBehaviour
         SushiTypes sushi1 = SushiTypes.Any, sushi2 = SushiTypes.Any;
         ColorTypes dish1 = ColorTypes.DishStandBy, dish2 = ColorTypes.DishStandBy;
 
+        if (type == ResultTypes.GiveTip) return;
+
+        if (type == ResultTypes.EmptyNextDish)
+        {
+            TableManager.Instance.EmptyNextDish(int.Parse(resVal1));
+            return;
+        }
+        else if (type == ResultTypes.EmptyColorDish)
+        {
+            TableManager.Instance.EmptyNextDish(Enum.Parse<ColorTypes>(resVal1, true), int.Parse(resVal2));
+            return;
+        }
+            
         if (isVal1Sushi)
         {
             if (Enum.TryParse(resVal1, ignoreCase: true, out sushi1)) { }
@@ -76,14 +90,6 @@ public class ResultMethods : MonoBehaviour
                 TableManager.Instance.GenerateSushi(sushi1);
                 break;
             
-            case ResultTypes.GiveTip:
-                // TODO: import result
-                break;
-            
-            case ResultTypes.EmptyNextDish:
-                // TODO: import result
-                break;
-            
             case ResultTypes.EmptyColorDish:
                 // TODO: import result
                 break;
@@ -95,8 +101,6 @@ public class ResultMethods : MonoBehaviour
             case ResultTypes.ChangeType:
                 if (isVal1Sushi && isVal2Sushi)
                     TableManager.Instance.ChangeType(sushi1, sushi2);
-                else if (!isVal1Sushi && !isVal2Sushi)
-                    TableManager.Instance.ChangeType(dish1, dish2);
                 else
                     Debug.LogError($"Change Type Error: {resVal1}, {resVal2}");
                 break;
