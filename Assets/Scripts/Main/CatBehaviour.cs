@@ -11,7 +11,8 @@ public class CatBehaviour : MonoBehaviour
     [SerializeField] private SpriteRenderer catSr;
     [SerializeField] private CatConditionBehaviour catConditionBehaviour;
     [SerializeField] private CatResultBehaviour catResultBehaviour;
-    [SerializeField] private SpriteRenderer priceSr; 
+    [SerializeField] private SpriteRenderer priceSr;
+    [SerializeField] private GameObject bubble;
     
     private readonly float _sushiTypeScale, _dishTypeScale;
     private ColorTypes color;
@@ -55,7 +56,8 @@ public class CatBehaviour : MonoBehaviour
             }
         }
         else Debug.LogError("Cat Color Error: " + (string)catData["Color"]);
-
+        
+        
         // Generate Condition
         if (Enum.TryParse((string)catData["Condition"], ignoreCase: true, out ConditionTypes cond))
         {
@@ -64,6 +66,12 @@ public class CatBehaviour : MonoBehaviour
             var conditionData =
                 ConditionMethods.Instance.GetConditionSprites(conditionType, catData["ConVal1"]);
             catConditionBehaviour.InitCondition(conditionData.Item1, conditionData.Item2, conditionData.Item3);
+        }
+        else if (string.Equals((string)catData["Condition"], "X", StringComparison.OrdinalIgnoreCase))
+        {
+            conditionType = ConditionTypes.Empty;
+            bubble.SetActive(false);
+            return;
         }
         else Debug.LogError("Condition Error: " + (string)catData["Condition"]);
         
@@ -123,11 +131,6 @@ public class CatBehaviour : MonoBehaviour
 
     public bool CheckCondition(ConditionTypes conditionType, string condition, bool isSushiEmpty = false)
     {
-        Debug.Log($"this: {this.conditionType}, conditionType: {conditionType}, val: {condition}, thisVal: {Condition}, {isSushiEmpty}");
-        Debug.LogError(conditionType == ConditionTypes.DishPassed
-                  && this.conditionType == conditionType
-                  && Condition == ColorTypes.DishEmpty.ToString()
-                  && isSushiEmpty);
         if (conditionType == ConditionTypes.DishPassed
             && this.conditionType == conditionType
             && Condition == ColorTypes.DishEmpty.ToString()
