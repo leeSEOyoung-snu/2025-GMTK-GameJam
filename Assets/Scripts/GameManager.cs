@@ -66,6 +66,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void SetcurrStageData(int StageIdx, bool justSet)
+    {
+        CurrStageIdx = StageIdx;
+        currStageData = _currStageData[CurrStageIdx]["Stage"].ToString();
+        //then load Scene
+        SoundManager.Instance.PlayBGM(SoundManager.Instance.BGMs[1]);
+        if (justSet == false)
+        {
+            SceneManager.LoadScene("Scenes/Test SEO 1");
+        } 
+    }
+
     public Dictionary<string, object> GetcurrStageData()
     {
         return _currStageData[CurrStageIdx];
@@ -100,14 +112,22 @@ public class GameManager : MonoBehaviour
 
     
     
-    public void EndStage()  //gotoNextStage
+    public void EndStage()
     {
-        SaveClearData();
+        Debug.Log("EndStage button pressed");  // 버튼 눌렸는지 확인
+        UpdateClearData();
         unlockStage();
-        //
+        SaveSaveData();
+        LoadSaveData();
+
         CurrStageIdx++;
-        MainSceneManager.Instance.Init();
         Debug.Log("Curr Stage Idx: " + CurrStageIdx);
+        SetcurrStageData(CurrStageIdx, false);
+    
+        if (MainSceneManager.Instance == null)
+            Debug.LogError("MainSceneManager.Instance is null");
+        else
+            MainSceneManager.Instance.Init();
     }
     
     #region Save
@@ -165,13 +185,13 @@ public class GameManager : MonoBehaviour
     
     #endregion
 
-    private void SaveClearData()
+    private void UpdateClearData()
     {
         int BS = int.Parse(currStageData.Substring(0, 1));
         int SS = int.Parse(currStageData.Substring(1));
 
-        _saveData.saveData[BS][SS] = 2;
-        SaveSaveData();
+        _saveData.saveData[BS-1][SS-1] = 2;
+        Debug.Log(BS+"-"+SS+"has cleard");
     }
 
     private void unlockStage()   //call when stage is cleared
@@ -180,16 +200,17 @@ public class GameManager : MonoBehaviour
         {
             if(int.Parse(s["Stage"].ToString()) == int.Parse(currStageData))
             {
+                if (int.Parse(s["Unlock"].ToString()) == -1) return;
+                
                 string[] tmp = s["Unlock"].ToString().Split('$');
                 foreach (var t in tmp)
                 {
                     int BS = int.Parse(t.Substring(0, 1));  //Chapter Can be smaller thaan 10
                     int SS = int.Parse(t.Substring(1));
                     
-                    _saveData.saveData[BS][SS] = 1;
+                    _saveData.saveData[BS-1][SS-1] = 1;
                     Debug.Log($"Stage {BS}0{SS} unlocked.");
                 }
-                SaveSaveData();
                 break;
             }
         }

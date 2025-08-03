@@ -14,9 +14,8 @@ public class PopupBehaviour : MonoBehaviour
     [SerializeField] private Image checkButton;
     // Start is called before the first frame update
 
-    public void InitPopup(int popupIndex, string popupDescriptionText)
+    public void InitPopup(int popupIndex)
     {
-        popupDescription.text = popupDescriptionText; 
         if(popupIndex < PopupSpritesList.Count-1)
         {
             Debug.Log("PopupSpritesList is null or index out of range");

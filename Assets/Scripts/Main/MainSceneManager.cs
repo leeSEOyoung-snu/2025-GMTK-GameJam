@@ -179,10 +179,9 @@ public class MainSceneManager : MonoBehaviour
         int t = 0;
         foreach(int i in _newIcon)
         {
-            Debug.Log("New Icon: " + i);
             GameObject popup = Instantiate(popupPrefab, transform);
             popup.transform.SetParent(mainCanvas.transform, false);
-            popup.GetComponent<PopupBehaviour>().InitPopup(i-1, _newIconDescription[t++]);
+            popup.GetComponent<PopupBehaviour>().InitPopup(i-1);
         }
     }
 
@@ -222,5 +221,10 @@ public class MainSceneManager : MonoBehaviour
     public void DebugClear()
     {
         StageSummaryPanelOn(true);
+    }
+    
+    public void DebugEndStage()
+    {
+        GameManager.Instance.EndStage();
     }
 }
