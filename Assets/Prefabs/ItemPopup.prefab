@@ -92,8 +92,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PopupSpritesList:
+  - {fileID: 21300000, guid: 1614aead26599944cb77f18cd372b78b, type: 3}
+  - {fileID: 21300000, guid: 5338512e177eb1e4f8942667c9b0948a, type: 3}
   - {fileID: 21300000, guid: 40cd91bfa56deb84ead4fb8c6f62aab9, type: 3}
-  - {fileID: 21300000, guid: e5e5a234db534614fa26d119dfc8c69a, type: 3}
+  - {fileID: 21300000, guid: f781d6fd967db9c40b71078d2ebfd9e6, type: 3}
   - {fileID: 21300000, guid: 25dcf12b66eb41f488f5d0a30b79b9fd, type: 3}
   - {fileID: 21300000, guid: 36a61c29215e0234ca5b8b9565d2d431, type: 3}
   - {fileID: 21300000, guid: 710406a8bd76baf4a98fdc3e3cd43bc3, type: 3}
