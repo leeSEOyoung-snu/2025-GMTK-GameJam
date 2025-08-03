@@ -602,6 +602,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: e51d859c02814a14ca9fb2de03d6897b, type: 3}
   - {fileID: 21300000, guid: 5a1033b199b80624ba379b0fd2dd67fe, type: 3}
   arrow: {fileID: 21300000, guid: 8a7ee444e4cbe00498b5c79e8d3a0a39, type: 3}
+  anyPref: {fileID: 3023567411011620781, guid: 29a70cf15be785f49bcbd53598e18c02, type: 3}
 --- !u!114 &270993563
 MonoBehaviour:
   m_ObjectHideFlags: 0

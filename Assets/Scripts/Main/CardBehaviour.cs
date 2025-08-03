@@ -34,7 +34,7 @@ public class CardBehaviour : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (isSelected) return;
+        if (CardManager.Instance.isCardChanging || isSelected) return;
         cardSr.sortingOrder = _order + _hoveredOrderAdder;
         if (_sequence != null && _sequence.IsActive() && _sequence.IsPlaying())
         {
@@ -60,6 +60,7 @@ public class CardBehaviour : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (CardManager.Instance.isCardChanging) return;
         if (isSelected)
         {
             isSelected = false;
@@ -87,5 +88,29 @@ public class CardBehaviour : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         _sequence = DOTween.Sequence();
         _sequence.Append(transform.DOLocalMove(_normalPos, CardManager.Instance.CardMoveDuration));
         _sequence.Play();
+    }
+
+    public void ChangeSushiUp(SushiTypes sushi)
+    {
+        if (_sequence != null && _sequence.IsActive() && _sequence.IsPlaying())
+        {
+            _sequence.Kill();
+        }
+        _sequence = DOTween.Sequence();
+        _sequence.Append(transform.DOLocalMove(_hoveredPos, CardManager.Instance.CardMoveDuration));
+        _sequence.Play().OnComplete(() => { ChangeSushiDown(sushi); });
+    }
+
+    public void ChangeSushiDown(SushiTypes sushi)
+    {
+        Sushi = sushi;
+        cardSr.sprite = CardManager.Instance.cardSprites[(int)sushi];
+        if (_sequence != null && _sequence.IsActive() && _sequence.IsPlaying())
+        {
+            _sequence.Kill();
+        }
+        _sequence = DOTween.Sequence();
+        _sequence.Insert(1f, transform.DOLocalMove(_normalPos, CardManager.Instance.CardMoveDuration));
+        _sequence.Play().OnComplete(CardManager.Instance.EndChangeCard);
     }
 }

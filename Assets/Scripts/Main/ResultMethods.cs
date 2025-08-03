@@ -44,11 +44,6 @@ public class ResultMethods : MonoBehaviour
             TableManager.Instance.EmptyNextDish(int.Parse(resVal1));
             return;
         }
-        else if (type == ResultTypes.EmptyColorDish)
-        {
-            TableManager.Instance.EmptyNextDish(Enum.Parse<ColorTypes>(resVal1, true), int.Parse(resVal2));
-            return;
-        }
             
         if (isVal1Sushi)
         {
@@ -57,15 +52,15 @@ public class ResultMethods : MonoBehaviour
         }
         else
         {
-            if (Enum.TryParse(resVal2, ignoreCase: true, out dish1)) { }
-            else Debug.LogError($"Result Value2 Error: {resVal1}");
+            if (Enum.TryParse(resVal1, ignoreCase: true, out dish1)) { }
+            else Debug.LogError($"Result Value1 Error: {resVal1}");
         }
 
         if (!isResultSingle)
         {
             if (isVal2Sushi)
             {
-                if (Enum.TryParse(resVal1, ignoreCase: true, out sushi2)) { }
+                if (Enum.TryParse(resVal2, ignoreCase: true, out sushi2)) { }
                 else Debug.LogError($"Result Value1 Error: {resVal2}");
             }
             else
@@ -91,22 +86,22 @@ public class ResultMethods : MonoBehaviour
                 break;
             
             case ResultTypes.EmptyColorDish:
-                // TODO: import result
+                TableManager.Instance.EmptyColorDish(Enum.Parse<ColorTypes>(resVal1, true));
                 break;
             
-            case ResultTypes.GenerateSushiOnColorDish:
-                TableManager.Instance.GenerateSushi(sushi1, dish2);
-                break;
+            // case ResultTypes.GenerateSushiOnColorDish:
+            //     TableManager.Instance.GenerateSushi(sushi2, dish1);
+            //     break;
             
             case ResultTypes.ChangeType:
                 if (isVal1Sushi && isVal2Sushi)
-                    TableManager.Instance.ChangeType(sushi1, sushi2);
+                    TableManager.Instance.ChangeSushiType(sushi1, sushi2);
                 else
                     Debug.LogError($"Change Type Error: {resVal1}, {resVal2}");
                 break;
             
             case ResultTypes.ChangeCard:
-                // TODO: import result
+                CardManager.Instance.ChangeCard(sushi1, sushi2);
                 break;
         }
     }
