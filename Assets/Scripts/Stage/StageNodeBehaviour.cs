@@ -83,7 +83,7 @@ public class StageNodeBehaviour : MonoBehaviour
         SoundManager.Instance.PlaySFX(SoundManager.Instance.SFXs[0]);
         if (stageState == StageState.Open || stageState == StageState.Clear)
         {
-            GameManager.Instance.SetcurrStageData(BigStage, SmallStage);
+            GameManager.Instance.SetcurrStageData(BigStage, SmallStage, false);
         }
         
     }

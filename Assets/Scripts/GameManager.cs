@@ -49,18 +49,21 @@ public class GameManager : MonoBehaviour
 
         LoadSaveData();
 #if UNITY_EDITOR
-        SetcurrStageData(1,1);
+        SetcurrStageData(1,1, true);
 #endif
         CurrStageIdx = 0;
     }
 
-    public void SetcurrStageData(int BigStage, int SmallStage)
+    public void SetcurrStageData(int BigStage, int SmallStage, bool justSet)
     {
         CurrStageIdx = (BigStage-1)*10 + SmallStage - 1; // 0-indexed
         currStageData = BigStage.ToString() +"0"+ SmallStage.ToString();
         //then load Scene
         SoundManager.Instance.PlayBGM(SoundManager.Instance.BGMs[1]);
-        SceneManager.LoadScene("Scenes/Test SEO 1");
+        if (justSet == false)
+        {
+            SceneManager.LoadScene("Scenes/Test SEO 1");
+        }
     }
 
     public Dictionary<string, object> GetcurrStageData()
