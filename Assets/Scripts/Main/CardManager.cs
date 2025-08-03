@@ -5,11 +5,14 @@ using UnityEngine;
 
 public class CardManager : MonoBehaviour, IInit
 {
+    public bool isCardChanging;
     public static CardManager Instance { get; private set; }
 
     [SerializeField] private GameObject cardPref, cardParent;
     
     public List<Sprite> cardSprites;
+
+    public readonly float BubbleCardScale = 0.19f;
     
     public List<CardBehaviour> CurrCards { get; private set; }
     public readonly float CardMoveDuration = 0.5f;
@@ -33,7 +36,8 @@ public class CardManager : MonoBehaviour, IInit
         
         foreach (Transform card in cardParent.transform)
             Destroy(card.gameObject);
-        
+
+        isCardChanging = false;
         CurrCards = new List<CardBehaviour>();
 
         for (int i = 0; i < cardData.Length; i++)
@@ -124,6 +128,27 @@ public class CardManager : MonoBehaviour, IInit
             InteractionManager.Instance.EnQueueCondition(ConditionTypes.CardGenerated, sushi.ToString());
             InteractionManager.Instance.TriggerProcess();
         }
+    }
+
+    private int all, curr;
+    public void ChangeCard(SushiTypes sushi1, SushiTypes sushi2)
+    {
+        all = curr = 0;
+        foreach (CardBehaviour card in CurrCards)
+        {
+            if (card.Sushi != sushi1) continue;
+            all++;
+            card.ChangeSushiUp(sushi2);
+        }
+        if (all == 0) InteractionManager.Instance.ActivateResult();
+        isCardChanging = true;
+    }
+
+    public void EndChangeCard()
+    {
+        if (curr < all - 1) { curr++; return; }
+        isCardChanging = false;
+        InteractionManager.Instance.ActivateResult();
     }
 
     public void DebugAddEggCard()

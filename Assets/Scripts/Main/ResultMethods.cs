@@ -101,7 +101,7 @@ public class ResultMethods : MonoBehaviour
                 break;
             
             case ResultTypes.ChangeCard:
-                // TODO: import result
+                CardManager.Instance.ChangeCard(sushi1, sushi2);
                 break;
         }
     }
