@@ -12,29 +12,6 @@ public enum ColorTypes { W = 0, R = 1, Y = 2, B = 3, DishStandBy = 4, DishEmpty 
 
 public class MainSceneManager : MonoBehaviour
 {
-    // public static MainSceneManager Instance { get; private set; }
-    //
-    // #region Attributes
-    //
-    // //[Header("References")]
-    //
-    // #endregion
-
-    // private void Awake()
-    // {
-    //     
-    // }
-
-    // private void Start()
-    // {
-    //     Init();
-    // }
-    //
-    // public void Init()
-    // {
-    //     
-    // }
-
     [Header("Clothes")] 
     [SerializeField] public Sprite redClothes;
     [SerializeField] public Sprite yellowClothes;
@@ -90,24 +67,6 @@ public class MainSceneManager : MonoBehaviour
             Instance = this;
             _initScripts = new List<IInit>(transform.GetComponentsInChildren<IInit>());
         }
-
-        var data = CSVReader.ReadCatData();
-        foreach (var chap in data)
-        {
-            foreach (var stg in chap.Value)
-            {
-                foreach (var dict in stg.Value)
-                {
-                    string tmp = "";
-                    foreach (var pair in dict)
-                    {
-                        tmp += $" {pair.Key}: {pair.Value}";
-                    }
-                    tmp = $"{chap.Key}-{stg.Key}" + tmp;
-                    Debug.Log(tmp);
-                }
-            }
-        }
     }
     
     private void Start()
@@ -117,7 +76,7 @@ public class MainSceneManager : MonoBehaviour
     
     public void Init()
     {
-        CurrStageData = GameManager.Instance.GetcurrStageData();
+        // CurrStageData = GameManager.Instance.GetcurrStageData();
         Debug.Log("Current Stage Data: " + CurrStageData["Stage"]);
         
         _maxRotateCnt = _currRotateCnt = (int)CurrStageData["RotateCnt"];

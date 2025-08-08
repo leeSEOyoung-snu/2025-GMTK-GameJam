@@ -2,21 +2,53 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 using Newtonsoft.Json;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine.SceneManagement;
 
+public enum StageHeader
+{
+    Chapter,
+    Stage,
+    Rail,
+    Rotate,
+    Dish,
+    StartCard,
+    NextSushi,
+    Menu,
+    Score,
+    NewIcon,
+    Description,
+    Unlock,
+}
+
+public enum CatHeader
+{
+    Chapter,
+    Stage,
+    Sprite,
+    Color,
+    Condition,
+    ConVal1,
+    ConVal2,
+    Result,
+    ResVal1,
+    ResVal2,
+}
+
 public class GameManager : MonoBehaviour
 {
     //singleton instance
     public static GameManager Instance { get; private set; }
+
+    private Dictionary<int, Dictionary<int, Dictionary<StageHeader, object>>> _stageData;
+    private Dictionary<int, Dictionary<int, List<Dictionary<CatHeader, object>>>> _catData;
     
-    private List<Dictionary<string, object>> _currStageData;
-    private List<Dictionary<string, object>> _catData;
-    private string StageFileName;
     private bool isClear;
-    public int CurrStageIdx { get; private set; }
+
+    private int currChapter, currStage;
     public readonly float RotateDuration = 0.6f;
     
 
@@ -33,7 +65,6 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject); // Keep this instance across scenes
-            path = Path.Combine(Application.persistentDataPath, "saveData.json");
             Init();
         }
         else
@@ -44,20 +75,47 @@ public class GameManager : MonoBehaviour
 
     private void Init()
     {
-        _currStageData = CSVReader.Read("Data/Test");
-        _catData = CSVReader.Read("Data/TestCat");
+        _stageData = CSVReader.ReadStageData();
+        _catData = CSVReader.ReadCatData();
 
+        path = Path.Combine(Application.persistentDataPath, "saveData.json");
         LoadSaveData();
+        
+        currChapter = 1;
+        currStage = 1;
 #if UNITY_EDITOR
         SetcurrStageData(3,1, true);
 #endif
-        CurrStageIdx = 0;
     }
 
-    public void SetcurrStageData(int BigStage, int SmallStage, bool justSet)
+    public void SetcurrStageData(int chapter, int stage, bool justSet)
     {
-        CurrStageIdx = (BigStage-1)*10 + SmallStage - 1; // 0-indexed
-        currStageData = BigStage.ToString() +"0"+ SmallStage.ToString();
+        currChapter = chapter;
+        currStage = stage;
+
+        while (true)
+        {
+            if (!_stageData.Keys.Contains(currChapter))
+            {
+                Debug.LogError($"No Chapter Found: chapter{currChapter}");
+                currChapter++;
+                currStage = 1;
+            }
+            else if (currStage > _stageData[currChapter].Count)
+            {
+                currChapter++;
+                currStage = 1;
+            }
+            else if (!_stageData[currChapter].Keys.Contains(currStage))
+            {
+                Debug.LogError($"No Stage Found: chapter{currChapter} - stage{currStage}");
+                currChapter++;
+                currStage = 1;
+            }
+            else break;
+        }
+
+        currStageData = $"{chapter}{stage:D4}";
         //then load Scene
         SoundManager.Instance.PlayBGM(SoundManager.Instance.BGMs[1]);
         if (justSet == false)
@@ -66,48 +124,22 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void SetcurrStageData(int StageIdx, bool justSet)
+    public Dictionary<StageHeader, object> GetcurrStageData()
     {
-        CurrStageIdx = StageIdx;
-        currStageData = _currStageData[CurrStageIdx]["Stage"].ToString();
-        //then load Scene
-        SoundManager.Instance.PlayBGM(SoundManager.Instance.BGMs[1]);
-        if (justSet == false)
-        {
-            SceneManager.LoadScene("Scenes/Test SEO 1");
-        } 
-    }
-
-    public Dictionary<string, object> GetcurrStageData()
-    {
-        return _currStageData[CurrStageIdx];
+        return _stageData[currChapter][currStage];
         //I don't know why this code works.... but it's still working We dont't need to modify anymore.
-        foreach(Dictionary<string,object> d in _currStageData) {
-            if (int.Parse(currStageData) == (int)d["Stage"]) {
-                return d;
-            }
-        } 
-        Debug.LogError("Stage data not found for Stage: " + currStageData);
-        return new Dictionary<string, object>();
+        // foreach(Dictionary<string,object> d in _currStageData) {
+        //     if (int.Parse(currStageData) == (int)d["Stage"]) {
+        //         return d;
+        //     }
+        // } 
+        // Debug.LogError("Stage data not found for Stage: " + currStageData);
+        // return new Dictionary<string, object>();
     }
     
-    public List<Dictionary<string, object>> GetCatData()
+    public List<Dictionary<CatHeader, object>> GetCatData()
     {
-        bool goodToEnd = false;
-        List<Dictionary<string, object>> result = new List<Dictionary<string, object>>();
-        foreach (var catData in _catData)
-        {
-            if (  int.Parse(currStageData) != (int)catData["Stage"])
-            {
-                if (goodToEnd) break;
-            }
-            else
-            {
-                goodToEnd = true;
-                result.Add(catData);
-            }
-        }
-        return result;
+        return _catData[currChapter][currStage];
     }
 
     
@@ -120,9 +152,10 @@ public class GameManager : MonoBehaviour
         SaveSaveData();
         LoadSaveData();
 
-        CurrStageIdx++;
-        Debug.Log("Curr Stage Idx: " + CurrStageIdx);
-        SetcurrStageData(CurrStageIdx, false);
+        currChapter++;
+        currStage++;
+        Debug.Log($"Next Chapter: {currChapter}, Next Stage: {currStage}");
+        SetcurrStageData(currChapter, currStage, false);
     
         if (MainSceneManager.Instance == null)
             Debug.LogError("MainSceneManager.Instance is null");
@@ -196,13 +229,13 @@ public class GameManager : MonoBehaviour
 
     private void unlockStage()   //call when stage is cleared
     {
-        foreach (var s in _currStageData)
+        if (_stageData.TryGetValue(currChapter, out var stages))
         {
-            if(int.Parse(s["Stage"].ToString()) == int.Parse(currStageData))
+            if (stages.TryGetValue(currStage, out var stage))
             {
-                if (int.Parse(s["Unlock"].ToString()) == -1) return;
+                if (int.Parse(stage[StageHeader.Unlock].ToString()) == -1) return;
                 
-                string[] tmp = s["Unlock"].ToString().Split('$');
+                string[] tmp = stage[StageHeader.Unlock].ToString().Split('$');
                 foreach (var t in tmp)
                 {
                     int BS = int.Parse(t.Substring(0, 1));  //Chapter Can be smaller thaan 10
@@ -211,8 +244,9 @@ public class GameManager : MonoBehaviour
                     _saveData.saveData[BS-1][SS-1] = 1;
                     Debug.Log($"Stage {BS}0{SS} unlocked.");
                 }
-                break;
             }
+            else Debug.Log($"Stage Data에 currStage가 매칭되지 않음: currStage == {currStage}");
         }
+        else Debug.Log($"Stage Data에 currChapter가 매칭되지 않음: currChapter == {currChapter}");
     }
 }
