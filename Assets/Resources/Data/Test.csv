@@ -7,7 +7,7 @@ Stage,RailCnt,RotateCnt,DishColor,StartSushi,NextSushi,Menu,TargetScore,NewIcon,
 106,3,3,W$W$W,Egg$Egg$Shrimp$Shrimp,Egg,Egg$Shrimp,85,-1,X,107
 107,3,3,W$W$W,Egg$Egg$Shrimp$Shrimp,X,Egg$Shrimp,100,-1,X,108
 108,2,3,W$W,Egg$Egg$Shrimp,Egg,Egg$Shrimp,75,-1,X,109
-109,3,3,W$W$W,Egg$Shirmp$Unagi,Egg,Egg$Shrimp$Unagi,95,5,X,110
+109,3,3,W$W$W,Egg$Shrimp$Unagi,Egg,Egg$Shrimp$Unagi,95,5,X,110
 110,4,3,W$W$W$W,Egg$Egg$Shrimp$Shrimp$Unagi$Unagi,Egg,Egg$Shrimp$Unagi,110,-1,X,-1
 201,1,3,W,Egg$Egg,X,Egg,30,6,X,202
 202,1,3,W,Egg$Shirmp$Shirmp,Egg,Egg$Shrimp,65,-1,X,203
@@ -36,9 +36,9 @@ Stage,RailCnt,RotateCnt,DishColor,StartSushi,NextSushi,Menu,TargetScore,NewIcon,
 405,2,3,W$W,Egg$Egg$Tuna$Maki,Maki$Egg,Egg$Tuna$Maki,105,11,X,406
 406,3,3,W$W$W ,Egg$Egg$Shrimp$Tuna$Tuna$Maki$Maki,Egg$Egg,Egg$Shrimp$Tuna$Maki,180,-1,X,407
 407,4,3,W$W$W$W$W,Egg$Egg$Shrimp$Shrimp$Shrimp$Tuna$Tuna$Maki$Maki,X,Egg$Shrimp$Tuna$Maki,250,-1,X,-1
-408,4,3,W$B$W$W,Unagi$Unagi$Tuna$Tuna$Egg,Tuna,Egg$Unagi$Tuna,200,12,X,409
-409,4,3,W$B$W$W,Unagi$Unagi$Tuna$Tuna$Egg,Tuna,Egg$Unagi$Tuna,200,12,X,409
-410,4,3,W$B$W$W,Unagi$Unagi$Tuna$Tuna$Egg,Tuna,Egg$Unagi$Tuna,200,12,X,409
+408,,,,,,,,,,
+409,,,,,,,,,,
+410,,,,,,,,,,
 501,4,3,W$B$W$W,Unagi$Unagi$Tuna$Tuna$Egg,Tuna,Egg$Unagi$Tuna,200,12,X,502
 502,4,1,W$R$B$Y,Tuna$Tuna$Tuna$Unagi$Unagi,X,Unagi$Tuna,999,-1,X,503
 503,3,1,Y$R$R,Shrimp$Shrimp$Shrimp,X,Shrimp,75,-1,X,504
