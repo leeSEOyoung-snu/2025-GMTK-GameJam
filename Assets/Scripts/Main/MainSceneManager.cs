@@ -91,18 +91,21 @@ public class MainSceneManager : MonoBehaviour
             _initScripts = new List<IInit>(transform.GetComponentsInChildren<IInit>());
         }
 
-        var data = CSVReader.ReadStageData();
+        var data = CSVReader.ReadCatData();
         foreach (var chap in data)
         {
             foreach (var stg in chap.Value)
             {
-                string tmp = "";
-                foreach (var dt in stg.Value)
+                foreach (var dict in stg.Value)
                 {
-                    tmp += $" [{dt.Key}: {dt.Value}]";
+                    string tmp = "";
+                    foreach (var pair in dict)
+                    {
+                        tmp += $" {pair.Key}: {pair.Value}";
+                    }
+                    tmp = $"{chap.Key}-{stg.Key}" + tmp;
+                    Debug.Log(tmp);
                 }
-                tmp = $"{chap.Key}-{stg.Key}" + tmp;
-                Debug.Log(tmp);
             }
         }
     }
