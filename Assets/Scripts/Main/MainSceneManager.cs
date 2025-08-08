@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -11,6 +12,28 @@ public enum ColorTypes { W = 0, R = 1, Y = 2, B = 3, DishStandBy = 4, DishEmpty 
 
 public class MainSceneManager : MonoBehaviour
 {
+    // public static MainSceneManager Instance { get; private set; }
+    //
+    // #region Attributes
+    //
+    // //[Header("References")]
+    //
+    // #endregion
+
+    // private void Awake()
+    // {
+    //     
+    // }
+
+    // private void Start()
+    // {
+    //     Init();
+    // }
+    //
+    // public void Init()
+    // {
+    //     
+    // }
 
     [Header("Clothes")] 
     [SerializeField] public Sprite redClothes;
@@ -39,7 +62,7 @@ public class MainSceneManager : MonoBehaviour
     public Dictionary<string, object> CurrStageData { get; private set; }
     public readonly float PosXFactor = 1.75f;
     private List<IInit> _initScripts = new List<IInit>();
-
+    
     public float RotateSpeedFactor;
     public int _maxRotateCnt, _currRotateCnt;
     public int _targetScore, _currScore;
@@ -59,7 +82,7 @@ public class MainSceneManager : MonoBehaviour
         { SushiTypes.Tuna, 25 },
         { SushiTypes.Maki, -10 },
     };
-
+    
     private void Awake()
     {
         if (Instance == null)
@@ -67,13 +90,28 @@ public class MainSceneManager : MonoBehaviour
             Instance = this;
             _initScripts = new List<IInit>(transform.GetComponentsInChildren<IInit>());
         }
-    }
 
+        var data = CSVReader.ReadStageData();
+        foreach (var chap in data)
+        {
+            foreach (var stg in chap.Value)
+            {
+                string tmp = "";
+                foreach (var dt in stg.Value)
+                {
+                    tmp += $" [{dt.Key}: {dt.Value}]";
+                }
+                tmp = $"{chap.Key}-{stg.Key}" + tmp;
+                Debug.Log(tmp);
+            }
+        }
+    }
+    
     private void Start()
     {
-        Init();
+        //Init();
     }
-
+    
     public void Init()
     {
         CurrStageData = GameManager.Instance.GetcurrStageData();
@@ -81,7 +119,7 @@ public class MainSceneManager : MonoBehaviour
         
         _maxRotateCnt = _currRotateCnt = (int)CurrStageData["RotateCnt"];
         UpdateRotateCnt();
-
+    
         RotateSpeedFactor = 1f;
         
         _targetScore = (int)CurrStageData["TargetScore"];
@@ -134,12 +172,12 @@ public class MainSceneManager : MonoBehaviour
         
         foreach(IInit script in _initScripts) script.Init();
     }
-
+    
     public void UpdateRotateCnt()
     {
         rotateCntText.text = _currRotateCnt.ToString();
     }
-
+    
     public void ChangeScore(int delta)
     {
         _currScore += delta;
@@ -158,7 +196,7 @@ public class MainSceneManager : MonoBehaviour
         GaguePanel.GetComponent<GaugeBehaiviour>().UpdateGaugeFinite(_currScore, _targetScore);
         //TODO : infinite
     }
-
+    
     public void StartCook()
     {
         // SoundManager.Instance.PlaySFX(SoundManager.Instance.SFXs[4]);
@@ -166,7 +204,7 @@ public class MainSceneManager : MonoBehaviour
         startCookButton.SetActive(false);
         TableManager.Instance.ReadyToCook();
     }
-
+    
     public void Rotate()
     {
         if (!CookStarted || isRotating || _currRotateCnt == 0) return;
@@ -176,7 +214,7 @@ public class MainSceneManager : MonoBehaviour
         UpdateRotateCnt();
         TableManager.Instance.RotateDishOnce();
     }
-
+    
     public void CheckConditionCompleted()
     {
         Vector3 firstDishPos = TableManager.Instance.DishBehaviourDict[0].DishData.CurrPos;
@@ -188,7 +226,7 @@ public class MainSceneManager : MonoBehaviour
         if (!isRotating) return;
         TableManager.Instance.RotateDishOnce();
     }
-
+    
     private void Madepopup()
     {
         int t = 0;
@@ -199,7 +237,7 @@ public class MainSceneManager : MonoBehaviour
             popup.GetComponent<PopupBehaviour>().InitPopup(i-1);
         }
     }
-
+    
     private void initNextSushi()
     {
         switch (_nextSushi.Count)
@@ -220,19 +258,19 @@ public class MainSceneManager : MonoBehaviour
                 break;
         }
     }
-
+    
     
     public void CheckClear()
     {
         isClear = _currScore >= _targetScore;
         Debug.Log(_currScore + " >= " + _targetScore + " ? " + isClear);
     }
-
+    
     public void ShowClearPanel()
     {
         StageSummaryPanelOn(isClear);
     }
-
+    
     public void DebugClear()
     {
         StageSummaryPanelOn(true);
@@ -242,7 +280,7 @@ public class MainSceneManager : MonoBehaviour
     {
         GameManager.Instance.EndStage();
     }
-
+    
     public void InitButtonClicked()
     {
         SoundManager.Instance.PlaySFX(SoundManager.Instance.SFXs[0]);
@@ -250,7 +288,7 @@ public class MainSceneManager : MonoBehaviour
         initButton.GetComponent<RectTransform>().localScale =
             new Vector3(1f, 1f, 1f); // Reset scale of the button
     }
-
+    
     public void TitleButtonClicked()
     {
         SoundManager.Instance.PlaySFX(SoundManager.Instance.SFXs[0]);
@@ -261,17 +299,17 @@ public class MainSceneManager : MonoBehaviour
     {
         PointerEventData ped = (PointerEventData)data;
         GameObject hoveredObject = ped.pointerEnter;
-
+    
         hoveredObject.GetComponent<RectTransform>().localScale =
             new Vector3(1.2f, 1.2f, 1f); // Scale up the hovered button
         
     }
-
+    
     public void OnHoverExit(BaseEventData data)
     {
         initButtonSize();
     }
-
+    
     private void initButtonSize()
     {
         titleButton.GetComponent<RectTransform>().localScale =

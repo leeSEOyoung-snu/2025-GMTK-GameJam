@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 0c9f87edd0b56374f8291ffbefb7c5ae
+guid: cefa0e3afedab2a42b534078abb51694
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -93,11 +93,24 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ClothBlue_0
+      name: ClothYellow_0
       rect:
         serializedVersion: 2
         x: 0
@@ -111,14 +124,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: edc9c0c57a6eecc4788a0119edaac190
-      internalID: -1862704964
+      spriteID: c7976d9b55f76314199cf187a624df42
+      internalID: 1152171310
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ClothBlue_1
+      name: ClothYellow_1
       rect:
         serializedVersion: 2
         x: 134
@@ -132,14 +145,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 542df7fa6a339564a8e1950ba668e201
-      internalID: -538623145
+      spriteID: f6bbc746bc2458145b5870f55e559d90
+      internalID: 658928444
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ClothBlue_2
+      name: ClothYellow_2
       rect:
         serializedVersion: 2
         x: 268
@@ -153,14 +166,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3ceb3ad1693891048926f55e83844f5e
-      internalID: 1370168153
+      spriteID: c7b06e473841acd479da05798ead8658
+      internalID: -1025403796
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ClothBlue_3
+      name: ClothYellow_3
       rect:
         serializedVersion: 2
         x: 402
@@ -174,8 +187,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bc0e2d528cb31724c8f8d22dbde91838
-      internalID: -1192378320
+      spriteID: dce80711c1798974f9a728e218d4e238
+      internalID: 1838831127
       vertices: []
       indices: 
       edges: []
@@ -191,10 +204,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      ClothBlue_0: -1862704964
-      ClothBlue_1: -538623145
-      ClothBlue_2: 1370168153
-      ClothBlue_3: -1192378320
+      ClothYellow_0: 1152171310
+      ClothYellow_1: 658928444
+      ClothYellow_2: -1025403796
+      ClothYellow_3: 1838831127
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

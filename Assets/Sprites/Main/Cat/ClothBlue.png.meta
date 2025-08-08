@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 43642cca7a6743c48b695459de4a0bf1
+guid: 0c9f87edd0b56374f8291ffbefb7c5ae
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -106,30 +106,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Cat_0
+      name: ClothBlue_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 188
-        height: 191
+        width: 134.75
+        height: 112
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,20 +124,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0ed48209d536fdf4e80d272021e42a16
-      internalID: 1577768633
+      spriteID: edc9c0c57a6eecc4788a0119edaac190
+      internalID: -1862704964
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Cat_1
+      name: ClothBlue_1
       rect:
         serializedVersion: 2
-        x: 188
+        x: 134
         y: 0
-        width: 188
-        height: 191
+        width: 134.75
+        height: 112
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -158,20 +145,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 999982d79a40a5442a1d49cf33f56a78
-      internalID: 1919098101
+      spriteID: 542df7fa6a339564a8e1950ba668e201
+      internalID: -538623145
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Cat_2
+      name: ClothBlue_2
       rect:
         serializedVersion: 2
-        x: 376
+        x: 268
         y: 0
-        width: 188
-        height: 191
+        width: 134.75
+        height: 112
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -179,20 +166,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0d79ba8fedf237f47986fe52c5bb9479
-      internalID: -1448299727
+      spriteID: 3ceb3ad1693891048926f55e83844f5e
+      internalID: 1370168153
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Cat_3
+      name: ClothBlue_3
       rect:
         serializedVersion: 2
-        x: 564
+        x: 402
         y: 0
-        width: 188
-        height: 191
+        width: 134.75
+        height: 112
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -200,29 +187,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4d60158d070dc2044b8cfc0f1d8864bf
-      internalID: 478568577
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Cat_4
-      rect:
-        serializedVersion: 2
-        x: 752
-        y: 0
-        width: 188
-        height: 191
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c33e0fa2a48ef784a816d5acabae2662
-      internalID: 1995747726
+      spriteID: bc0e2d528cb31724c8f8d22dbde91838
+      internalID: -1192378320
       vertices: []
       indices: 
       edges: []
@@ -238,11 +204,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Cat_0: 1577768633
-      Cat_1: 1919098101
-      Cat_2: -1448299727
-      Cat_3: 478568577
-      Cat_4: 1995747726
+      ClothBlue_0: -1862704964
+      ClothBlue_1: -538623145
+      ClothBlue_2: 1370168153
+      ClothBlue_3: -1192378320
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
