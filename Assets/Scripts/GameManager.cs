@@ -124,7 +124,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public Dictionary<StageHeader, object> GetcurrStageData()
+    public Dictionary<StageHeader, object> GetCurrStageData()
     {
         return _stageData[currChapter][currStage];
         //I don't know why this code works.... but it's still working We dont't need to modify anymore.

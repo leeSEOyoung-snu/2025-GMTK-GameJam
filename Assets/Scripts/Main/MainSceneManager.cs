@@ -12,6 +12,7 @@ public enum ColorTypes { W = 0, R = 1, Y = 2, B = 3, DishStandBy = 4, DishEmpty 
 
 public class MainSceneManager : MonoBehaviour
 {
+    #region Backup Attributes
     [Header("Clothes")] 
     [SerializeField] public Sprite redClothes;
     [SerializeField] public Sprite yellowClothes;
@@ -50,7 +51,6 @@ public class MainSceneManager : MonoBehaviour
     [HideInInspector] public bool isClear;
     public bool CookStarted { get; private set; }
     
-    // TODO: 가격 수정
     public readonly Dictionary<SushiTypes, int> Price = new Dictionary<SushiTypes, int>()
     {
         { SushiTypes.Egg, 10 },
@@ -59,6 +59,14 @@ public class MainSceneManager : MonoBehaviour
         { SushiTypes.Tuna, 25 },
         { SushiTypes.Maki, -10 },
     };
+    #endregion
+    
+    #region Refactored Attributes
+
+    private Dictionary<StageHeader, object> _stageData;
+    private List<Dictionary<CatHeader, object>> _catData;
+    
+    #endregion
     
     private void Awake()
     {
@@ -73,67 +81,77 @@ public class MainSceneManager : MonoBehaviour
     {
         //Init();
     }
-    
+
+    #region Refactored Methods
     public void Init()
     {
-        // CurrStageData = GameManager.Instance.GetcurrStageData();
-        Debug.Log("Current Stage Data: " + CurrStageData["Stage"]);
-        
-        _maxRotateCnt = _currRotateCnt = (int)CurrStageData["RotateCnt"];
-        UpdateRotateCnt();
-    
-        RotateSpeedFactor = 1f;
-        
-        _targetScore = (int)CurrStageData["TargetScore"];
-        _currScore = 0;
-        UpdateScore();
-        
-        //nextSushi
-        _nextSushi = new List<string>();
-        foreach (string i in CurrStageData["NextSushi"].ToString().Split('$'))
-        {
-            if (i == "X")  //there is no next Sushi
-            {
-                _nextSushi.Clear();
-                break;
-            }
-            _nextSushi.Add(i);
-        }
-        initNextSushi();
-        
-        //newIcon
-        _newIcon = new List<int>();
-        foreach (string i in CurrStageData["NewIcon"].ToString().Split('_'))
-        {
-            if (i == "-1")  //there is no new Popup
-            {
-                _newIcon.Clear();
-                break;
-            }
-            _newIcon.Add(int.Parse(i));
-        }
-        
-        //newIconDescription
-        _newIconDescription = new List<string>();
-        foreach (string i in CurrStageData["Description"].ToString().Split('$'))
-        {
-            if (i == "X")  //there is no new Popup
-            {
-                _newIconDescription.Clear();
-                break;
-            }
-            _newIconDescription.Add(i);
-        }
-        
-        Madepopup();
-        
-        isRotating = false;
-        isClear = false;
-        CookStarted = false;
-        startCookButton.SetActive(true);
-        
-        foreach(IInit script in _initScripts) script.Init();
+        _stageData = GameManager.Instance.GetCurrStageData();
+        _catData = GameManager.Instance.GetCatData();
     }
+    
+    #endregion
+    
+    #region Backup Methods
+    // public void Init()
+    // {
+    //     // CurrStageData = GameManager.Instance.GetcurrStageData();
+    //     Debug.Log("Current Stage Data: " + CurrStageData["Stage"]);
+    //     
+    //     _maxRotateCnt = _currRotateCnt = (int)CurrStageData["RotateCnt"];
+    //     UpdateRotateCnt();
+    //
+    //     RotateSpeedFactor = 1f;
+    //     
+    //     _targetScore = (int)CurrStageData["TargetScore"];
+    //     _currScore = 0;
+    //     UpdateScore();
+    //     
+    //     //nextSushi
+    //     _nextSushi = new List<string>();
+    //     foreach (string i in CurrStageData["NextSushi"].ToString().Split('$'))
+    //     {
+    //         if (i == "X")  //there is no next Sushi
+    //         {
+    //             _nextSushi.Clear();
+    //             break;
+    //         }
+    //         _nextSushi.Add(i);
+    //     }
+    //     initNextSushi();
+    //     
+    //     //newIcon
+    //     _newIcon = new List<int>();
+    //     foreach (string i in CurrStageData["NewIcon"].ToString().Split('_'))
+    //     {
+    //         if (i == "-1")  //there is no new Popup
+    //         {
+    //             _newIcon.Clear();
+    //             break;
+    //         }
+    //         _newIcon.Add(int.Parse(i));
+    //     }
+    //     
+    //     //newIconDescription
+    //     _newIconDescription = new List<string>();
+    //     foreach (string i in CurrStageData["Description"].ToString().Split('$'))
+    //     {
+    //         if (i == "X")  //there is no new Popup
+    //         {
+    //             _newIconDescription.Clear();
+    //             break;
+    //         }
+    //         _newIconDescription.Add(i);
+    //     }
+    //     
+    //     Madepopup();
+    //     
+    //     isRotating = false;
+    //     isClear = false;
+    //     CookStarted = false;
+    //     startCookButton.SetActive(true);
+    //     
+    //     foreach(IInit script in _initScripts) script.Init();
+    // }
     
     public void UpdateRotateCnt()
     {
@@ -281,5 +299,5 @@ public class MainSceneManager : MonoBehaviour
         
     }
     
-    
+    #endregion
 }
